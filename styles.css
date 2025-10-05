@@ -824,98 +824,100 @@ body {
         font-size: 0.95rem;
     }
     
-    /* Mobile Hero Image Container */
+    /* Mobile Hero Image Container - Completely Redesigned */
     .hero-image-container {
-        width: 280px;
-        height: 350px;
+        width: 100%;
+        max-width: 300px;
+        height: 400px;
         margin: 0 auto;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     
     .hero-main-image {
-        width: 220px;
-        height: 280px;
+        width: 200px;
+        height: 250px;
+        z-index: 2;
     }
     
-    /* Mobile Floating Elements - Simplified Layout */
-    .floating-card {
-        padding: 0.8rem;
-        border-radius: 12px;
+    /* Hide some floating elements on mobile for cleaner layout */
+    .ads-seo-badge {
+        display: none;
     }
     
-    /* Project Done Card - Repositioned */
+    /* Project Done Card - Better Mobile Position */
     .project-done-card {
-        top: -5%;
-        left: -25%;
-        width: 120px;
-        transform: scale(0.85);
+        top: 5%;
+        left: -15%;
+        width: 100px;
+        transform: scale(0.75);
+        z-index: 3;
     }
     
     .project-number {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
+        font-size: 1.3rem;
+        margin-bottom: 0.3rem;
     }
     
     .project-label {
-        font-size: 0.7rem;
+        font-size: 0.65rem;
+        margin-bottom: 0.3rem;
     }
     
-    /* Floating Badges - Repositioned */
+    /* Website Turnkey Badge - Better Mobile Position */
     .turnkey-badge {
-        top: 15%;
-        right: -25%;
-        padding: 0.5rem 1rem;
-        font-size: 0.8rem;
-        transform: scale(0.9);
+        top: 5%;
+        right: -15%;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.7rem;
+        transform: scale(0.8);
+        z-index: 3;
     }
     
-    .ads-seo-badge {
-        top: -5%;
-        right: 5%;
-        padding: 0.5rem 1rem;
-        font-size: 0.8rem;
-        transform: scale(0.9);
-    }
-    
-    /* Revenue Chart Card - Repositioned */
+    /* Revenue Chart Card - Better Mobile Position */
     .revenue-chart-card {
-        bottom: -8%;
-        right: -35%;
-        width: 140px;
-        transform: scale(0.85);
+        bottom: 5%;
+        right: -20%;
+        width: 120px;
+        transform: scale(0.75);
+        z-index: 3;
     }
     
     .revenue-amount {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
     }
     
     .revenue-period {
-        font-size: 0.75rem;
+        font-size: 0.65rem;
     }
     
     .mini-chart {
-        height: 40px;
-        gap: 3px;
+        height: 35px;
+        gap: 2px;
     }
     
     .chart-bar {
-        width: 8px;
+        width: 6px;
     }
     
-    /* Testimonial Card - Repositioned */
+    /* Testimonial Card - Better Mobile Position */
     .testimonial-card {
-        bottom: -8%;
-        left: -35%;
-        width: 200px;
-        transform: scale(0.85);
+        bottom: 5%;
+        left: -20%;
+        width: 180px;
+        transform: scale(0.75);
+        z-index: 3;
     }
     
     .client-name {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
     
     .testimonial-text {
-        font-size: 0.8rem;
-        line-height: 1.4;
+        font-size: 0.75rem;
+        line-height: 1.3;
     }
     
     .rating-stars {
@@ -923,21 +925,58 @@ body {
     }
     
     .star {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
     }
     
     /* Circular Progress - Mobile */
     .circular-progress {
-        width: 35px;
-        height: 35px;
+        width: 30px;
+        height: 30px;
     }
     
     /* Badge Triangles - Mobile */
     .badge-triangle {
-        bottom: -6px;
-        border-left: 6px solid transparent;
-        border-right: 6px solid transparent;
-        border-top: 6px solid #20B2AA;
+        bottom: -5px;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid #20B2AA;
+    }
+    
+    /* Ensure floating elements don't overflow */
+    .floating-card,
+    .floating-badge {
+        padding: 0.6rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(32, 178, 170, 0.15);
+    }
+    
+    /* Mobile-specific improvements */
+    .hero-right {
+        overflow: hidden;
+        position: relative;
+    }
+    
+    /* Ensure no horizontal scroll on mobile */
+    body {
+        overflow-x: hidden;
+    }
+    
+    /* Better mobile floating element constraints */
+    .floating-card,
+    .floating-badge {
+        max-width: calc(100vw - 2rem);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .testimonial-text {
+        white-space: normal;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
     }
     
     /* Show mobile menu elements only in mobile view */
@@ -1200,61 +1239,92 @@ body {
     }
     
     .hero-image-container {
-        width: 240px;
-        height: 300px;
+        width: 100%;
+        max-width: 250px;
+        height: 350px;
     }
 
     .hero-main-image {
-        width: 190px;
-        height: 240px;
+        width: 170px;
+        height: 220px;
     }
     
-    /* Further scale down floating elements for small screens */
+    /* Very small mobile - minimal floating elements */
     .project-done-card {
-        top: -8%;
-        left: -30%;
-        width: 100px;
-        transform: scale(0.75);
+        top: 8%;
+        left: -10%;
+        width: 85px;
+        transform: scale(0.65);
     }
     
     .project-number {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
     
-    .turnkey-badge,
-    .ads-seo-badge {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.75rem;
-        transform: scale(0.8);
+    .project-label {
+        font-size: 0.6rem;
     }
     
     .turnkey-badge {
-        top: 10%;
-        right: -30%;
+        top: 8%;
+        right: -10%;
+        padding: 0.3rem 0.6rem;
+        font-size: 0.65rem;
+        transform: scale(0.7);
     }
     
+    /* Keep ads-seo-badge hidden on very small screens */
     .ads-seo-badge {
-        top: -8%;
-        right: 0%;
+        display: none;
     }
     
     .revenue-chart-card {
-        bottom: -12%;
-        right: -40%;
-        width: 120px;
-        transform: scale(0.75);
+        bottom: 8%;
+        right: -15%;
+        width: 100px;
+        transform: scale(0.65);
+    }
+    
+    .revenue-amount {
+        font-size: 1rem;
+    }
+    
+    .revenue-period {
+        font-size: 0.6rem;
+    }
+    
+    .mini-chart {
+        height: 30px;
+        gap: 2px;
+    }
+    
+    .chart-bar {
+        width: 5px;
     }
     
     .testimonial-card {
-        bottom: -12%;
-        left: -40%;
-        width: 170px;
-        transform: scale(0.75);
+        bottom: 8%;
+        left: -15%;
+        width: 150px;
+        transform: scale(0.65);
+    }
+    
+    .client-name {
+        font-size: 0.75rem;
+    }
+    
+    .testimonial-text {
+        font-size: 0.7rem;
+        line-height: 1.2;
+    }
+    
+    .star {
+        font-size: 0.7rem;
     }
     
     .circular-progress {
-        width: 30px;
-        height: 30px;
+        width: 25px;
+        height: 25px;
     }
 }
 
@@ -1590,6 +1660,55 @@ body {
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) and (max-width: 767.98px) {
+    /* Hero Section for medium mobile */
+    .hero-image-container {
+        max-width: 320px;
+        height: 420px;
+    }
+    
+    .hero-main-image {
+        width: 220px;
+        height: 280px;
+    }
+    
+    /* Show ads-seo-badge on slightly larger mobile screens */
+    .ads-seo-badge {
+        display: block;
+        top: 2%;
+        right: 8%;
+        padding: 0.5rem 0.9rem;
+        font-size: 0.75rem;
+        transform: scale(0.85);
+    }
+    
+    /* Adjust other floating elements for this screen size */
+    .project-done-card {
+        top: 2%;
+        left: -12%;
+        width: 110px;
+        transform: scale(0.8);
+    }
+    
+    .turnkey-badge {
+        top: 2%;
+        right: -12%;
+        transform: scale(0.85);
+    }
+    
+    .revenue-chart-card {
+        bottom: 2%;
+        right: -18%;
+        width: 130px;
+        transform: scale(0.8);
+    }
+    
+    .testimonial-card {
+        bottom: 2%;
+        left: -18%;
+        width: 190px;
+        transform: scale(0.8);
+    }
+    
     .clients-title {
         font-size: 2rem;
     }
