@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>ROI - Digital Marketing Agency</title>
+   <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo">
+                    <img src="images/logo.png" alt="ROI Logo" class="logo-image" />
+                    <div class="logo-content">
+                        <span class="logo-text">Royal Orbit Innovations</span>
+                        <span class="logo-subtitle">Digital Marketing Agency</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-menu" id="nav-menu">
+                <div class="mobile-menu-header">
+                    <button class="close-menu" id="close-menu">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="#team" class="nav-link">Team</a></li>
+                    <li class="nav-item"><a href="#industries" class="nav-link">Industries</a></li>
+                    <li class="nav-item"><a href="#blog" class="nav-link">Blog</a></li>
+                    <li class="nav-item">
+                        <a href="#services" class="nav-link">
+                            <i class="fas fa-search"></i> Services
+                        </a>
+                    </li>
+                    <li class="nav-item"><a href="#contacts" class="nav-link">Contacts</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i> Search
+                </button>
+                <button class="cta-btn">
+                    <i class="fas fa-phone"></i> Request a call back
+                </button>
+            </div>
+            
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+                <span class="hamburger-fallback">☰</span>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="menu-overlay" id="menu-overlay"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-left">
+                    <div class="hero-text">
+                        <p class="hero-subtitle">100+ REVIEWS FROM OUR CLIENTS</p>
+                        <h1 class="hero-title">Digital Marketing Agency</h1>
+                        <p class="hero-description">
+                            Top Position is a full-service digital marketing agency dedicated to growing 
+                            your client base and bringing your business to a new competitive level.
+                        </p>
+                        <button class="hero-cta-btn">Book A Free Consultation</button>
+                    </div>
+                </div>
+                
+                <div class="hero-right">
+                    <div class="hero-image-container">
+                        <!-- Main Man Image -->
+                        <div class="hero-main-image">
+                            <img src="images/man.jpg" alt="Digital Marketing Professional" />
+                        </div>
+                        
+                        <!-- Project Done Count - Top Left -->
+                        <div class="floating-card project-done-card">
+                            <div class="project-content">
+                                <span class="project-label">Project Done</span>
+                                <div class="project-number">120+</div>
+                                <div class="project-indicator">
+                                    <div class="circular-progress">
+                                        <svg viewBox="0 0 36 36" class="circular-chart">
+                                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                            <path class="circle" stroke-dasharray="75, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Website Turnkey Badge - Right with Triangle -->
+                        <div class="floating-badge turnkey-badge">
+                            <span>Website turnkey</span>
+                            <div class="badge-triangle"></div>
+                        </div>
+                        
+                        <!-- Ads and SEO Badge - Top Right with Triangle -->
+                        <div class="floating-badge ads-seo-badge">
+                            <span>Ads and SEO</span>
+                            <div class="badge-triangle"></div>
+                        </div>
+                        
+                        <!-- Daily Progress Chart - Bottom Right -->
+                        <div class="floating-card revenue-chart-card">
+                            <div class="chart-info">
+                                <span class="revenue-amount">$1.8k</span>
+                                <span class="revenue-period">/ Daily</span>
+                            </div>
+                            <div class="mini-chart">
+                                <div class="chart-bar" data-height="20"></div>
+                                <div class="chart-bar" data-height="45"></div>
+                                <div class="chart-bar" data-height="30"></div>
+                                <div class="chart-bar" data-height="70"></div>
+                                <div class="chart-bar" data-height="90"></div>
+                                <div class="chart-bar" data-height="60"></div>
+                                <div class="chart-bar" data-height="80"></div>
+                                <div class="chart-bar" data-height="50"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Testimonial Card - Behind Image -->
+                        <div class="floating-card testimonial-card">
+                            <div class="testimonial-header">
+                                <span class="client-name">Mari Stuart</span>
+                                <div class="rating-stars">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                </div>
+                            </div>
+                            <p class="testimonial-text">
+                                With Topposition I got 34 new clients and increased my income by 2 times.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Clients Section -->
+    <section class="clients-section py-5">
+        <div class="container-fluid px-3 px-lg-5">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="clients-title text-center mb-4 mb-lg-5">Our clients</h2>
+                </div>
+            </div>
+            
+            <!-- Desktop/Tablet Animated Slider -->
+            <div class="d-none d-md-block">
+                <div class="clients-slider">
+                    <div class="clients-track">
+                        <!-- First Set -->
+                        <div class="client-logo">
+                            <img src="images/logo.png" alt="Royal Orbit Innovations" class="img-fluid" />
+                        </div>
+                        <div class="client-logo">
+                            <img src="images/factoring.jpg" alt="Factoring Express" class="img-fluid" />
+                        </div>
+                        <div class="client-logo">
+                            <img src="images/pngegg (7).png" alt="Client 3" class="img-fluid" />
+                        </div>
+                        <div class="client-logo">
+                            <img src="images/pngegg (10).png" alt="Client 4" class="img-fluid" />
+                        </div>
+                        <div class="client-logo">
+                            <img src="images/pngegg (6).png" alt="Client 5" class="img-fluid" />
+                        </div>
+                        <div class="client-logo">
+                            <img src="images/pngegg (8).png" alt="Client 6" class="img-fluid" />
+                        </div>
+                        <div class="client-logo">
+                            <img src="images/pngegg (9).png" alt="Client 7" class="img-fluid" />
+                        </div>
+                        
+                        <!-- Duplicate Set for Seamless Loop -->
+                        <div class="client-logo">
+                            <img src="images/logo.png" alt="Royal Orbit Innovations" class="img-fluid" />
+                        </div>
+                        <div class="client-logo">
+                            <img src="images/factoring.jpg" alt="Factoring Express" class="img-fluid" />
+                        </div>
+                        <div class="client-logo">
+                            <img src="images/pngegg (7).png" alt="Client 3" class="img-fluid" />
+                        </div>
+                        <div class="client-logo">
+                            <img src="images/pngegg (10).png" alt="Client 4" class="img-fluid" />
+                        </div>
+                        <div class="client-logo">
+                            <img src="images/pngegg (6).png" alt="Client 5" class="img-fluid" />
+                        </div>
+                        <div class="client-logo">
+                            <img src="images/pngegg (8).png" alt="Client 6" class="img-fluid" />
+                        </div>
+                        <div class="client-logo">
+                            <img src="images/pngegg (9).png" alt="Client 7" class="img-fluid" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile Grid Layout -->
+            <div class="d-block d-md-none">
+                <div class="row g-3">
+                    <div class="col-6 col-sm-4">
+                        <div class="client-logo-mobile">
+                            <img src="images/logo.png" alt="Factoring Express" class="img-fluid" />
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-4">
+                        <div class="client-logo-mobile">
+                            <img src="images/factoring.jpg" alt="Factoring Express" class="img-fluid" />
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-4">
+                        <div class="client-logo-mobile">
+                            <img src="images/pngegg (9).png" alt="Factoring Express" class="img-fluid" />
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-4">
+                        <div class="client-logo-mobile">
+                            <img src="images/pngegg (8).png" alt="Factoring Express" class="img-fluid" />
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-4">
+                        <div class="client-logo-mobile">
+                            <img src="images/pngegg (7).png" alt="Factoring Express" class="img-fluid" />
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-4">
+                        <div class="client-logo-mobile">
+                            <img src="images/pngegg (6).png" alt="Factoring Express" class="img-fluid" />
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-4">
+                        <div class="client-logo-mobile">
+                            <img src="images/pngegg (10).png" alt="Factoring Express" class="img-fluid" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Digital Marketing Services Section -->
+    <section class="services-section py-5">
+        <div class="container-fluid px-3 px-lg-5">
+            <div class="row align-items-center">
+                <!-- Left Side - Chart and Description -->
+                <div class="col-lg-6 col-12 mb-5 mb-lg-0">
+                    <div class="services-content">
+                        <h2 class="services-title">What digital marketing services mean for your business</h2>
+                        <p class="services-description">
+                            With digital marketing, you can get more customers from the Internet, earn more profits, and expand your business.
+                        </p>
+                        
+                        <!-- Interactive Chart -->
+                        <div class="chart-container">
+                            <div class="chart-wrapper">
+                                <canvas id="businessChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Side - Benefits -->
+                <div class="col-lg-6 col-12">
+                    <div class="benefits-container">
+                        <!-- Benefit 1 -->
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <i class="fas fa-phone-slash"></i>
+                            </div>
+                            <div class="benefit-content">
+                                <h3 class="benefit-title">No more cold calls</h3>
+                                <p class="benefit-description">
+                                    According to the Harvard Business Review, cold calling is ineffective 90% of the time. With digital marketing solutions, you can reach interested customers 24/7 through online ads, social media, and other platforms even as you sleep.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Benefit 2 -->
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="benefit-content">
+                                <h3 class="benefit-title">More new & repeat customers</h3>
+                                <p class="benefit-description">
+                                    With the help of digital marketing companies like Top Position, you can reach a wider audience on the internet. Your business will be known to new customers, you'll get to nurture customer loyalty to encourage repeat purchases.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Benefit 3 -->
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="benefit-content">
+                                <h3 class="benefit-title">Excellent return on investment</h3>
+                                <p class="benefit-description">
+                                    With the help of the best digital marketing agency, your brand will be exposed to the right audience. This translates to higher engagement, more leads, and more profits for your business. You'll enjoy all these without any technical work on your part.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Benefit 4 -->
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="benefit-content">
+                                <h3 class="benefit-title">Stand out from competitors</h3>
+                                <p class="benefit-description">
+                                    Most of your competitors are already partnering with digital marketing agencies to boost their sales. Our digital marketing firm can help by ensuring your business has the best online presence.  
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Consultation Section -->
+    <section class="consultation-section">
+        <div class="container-fluid px-3 px-lg-5">
+            <div class="row align-items-center">
+                <!-- Left Side - Content -->
+                <div class="col-lg-7 col-12 mb-4 mb-lg-0">
+                    <div class="consultation-content">
+                        <h2 class="consultation-title">
+                            Do you want your business to get more...
+                        </h2>
+                        
+                        <!-- Benefits Grid -->
+                        <div class="consultation-benefits">
+                            <div class="row g-3">
+                                <div class="col-md-4 col-6">
+                                    <div class="consultation-benefit">
+                                        <div class="benefit-icon-circle">
+                                            <i class="fas fa-phone"></i>
+                                        </div>
+                                        <span class="benefit-text">Calls</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-6">
+                                    <div class="consultation-benefit">
+                                        <div class="benefit-icon-circle">
+                                            <i class="fas fa-calendar-check"></i>
+                                        </div>
+                                        <span class="benefit-text">Appointments</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-6">
+                                    <div class="consultation-benefit">
+                                        <div class="benefit-icon-circle">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </div>
+                                        <span class="benefit-text">Orders</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-6">
+                                    <div class="consultation-benefit">
+                                        <div class="benefit-icon-circle">
+                                            <i class="fas fa-dollar-sign"></i>
+                                        </div>
+                                        <span class="benefit-text">Sales</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-6">
+                                    <div class="consultation-benefit">
+                                        <div class="benefit-icon-circle">
+                                            <i class="fas fa-bookmark"></i>
+                                        </div>
+                                        <span class="benefit-text">Bookings</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-6">
+                                    <div class="consultation-benefit">
+                                        <div class="benefit-icon-circle">
+                                            <i class="fas fa-walking"></i>
+                                        </div>
+                                        <span class="benefit-text">Foot traffic</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- CTA Button -->
+                        <div class="consultation-cta">
+                            <button class="consultation-btn">
+                                Book A Free Consultation
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Side - Speech Bubble and Image -->
+                <div class="col-lg-5 col-12">
+                    <div class="consultation-right-content">
+                        <!-- Speech Bubble Above -->
+                        <div class="consultation-speech-bubble">
+                            <p>...Then a digital marketing strategy is what you need!</p>
+                        </div>
+                        
+                        <!-- Person with Laptop Below -->
+                        <div class="consultation-image">
+                            <img src="images/man.jpg" alt="Digital Marketing Consultant" class="consultant-image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Successful Clients Section -->
+    <section class="successful-clients-section py-5">
+        <div class="container-fluid px-3 px-lg-5">
+            <!-- Section Title -->
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="successful-clients-title text-center mb-5">
+                        See Our Successful Digital Marketing Clients
+                    </h2>
+                </div>
+            </div>
+            
+            <!-- Client Cases -->
+            <div class="row g-4" id="client-cases-container">
+                <!-- Client Case 1 - Rent For Event -->
+                <div class="col-lg-6 col-12 client-case-item">
+                    <div class="client-case">
+                        <!-- Metrics Row -->
+                        <div class="case-metrics">
+                            <div class="metric-item">
+                                <span class="metric-label">New clients</span>
+                                <span class="metric-value">+256</span>
+                            </div>
+                            <div class="metric-item conversion-rate">
+                                <span class="metric-label">Conversion rate</span>
+                                <span class="metric-value">+221% <i class="fas fa-chart-line"></i></span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">SEO</span>
+                                <span class="metric-value seo-ranking">Top 3 <i class="fas fa-trending-up"></i></span>
+                            </div>
+                        </div>
+                        
+                        <!-- Website Preview -->
+                        <div class="website-preview">
+                            <img src="images/web1.jpg" alt="Rent For Event Website" class="preview-image">
+                        </div>
+                        
+                        <!-- Client Info -->
+                        <div class="client-info">
+                            <div class="client-avatar">
+                                <img src="images/man.jpg" alt="Yegor Novikov" class="avatar-image">
+                            </div>
+                            <div class="client-details">
+                                <h4 class="client-name">Yegor Novikov</h4>
+                                <p class="client-position">COO of Rent For Event</p>
+                                <p class="client-testimonial">
+                                    We started working with Rent For Event in 2020 during the pandemic lockdown. Through digital marketing alone, we brought leads that helped grow their <strong>profits from $1.2 million to $5 million</strong> annually. From being close to bankruptcy, they now expanded as a national company with first positions on most services in major US cities.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Client Case 2 - Medical Spa -->
+                <div class="col-lg-6 col-12 client-case-item">
+                    <div class="client-case">
+                        <!-- Metrics Row -->
+                        <div class="case-metrics">
+                            <div class="metric-item">
+                                <span class="metric-label">New clients</span>
+                                <span class="metric-value">+141</span>
+                            </div>
+                            <div class="metric-item conversion-rate">
+                                <span class="metric-label">Conversion rate</span>
+                                <span class="metric-value">+374% <i class="fas fa-chart-line"></i></span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">SEO</span>
+                                <span class="metric-value seo-ranking">Top 3 <i class="fas fa-trending-up"></i></span>
+                            </div>
+                        </div>
+                        
+                        <!-- Website Preview -->
+                        <div class="website-preview">
+                            <img src="images/web1.jpg" alt="Medical Spa Website" class="preview-image">
+                        </div>
+                        
+                        <!-- Client Info -->
+                        <div class="client-info">
+                            <div class="client-avatar">
+                                <img src="images/man.jpg" alt="Molly Rodriguez" class="avatar-image">
+                            </div>
+                            <div class="client-details">
+                                <h4 class="client-name">Molly Rodriguez</h4>
+                                <p class="client-position">RN, MPH of Eau Claire Medical Spa</p>
+                                <p class="client-testimonial">
+                                    Our collaboration with Eau Claire Body Care started in 2022 after meeting them at a marketing seminar. In just a few months, we managed to rank them in the <strong>top 3 positions on Google</strong> for all the services they offer. We're also currently working with them on the launch of more services!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Client Case 3 - E-commerce Store (Hidden by default) -->
+                <div class="col-lg-6 col-12 client-case-item client-case-hidden" id="additional-projects">
+                    <div class="client-case">
+                        <!-- Metrics Row -->
+                        <div class="case-metrics">
+                            <div class="metric-item">
+                                <span class="metric-label">New clients</span>
+                                <span class="metric-value">+189</span>
+                            </div>
+                            <div class="metric-item conversion-rate">
+                                <span class="metric-label">Conversion rate</span>
+                                <span class="metric-value">+298% <i class="fas fa-chart-line"></i></span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">SEO</span>
+                                <span class="metric-value seo-ranking">Top 5 <i class="fas fa-trending-up"></i></span>
+                            </div>
+                        </div>
+                        
+                        <!-- Website Preview -->
+                        <div class="website-preview">
+                            <img src="images/web1.jpg" alt="E-commerce Store Website" class="preview-image">
+                        </div>
+                        
+                        <!-- Client Info -->
+                        <div class="client-info">
+                            <div class="client-avatar">
+                                <img src="images/man.jpg" alt="Sarah Johnson" class="avatar-image">
+                            </div>
+                            <div class="client-details">
+                                <h4 class="client-name">Sarah Johnson</h4>
+                                <p class="client-position">Founder of Fashion Forward Store</p>
+                                <p class="client-testimonial">
+                                    Starting our e-commerce business felt overwhelming, but Top Position transformed our online presence. Through strategic SEO and targeted ads, we achieved <strong>$2.3 million in revenue</strong> in our first year and became the go-to fashion destination for young professionals.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            
+            <!-- More Projects Button -->
+            <div class="row mt-5">
+                <div class="col-12 text-center">
+                    <button class="more-projects-btn" id="more-projects-btn" onclick="toggleAdditionalProjects()">
+                        <span id="btn-text">More projects</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Digital Marketing Services Section -->
+    <section class="marketing-services-section py-5">
+        <div class="container-fluid px-3 px-lg-5">
+            <!-- Section Header -->
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="marketing-services-title">
+                        Check our digital marketing services<br>
+                        that drive revenue
+                    </h2>
+                    <p class="marketing-services-subtitle">
+                        As a full-service digital marketing agency, Top Position offers a complete strategy<br>
+                        that will keep your sales department busy. Here's how we make it possible
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Services Grid - First Row (3 cards) -->
+            <div class="row g-4 mb-4">
+                <!-- Service 1 - Website Design & Development -->
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="service-card">
+                        <div class="service-content">
+                            <div>
+                                <div class="service-icon">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <h3 class="service-title">Website design & development</h3>
+                                <p class="service-description">
+                                    This digital marketing service will give your business an online platform where customers can place orders 24/7.
+                                </p>
+                            </div>
+                            <a href="#" class="service-link">Learn more</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 2 - Search Engine Optimization -->
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="service-card">
+                        <div class="service-content">
+                            <div>
+                                <div class="service-icon">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <h3 class="service-title">Search Engine Optimization</h3>
+                                <p class="service-description">
+                                    Our SEO digital marketing agency will bring your business website to the top of search engine results pages (SERPs).
+                                </p>
+                            </div>
+                            <a href="#" class="service-link">Learn more</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 3 - Pay-Per-Click (PPC) Management -->
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="service-card">
+                        <div class="service-content">
+                            <div>
+                                <div class="service-icon">
+                                    <i class="fas fa-crown"></i>
+                                </div>
+                                <h3 class="service-title">Pay-Per-Click (PPC) Management</h3>
+                                <p class="service-description">
+                                    We'll launch online ads that show when someone searches your products or services.
+                                </p>
+                            </div>
+                            <a href="#" class="service-link">Learn more</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Services Grid - Second Row (2 centered cards) -->
+            <div class="row g-4 justify-content-center">
+                <!-- Service 4 - Social Media Marketing -->
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="service-card">
+                        <div class="service-content">
+                            <div>
+                                <div class="service-icon">
+                                    <i class="fas fa-share-alt"></i>
+                                </div>
+                                <h3 class="service-title">Social Media Marketing</h3>
+                                <p class="service-description">
+                                    Our specialists will create interesting, high-quality posts to attract followers, likes, and engagement on your social media accounts.
+                                </p>
+                            </div>
+                            <a href="#" class="service-link">Learn more</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 5 - Website Call Tracking -->
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="service-card">
+                        <div class="service-content">
+                            <div>
+                                <div class="service-icon">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <h3 class="service-title">Website Call Tracking</h3>
+                                <p class="service-description">
+                                    With our ecommerce digital marketing agency, you'll discover which ads and keywords drive customers. We refine your marketing strategy to boost your sales.
+                                </p>
+                            </div>
+                            <a href="#" class="service-link">Learn more</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="why-choose-section py-5">
+        <div class="container-fluid px-3 px-lg-5">
+            <!-- Section Header -->
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="why-choose-title">
+                        Why Choose Top Position Digital<br>
+                        Marketing Agency?
+                    </h2>
+                    <p class="why-choose-subtitle">
+                        Top Position is a team of digital marketing specialists who are passionate about seeing your<br>
+                        business grow. We want your business to succeed, much like our valued clients. Here's why<br>
+                        business owners like you consider us one of the top digital marketing firms:
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Why Choose Content -->
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="why-choose-container">
+                        <!-- Central Badge -->
+                        <div class="central-badge">
+                            <div class="badge-circle">
+                                <span class="badge-number">1</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Top Left - Results-driven marketing -->
+                        <div class="feature-item top-left">
+                            <div class="feature-content">
+                                <h3 class="feature-title">Results-driven marketing</h3>
+                                <p class="feature-description">
+                                    Everything we do is designed to generate more leads, calls, appointments, and sales for your business. Our mission is to provide you with steady revenue.
+                                </p>
+                            </div>
+                            <div class="connecting-line line-to-center"></div>
+                        </div>
+                        
+                        <!-- Top Right - Best-in-class technology -->
+                        <div class="feature-item top-right">
+                            <div class="feature-content">
+                                <h3 class="feature-title">Best-in-class technology</h3>
+                                <p class="feature-description">
+                                    We provide our clients with the winning combo of highly skilled specialists and custom-built systems to power up their marketing campaigns.
+                                </p>
+                            </div>
+                            <div class="connecting-line line-to-center"></div>
+                        </div>
+                        
+                        <!-- Bottom Left - Full-service marketing solutions -->
+                        <div class="feature-item bottom-left">
+                            <div class="feature-content">
+                                <h3 class="feature-title">Full-service marketing solutions</h3>
+                                <p class="feature-description">
+                                    Top Position will be your one-stop shop for all your digital marketing needs. We can adapt to your marketing needs as your business grows.
+                                </p>
+                            </div>
+                            <div class="connecting-line line-to-center"></div>
+                        </div>
+                        
+                        <!-- Bottom Right - 100% transparent reporting -->
+                        <div class="feature-item bottom-right">
+                            <div class="feature-content">
+                                <h3 class="feature-title">100% transparent reporting</h3>
+                                <p class="feature-description">
+                                    You're always on top of your results and budget without all the work on your part. We will also assign a dedicated project manager for you.
+                                </p>
+                            </div>
+                            <div class="connecting-line line-to-center"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Digital Marketing Statistics Section -->
+    <section class="digital-stats-section py-5">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <!-- Left Content - Statistics -->
+                <div class="col-lg-6 col-12">
+                    <div class="stats-content">
+                        <h2 class="stats-title">
+                            The whole business world is going digital. Our digital marketing company is here to help you.
+                        </h2>
+                        <p class="stats-subtitle">
+                            Another slow month in sales? Not much foot traffic on your store? That's because everyone is searching online!
+                        </p>
+                        
+                        <!-- Statistics Grid -->
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 class="stat-number">83% of U.S. shoppers</h4>
+                                    <p class="stat-description">use online search before going into a store.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 class="stat-number">78% of people search</h4>
+                                    <p class="stat-description">for local businesses more than once a week.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 class="stat-number">98% of consumers</h4>
+                                    <p class="stat-description">use the Internet to find information about local businesses.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 class="stat-number">60% of young consumers</h4>
+                                    <p class="stat-description">won't visit a business they can't find online – they're skeptical about legitimacy.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-globe"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 class="stat-number">86% of consumers</h4>
+                                    <p class="stat-description">rely on the Internet to find a local business.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 class="stat-number">46% of Google searches</h4>
+                                    <p class="stat-description">are for local businesses.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 class="stat-number">About 80% of local searches</h4>
+                                    <p class="stat-description">result in conversions – in short, revenue!</p>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-thumbs-up"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4 class="stat-number">35% of people</h4>
+                                    <p class="stat-description">still look up a new business even if it's been recommended to them.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Content - CTA Card -->
+                <div class="col-lg-6 col-12">
+                    <div class="cta-card">
+                        <div class="cta-content">
+                            <h3 class="cta-title">Don't let your business be left behind by competitors</h3>
+                            <p class="cta-description">
+                                People are searching online for businesses like yours, and our digital marketing agency services can help. We will put you on top of search results, which means you'll be the #1 choice for online searchers.
+                            </p>
+                            
+                            <!-- Medal Image -->
+                            <div class="medal-container">
+                                <div class="medal-image-wrapper">
+                                    <img src="images/medal.png" alt="#1 Digital Marketing Agency" class="medal-image">
+                                </div>
+                                <div class="decorative-line left-line"></div>
+                                <div class="decorative-line right-line"></div>
+                            </div>
+                            
+                            <!-- CTA Button -->
+                            <button class="consultation-cta-btn">Book A Free Consultation</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Digital vs Traditional Marketing Comparison Section -->
+    <section class="comparison-section py-5">
+        <div class="container-fluid px-3 px-lg-5">
+            <!-- Section Header -->
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="comparison-title">Digital marketing service vs. traditional marketing</h2>
+                    <p class="comparison-subtitle">
+                        With the top digital marketing agency as your partner, your business can get more sales compared to traditional marketing alone. <br> Here's why more and more businesses are investing in digital marketing:
+                    </p>
+                </div>
+            </div>
+
+            <!-- Comparison Content -->
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-12">
+                    <div class="comparison-container">
+                        <!-- Digital Marketing Column -->
+                        <div class="comparison-column digital-column">
+                            <div class="column-header">
+                                <div class="column-icon digital-icon">
+                                    <i class="fas fa-laptop"></i>
+                                </div>
+                                <h3 class="column-title">Digital Marketing</h3>
+                            </div>
+                            
+                            <div class="comparison-items">
+                                <div class="comparison-item positive">
+                                    <div class="item-icon positive-icon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Marketing through the internet</h4>
+                                        <p class="item-description">Examples: social media, email, search engines, etc.</p>
+                                    </div>
+                                </div>
+
+                                <div class="comparison-item positive">
+                                    <div class="item-icon positive-icon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Easy control of your spending</h4>
+                                        <p class="item-description">You can set a daily budget at exactly what it is and working (preventing losses).</p>
+                                    </div>
+                                </div>
+
+                                <div class="comparison-item positive">
+                                    <div class="item-icon positive-icon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Faster results</h4>
+                                        <p class="item-description">Get instant exposure within hours.</p>
+                                    </div>
+                                </div>
+
+                                <div class="comparison-item positive">
+                                    <div class="item-icon positive-icon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Easy to measure results</h4>
+                                        <p class="item-description">You'll know how many saw your ads, how many clicked, how many purchased, and more in real time.</p>
+                                    </div>
+                                </div>
+
+                                <div class="comparison-item positive">
+                                    <div class="item-icon positive-icon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Bigger audience reach</h4>
+                                        <p class="item-description">Get exposure for your business both locally and nationally at any target audience.</p>
+                                    </div>
+                                </div>
+
+                                <div class="comparison-item positive">
+                                    <div class="item-icon positive-icon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Highly customizable</h4>
+                                        <p class="item-description">You can easily change what doesn't work and refine your campaign targeting to similar prospects.</p>
+                                    </div>
+                                </div>
+
+                                <div class="comparison-item positive">
+                                    <div class="item-icon positive-icon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Allows for easier customer communication</h4>
+                                        <p class="item-description">You can easily communicate with your customers 24/7 through various online platforms.</p>
+                                    </div>
+                                </div>
+
+                                <div class="comparison-item positive">
+                                    <div class="item-icon positive-icon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Gives you control over who sees your ads</h4>
+                                        <p class="item-description">Your brand will be exposed to those who are actively searching for similar products or services.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Traditional Marketing Column -->
+                        <div class="comparison-column traditional-column">
+                            <div class="column-header">
+                                <div class="column-icon traditional-icon">
+                                    <i class="fas fa-newspaper"></i>
+                                </div>
+                                <h3 class="column-title">Traditional Marketing</h3>
+                            </div>
+                            
+                            <div class="comparison-items">
+                                <div class="comparison-item negative">
+                                    <div class="item-icon negative-icon">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Limited to offline marketing</h4>
+                                        <p class="item-description">Examples: telephone, print, billboards, flyers, broadcasts, etc.</p>
+                                    </div>
+                                </div>
+
+                                <div class="comparison-item negative">
+                                    <div class="item-icon negative-icon">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Higher costs</h4>
+                                        <p class="item-description">You pay a big price upfront without any guarantee results.</p>
+                                    </div>
+                                </div>
+
+                                <div class="comparison-item negative">
+                                    <div class="item-icon negative-icon">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Longer waiting periods</h4>
+                                        <p class="item-description">Takes weeks or months to set up and get actual results.</p>
+                                    </div>
+                                </div>
+
+                                <div class="comparison-item negative">
+                                    <div class="item-icon negative-icon">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Difficult to measure results</h4>
+                                        <p class="item-description">Limited tracking options, and you won't know exactly how many people saw your ads.</p>
+                                    </div>
+                                </div>
+
+                                <div class="comparison-item negative">
+                                    <div class="item-icon negative-icon">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Limited reach</h4>
+                                        <p class="item-description">Limited customization and too expensive if you're aiming for the national level.</p>
+                                    </div>
+                                </div>
+
+                                <div class="comparison-item negative">
+                                    <div class="item-icon negative-icon">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Can't be updated easily</h4>
+                                        <p class="item-description">Higher risk since materials can't be updated easily once it's printed, aired, or installed.</p>
+                                    </div>
+                                </div>
+
+                                <div class="comparison-item negative">
+                                    <div class="item-icon negative-icon">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Communication is only one-way</h4>
+                                        <p class="item-description">Customers don't have an option to instantly connect with you upon seeing your advertisement.</p>
+                                    </div>
+                                </div>
+
+                                <div class="comparison-item negative">
+                                    <div class="item-icon negative-icon">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Limited control over ad exposure</h4>
+                                        <p class="item-description">It's almost impossible to filter who can see your ads once it's been put out.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="final-cta-section py-5">
+        <div class="container-fluid px-3 px-lg-5">
+            <div class="row align-items-center">
+                <!-- Left Content -->
+                <div class="col-lg-7 col-12 mb-4 mb-lg-0">
+                    <div class="final-cta-content">
+                        <h2 class="final-cta-title">
+                            Let's give your small business the power to grow
+                        </h2>
+                        
+                        <div class="final-cta-text">
+                            <p class="final-cta-description">
+                                At Top Position, we know that bad marketing can easily hurt good businesses. This is why our specialists take the time to know your business so we can craft a digital marketing plan that will yield measurable and profitable results.
+                            </p>
+                            
+                            <p class="final-cta-description">
+                                As the best digital marketing company, our specialists will create a unique marketing strategy that works for your business and your customers looking for a reliable company like yours.
+                            </p>
+                            
+                            <p class="final-cta-description">
+                                If you're ready for your business to take off online, let Top Position be your partner. Contact us today for a free consultation to learn how our team can turn your online presence into a revenue machine.
+                            </p>
+                        </div>
+                        
+                        <!-- CTA Button -->
+                        <div class="final-cta-button-container">
+                            <button class="final-cta-btn">Book A Free Consultation</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Illustration -->
+                <div class="col-lg-5 col-12">
+                    <div class="final-cta-illustration">
+                        <!-- Success Notification -->
+                        <div class="success-notification">
+                            <div class="notification-progress">
+                                <div class="progress-ring">
+                                    <!-- Segmented Progress Circle -->
+                                    <svg class="progress-svg" width="120" height="120" viewBox="0 0 120 120">
+                                        <!-- Background circle with all 4 segments in gray -->
+                                        <circle cx="60" cy="60" r="45" fill="none" stroke="#e2e8f0" stroke-width="8" 
+                                                stroke-dasharray="60 10" opacity="0.5"/>
+                                        <!-- 3 active segments overlaid in teal -->
+                                        <circle cx="60" cy="60" r="45" fill="none" stroke="#20B2AA" stroke-width="8" 
+                                                stroke-dasharray="60 10 60 10 60 80" stroke-dashoffset="0" stroke-linecap="round"/>
+                                    </svg>
+                                    <div class="notification-icon">
+                                        <span class="emoji-icon">😍</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="notification-content">
+                                <h4 class="notification-title">You're doing good!</h4>
+                                <p class="notification-text">You have new customers</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Growth Chart -->
+                        <div class="growth-chart">
+                            <div class="chart-header">
+                                <h4 class="chart-title">Revenue Growth</h4>
+                                <span class="chart-period">Last 6 months</span>
+                            </div>
+                            <div class="chart-container-visual">
+                                <canvas id="growthChart"></canvas>
+                            </div>
+                            <div class="chart-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">+42%</span>
+                                    <span class="stat-label">Growth</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">$125K</span>
+                                    <span class="stat-label">Revenue</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating Elements -->
+                        <div class="floating-elements">
+                            <div class="floating-element chart-element">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="floating-element revenue-element">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="floating-element customer-element">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section py-5">
+        <div class="container-fluid px-3 px-lg-5">
+            <div class="row">
+                <!-- Left Side - FAQ Questions -->
+                <div class="col-lg-7 col-12 mb-5 mb-lg-0">
+                    <div class="faq-container">
+                        <h2 class="faq-main-title">Frequently Asked Questions</h2>
+                        
+                        <!-- FAQ Item 1 -->
+                        <div class="faq-item">
+                            <div class="faq-question" data-faq="1">
+                                <h3 class="faq-title">How am I going to be billed for the digital marketing services I will avail?</h3>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </div>
+                            <div class="faq-answer" id="faq-1">
+                                <p>This depends on what service you availed from us. For example, our SEO services are on a subscription basis, which will be charged to you at the beginning of the applicable month. Meanwhile, for our website development service, we require a 50% down payment, and the remaining 50% will be settled once we deliver all the inclusions of the package.</p>
+                                <p>If you want to know more about our pricing model, feel free to book a consultation with us. Our digital marketing consultancy specialist will answer all your questions.</p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 2 -->
+                        <div class="faq-item">
+                            <div class="faq-question" data-faq="2">
+                                <h3 class="faq-title">Where can I find a digital marketing agency near me?</h3>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </div>
+                            <div class="faq-answer" id="faq-2">
+                                <p>Wherever you are in the United States, Top Position would be a smart choice. We are currently headquartered in West Palm Beach, Florida, but our reach extends nationally. Don’t hesitate to book a consultation with us if you want to know how we can cater to your service area/s.</p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 3 -->
+                        <div class="faq-item">
+                            <div class="faq-question" data-faq="3">
+                                <h3 class="faq-title">Who owns the website you're going to build for my business?</h3>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </div>
+                            <div class="faq-answer" id="faq-3">
+                                <p>You’ll own everything on your website and the website itself. Still, we will provide you with the convenience of having specialists manage everything, so you don’t have to worry about the technical aspect. This makes our web design services a great investment for your business, whether you decide to work with us long-term or at your discretion.</p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 4 -->
+                        <div class="faq-item">
+                            <div class="faq-question" data-faq="4">
+                                <h3 class="faq-title">I'm not ready for a full package yet, can I choose just one service?</h3>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </div>
+                            <div class="faq-answer" id="faq-4">
+                                <p>Of course! You’re free to sign up for our complete digital marketing package or simply choose only the services you need at the moment. At the same time, you can always upgrade with more services once you’re ready to expand your marketing efforts.</p>
+                                <p>All our services are flexible and can be tailored to your needs. Let us know your marketing goals, and we will create a custom plan for your business. </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 5 -->
+                        <div class="faq-item">
+                            <div class="faq-question" data-faq="5">
+                                <h3 class="faq-title">What kind of report do you provide?</h3>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </div>
+                            <div class="faq-answer" id="faq-5">
+                                <p>For our SEO services, we provide monthly reports to let you see your growth each month. For our advertising campaigns, we can provide you with daily, weekly, monthly, quarterly, and even yearly reports upon request. Rest assured that we will update you regularly on your marketing campaigns’ status.</p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 6 -->
+                        <div class="faq-item">
+                            <div class="faq-question" data-faq="6">
+                                <h3 class="faq-title">How do you measure the results of your campaigns?</h3>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </div>
+                            <div class="faq-answer" id="faq-6">
+                                <p>We have a robust analytics system where we monitor every campaign we launch for our clients. This is also included in the reports we will provide regularly.</p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 7 -->
+                        <div class="faq-item">
+                            <div class="faq-question" data-faq="7">
+                                <h3 class="faq-title">How can I reach you if I have concerns about my campaigns?</h3>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </div>
+                            <div class="faq-answer" id="faq-7">
+                                <p>Once you decide to work with us, we will add you to our communication platform so you can easily reach out to the project manager assigned to you. This way, we can also give you updates on the get-go, making everything easy and convenient.</p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 8 -->
+                        <div class="faq-item">
+                            <div class="faq-question" data-faq="8">
+                                <h3 class="faq-title">How much do your digital marketing consulting services cost?</h3>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </div>
+                            <div class="faq-answer" id="faq-8">
+                                <p>Feel free to check the packages available on our service pages. If you wish to get custom services, book a consultation with us, and we will provide you with a custom quote.</p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 9 -->
+                        <div class="faq-item">
+                            <div class="faq-question" data-faq="9">
+                                <h3 class="faq-title">How long does it take to see results from digital marketing?</h3>
+                                <i class="fas fa-chevron-down faq-icon"></i>
+                            </div>
+                            <div class="faq-answer" id="faq-9">
+                                <p>Results timeline varies by service type. PPC campaigns can show immediate results, while SEO typically takes 3-6 months to see significant improvements. Social media marketing usually shows engagement within weeks, and website redesigns can impact conversions immediately. We'll set realistic expectations during our consultation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Contact Form -->
+                <div class="col-lg-5 col-12">
+                    <div class="contact-form-container">
+                        <h2 class="contact-form-title">Frequently Asked Questions</h2>
+                        <p class="contact-form-subtitle">If you have any questions, you can leave your details and we will contact you.</p>
+                        
+                        <form class="contact-form" id="contactForm">
+                            <!-- Name Field -->
+                            <div class="form-group">
+                                <label for="contactName" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="contactName" placeholder="Enter your Name" required>
+                            </div>
+
+                            <!-- Business Name Field -->
+                            <div class="form-group">
+                                <label for="businessName" class="form-label">Business Name</label>
+                                <input type="text" class="form-control" id="businessName" placeholder="Enter your Company Name" required>
+                            </div>
+
+                            <!-- Email Field -->
+                            <div class="form-group">
+                                <label for="contactEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="contactEmail" placeholder="Enter your Email" required>
+                            </div>
+
+                            <!-- Phone Number Field -->
+                            <div class="form-group">
+                                <label for="phoneNumber" class="form-label">Phone number</label>
+                                <input type="tel" class="form-control" id="phoneNumber" placeholder="Enter your phone" required>
+                            </div>
+
+                            <!-- Privacy Policy Checkbox -->
+                            <div class="form-group checkbox-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="privacyCheck" required>
+                                    <label class="form-check-label" for="privacyCheck">
+                                        I have read and accept the privacy policy.
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="contact-submit-btn">Book A Free Consultation</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest News and Resources Section -->
+    <section class="blog-section py-5">
+        <div class="container-fluid px-3 px-lg-5">
+            <!-- Section Title -->
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="blog-section-title">Latest News and Resources</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Left Side - Featured Blog -->
+                <div class="col-lg-6 col-12 mb-4 mb-lg-0">
+                    <div class="featured-blog-card">
+                        <div class="blog-image-container">
+                            <img src="images/blog 1.webp" alt="Digital Marketing Budget Mistakes" class="featured-blog-image">
+                            <div class="blog-label">
+                                <span class="new-label">New</span>
+                            </div>
+                        </div>
+                        <div class="featured-blog-content">
+                            <h3 class="featured-blog-title">The #1 Mistake Small Businesses Make With Digital Marketing Budgets</h3>
+                            <p class="featured-blog-excerpt">
+                                Most small businesses don't fail at marketing because they don't spend enough. They fail because they don't know how to distribute digital marketing budgets properly.
+                            </p>
+                            <a href="/Blog/blog1.html" class="learn-more-link">
+                                Learn more <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Blog List -->
+                <div class="col-lg-6 col-12">
+                    <div class="blog-list">
+                        <!-- Blog Item 1 -->
+                        <div class="blog-item">
+                            <div class="blog-item-image">
+                                <img src="images/target emai.webp" alt="Targeted Email Marketing" class="blog-thumbnail">
+                                <div class="blog-item-label">
+                                    <span class="new-label">New</span>
+                                </div>
+                                <div class="blog-item-icon">
+                                    <i class="fas fa-crosshairs"></i>
+                                </div>
+                            </div>
+                            <div class="blog-item-content">
+                                <h4 class="blog-item-title">Does Targeted Email Marketing Still Work in 2025? Expert Insights and Strategies</h4>
+                                <p class="blog-item-excerpt">Targeted email marketing isn't dead. In fact, it's more powerful than ever in 2025.</p>
+                                <a href="Blog/email.html" class="blog-arrow-link">
+                                    <span class="learn-more-text">Learn more</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Blog Item 2 -->
+                        <div class="blog-item">
+                            <div class="blog-item-image">
+                                <img src="images/seo.webp" alt="Mobile Friendly Website" class="blog-thumbnail">
+                                <div class="blog-item-label">
+                                    <span class="new-label">New</span>
+                                </div>
+                                <div class="blog-item-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                            </div>
+                            <div class="blog-item-content">
+                                <h4 class="blog-item-title">Why You Need a Mobile Friendly Website for SEO Success</h4>
+                                <p class="blog-item-excerpt">Did you know that more than 83% of Google traffic now comes from mobile</p>
+                                <a href="Blog/seo.html" class="blog-arrow-link">
+                                    <span class="learn-more-text">Learn more</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Blog Item 3 -->
+                        <div class="blog-item">
+                            <div class="blog-item-image">
+                                <img src="images/ai.webp" alt="AI Overview Ranking" class="blog-thumbnail">
+                                <div class="blog-item-label">
+                                    <span class="new-label">New</span>
+                                </div>
+                                <div class="blog-item-icon">
+                                    <i class="fas fa-crosshairs"></i>
+                                </div>
+                            </div>
+                            <div class="blog-item-content">
+                                <h4 class="blog-item-title">How to Rank in AI Overview</h4>
+                                <p class="blog-item-excerpt">In 2024, Google rolled out AI Overview, a major update that reshaped how users</p>
+                                <a href="Blog/ai.html" class="blog-arrow-link">
+                                    <span class="learn-more-text">Learn more</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer-section">
+        <div class="container-fluid px-3 px-lg-5">
+            <div class="row">
+                <!-- Left Column - Company Info -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="footer-company">
+                        <div class="footer-logo">
+                            <img src="images/logo.png" alt="ROI Logo" class="footer-logo-image" />
+                            <div class="footer-logo-content">
+                                <span class="footer-logo-text">Royal Orbit Innovations</span>
+                                <span class="footer-logo-subtitle">Digital Marketing Agency</span>
+                            </div>
+                        </div>
+                        <p class="footer-description">
+                            Our team knows what is business. Either it is small or medium size. Our passion is always find creative ways to cut the cost and expand your profits by using the latest digital tools and having intelligent people working on your project.
+                        </p>
+                        
+                        <!-- Google Map -->
+                        <div class="footer-map">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.0234567891234!2d51.5022374!3d25.2861336!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e45c5e4c5e4c5e4%3A0x5e4c5e4c5e4c5e4c!2z25%C2%B017%2710.1%22N%2051%C2%B030%2717.3%22E!5e0!3m2!1sen!2sqa!4v1640123456789!5m2!1sen!2sqa" 
+                                width="100%" 
+                                height="200" 
+                                style="border:0; border-radius: 10px;" 
+                                allowfullscreen="" 
+                                loading="lazy">
+                            </iframe>
+                        </div>
+                        
+                        <!-- CTA Button -->
+                        <button class="footer-cta-btn">Book A Free Consultation</button>
+                    </div>
+                </div>
+
+                <!-- Middle Left Column - Company Links -->
+                <div class="col-lg-2 col-md-6 col-6 mb-4">
+                    <div class="footer-links">
+                        <h4 class="footer-title">Company</h4>
+                        <ul class="footer-nav">
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#team">Team</a></li>
+                            <li><a href="#industries">Industries</a></li>
+                            <li><a href="#blog">Blog</a></li>
+                            <li><a href="#contacts">Contacts</a></li>
+                            <li><a href="#careers">Careers</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Middle Right Column - Services -->
+                <div class="col-lg-3 col-md-6 col-6 mb-4">
+                    <div class="footer-links">
+                        <h4 class="footer-title">Services</h4>
+                        <ul class="footer-nav">
+                            <li><a href="#services">Website Call Tracking</a></li>
+                            <li><a href="#services">Social Media Design</a></li>
+                            <li><a href="#services">Landing Page Design</a></li>
+                            <li><a href="#services">PPC Services</a></li>
+                            <li><a href="#services">SEO Services</a></li>
+                            <li><a href="#services">Email Marketing</a></li>
+                            <li><a href="#services">Video Production</a></li>
+                            <li><a href="#services">Outsource Staffing Services</a></li>
+                            <li><a href="#services">HR Outsourcing Services</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Right Column - Extended Services & Contact -->
+                <div class="col-lg-3 col-md-6 col-12 mb-4">
+                    <div class="footer-links">
+                        <h4 class="footer-title">More Services</h4>
+                        <ul class="footer-nav">
+                            <li><a href="#services">Website Design & Development</a></li>
+                            <li><a href="#services">Social Media Advertising</a></li>
+                            <li><a href="#services">Social Media Management</a></li>
+                            <li><a href="#services">Conversion Rate Optimization</a></li>
+                            <li><a href="#services">Listing Management Services</a></li>
+                            <li><a href="#services">Google My Business Services</a></li>
+                            <li><a href="#services">Google My Business Management</a></li>
+                            <li><a href="#services">Google My Business Setup Service</a></li>
+                            <li><a href="#services">Google My Business Support Service</a></li>
+                            <li><a href="#services">Google My Business Optimization Service</a></li>
+                            <li><a href="#services">Google My Business Reinstatement Service</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact Info -->
+                    <div class="footer-contact mt-4">
+                        <h4 class="footer-title">Contact</h4>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>(+974) 50755597</span>
+                        </div>
+                        
+                        <!-- Social Media -->
+                        <div class="footer-social">
+                            <a href="https://www.linkedin.com/company/royal-orbit-innovations/" class="social-link linkedin"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://www.facebook.com/share/12HbEYaXDaq/?mibextid=wwXIfr" class="social-link facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com/roi_marketing.qa?igsh=MXNrZThkMHJmZTJqNA==" class="social-link instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.tiktok.com/@roi_marketing.qa" class="social-link tiktok"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6 col-12">
+                        <p class="footer-copyright">Copyright © 2025, Royal Orbit Innovations. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="footer-bottom-links">
+                            <a href="#terms">Terms and Conditions</a>
+                            <a href="#privacy">Privacy Policy</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
