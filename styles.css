@@ -998,26 +998,64 @@ body {
         right: -350px;
         width: 350px;
         height: 100vh;
-        background: linear-gradient(135deg, var(--white) 0%, #f8fffe 100%);
+        background: #ffffff;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        padding: 2rem;
-        box-shadow: -15px 0 30px rgba(0, 0, 0, 0.15);
+        transition: right 0.3s ease;
+        padding: 1.5rem;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
         z-index: 1001;
-        backdrop-filter: blur(10px);
         overflow-y: auto;
     }
     
     .mobile-menu-header {
         width: 100%;
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
         align-items: center;
-        margin-bottom: 2rem;
-        padding-bottom: 1rem;
-        border-bottom: 2px solid rgba(32, 178, 170, 0.1);
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        margin: 0 0 1rem 0;
+        background: #ffffff;
+        position: sticky;
+        top: 0;
+        z-index: 1002;
+        border-bottom: 1px solid #eeeeee;
+    }
+    
+    .mobile-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    
+    .mobile-logo-image {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+        flex-shrink: 0;
+        display: block;
+    }
+    
+    .mobile-logo-content {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .mobile-logo-text {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #111111;
+        letter-spacing: 0.5px;
+        line-height: 1.2;
+    }
+    
+    .mobile-logo-subtitle {
+        font-size: 0.75rem;
+        color: #666666;
+        font-weight: 400;
+        line-height: 1.2;
     }
     
     .close-menu {
@@ -1035,6 +1073,7 @@ body {
         justify-content: center;
         transition: all 0.3s ease;
         box-shadow: 0 2px 8px rgba(32, 178, 170, 0.1);
+        margin-left: auto; /* keep close button on the right */
     }
     
     .close-menu:hover {
@@ -1050,7 +1089,7 @@ body {
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: linear-gradient(45deg, rgba(0, 0, 0, 0.6), rgba(32, 178, 170, 0.1));
+        background: linear-gradient(45deg, rgba(245, 242, 242, 0.6), rgba(255, 255, 255, 0.1));
         opacity: 0;
         visibility: hidden;
         transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -1059,7 +1098,7 @@ body {
     }
     
     .menu-overlay.active {
-        opacity: 1;
+        opacity: 0;
         visibility: visible;
     }
 
@@ -1087,16 +1126,15 @@ body {
         padding: 1rem 1.25rem;
         width: 100%;
         display: block;
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 500;
-        color: var(--text-dark);
+        color: #333333;
         text-decoration: none;
-        border-radius: 12px;
-        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        border-radius: 8px;
+        transition: all 0.3s ease;
         position: relative;
-        background: rgba(255, 255, 255, 0.5);
-        border: 1px solid rgba(32, 178, 170, 0.08);
-        backdrop-filter: blur(5px);
+        background: #ffffff;
+        margin-bottom: 0.1rem;
     }
     
     .nav-link::before {
@@ -1112,10 +1150,10 @@ body {
     }
     
     .nav-link:hover {
-        color: var(--white);
-        background: linear-gradient(135deg, var(--primary-teal), var(--light-teal));
-        transform: translateX(8px) scale(1.02);
-        box-shadow: 0 8px 25px rgba(32, 178, 170, 0.25);
+        color: var(--primary-teal);
+        background: #f8fffe;
+        transform: translateX(5px);
+        box-shadow: 0 4px 15px rgba(32, 178, 170, 0.15);
         border-color: var(--primary-teal);
     }
     
@@ -1124,9 +1162,7 @@ body {
     }
     
     .nav-link i {
-        margin-right: 0.5rem;
-        font-size: 0.9rem;
-        opacity: 0.8;
+        display: none !important; /* hide icons in mobile nav items */
     }
     
     .nav-link:hover i {
