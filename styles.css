@@ -847,23 +847,26 @@ body {
         display: none;
     }
     
-    /* Project Done Card - Better Mobile Position */
+    /* Project Done Card - Better Mobile Position with Larger Size */
     .project-done-card {
         top: 5%;
-        left: -15%;
-        width: 100px;
-        transform: scale(0.75);
+        left: -20%;
+        width: 130px;
+        transform: scale(0.9);
         z-index: 3;
     }
     
     .project-number {
-        font-size: 1.3rem;
-        margin-bottom: 0.3rem;
+        font-size: 1.5rem;
+        margin-bottom: 0.4rem;
+        font-weight: 700;
     }
     
     .project-label {
-        font-size: 0.65rem;
-        margin-bottom: 0.3rem;
+        font-size: 0.75rem;
+        margin-bottom: 0.4rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     
     /* Website Turnkey Badge - Better Mobile Position */
@@ -1249,20 +1252,23 @@ body {
         height: 220px;
     }
     
-    /* Very small mobile - minimal floating elements */
+    /* Very small mobile - larger Project Done card for readability */
     .project-done-card {
         top: 8%;
-        left: -10%;
-        width: 85px;
-        transform: scale(0.65);
+        left: -15%;
+        width: 110px;
+        transform: scale(0.8);
     }
     
     .project-number {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
+        font-weight: 700;
     }
     
     .project-label {
-        font-size: 0.6rem;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
     }
     
     .turnkey-badge {
