@@ -71,22 +71,58 @@ function handleNavActivate(link, e) {
         }
         return;
     }
-    // Other links: force navigate to ensure it works in mobile overlay contexts
-    closeMobileMenu();
+    // Other links: navigate immediately to avoid losing the click when menu closes on mobile
     if (href) {
-        if (e) e.preventDefault();
+        if (e) { try { e.preventDefault(); e.stopPropagation(); } catch(_) {} }
         navNavigating = true;
-        // Use assign for better compatibility
-        window.location.assign(href);
-        // Fallback in case assign is blocked
-        setTimeout(() => { if (!document.hidden) window.location.href = href; }, 250);
+        // Resolve absolute URL to avoid relative path issues
+        let targetUrl = href;
+        try { targetUrl = new URL(href, window.location.href).href; } catch(_) {}
+        window.location.href = targetUrl;
+        return;
     }
 }
 
 navLinks.forEach(link => {
     link.addEventListener('click', (e) => handleNavActivate(link, e));
     link.addEventListener('touchend', (e) => handleNavActivate(link, e), { passive: false });
+    link.addEventListener('touchstart', (e) => handleNavActivate(link, e), { passive: false });
+    link.addEventListener('pointerdown', (e) => handleNavActivate(link, e));
 });
+
+// Event delegation fallback for mobile menu to ensure taps always navigate
+if (navMenu) {
+    const delegatedHandler = (e) => {
+        const a = e.target && e.target.closest ? e.target.closest('a.nav-link') : null;
+        if (!a) return;
+        handleNavActivate(a, e);
+    };
+    navMenu.addEventListener('click', delegatedHandler);
+    navMenu.addEventListener('touchend', delegatedHandler, { passive: false });
+    navMenu.addEventListener('touchstart', delegatedHandler, { passive: false });
+    navMenu.addEventListener('pointerdown', delegatedHandler);
+}
+
+// Document-level capture fallback: if default navigation didn't happen (some mobile quirks), force it
+document.addEventListener('click', function(e) {
+    const a = e.target && e.target.closest ? e.target.closest('a.nav-link') : null;
+    if (!a) return;
+    const href = a.getAttribute('href') || '';
+    if (!href || href.startsWith('#')) return; // hash handled elsewhere
+    const current = window.location.href;
+    // Only fallback if menu is open (overlay active) to avoid interfering with normal clicks
+    const overlayActive = !!(document.getElementById('menu-overlay')?.classList.contains('active'));
+    setTimeout(() => {
+        if (overlayActive && window.location.href === current) {
+            try {
+                const abs = new URL(href, current).href;
+                window.location.href = abs;
+            } catch(_) {
+                window.location.href = href;
+            }
+        }
+    }, 120);
+}, { capture: true });
 
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -759,6 +795,23 @@ function initializeGrowthChart() {
     return chart;
 }
 
+// Trust tiles scroll-in animation
+document.addEventListener('DOMContentLoaded', function() {
+    const tiles = document.querySelectorAll('.trust-tile');
+    if (!tiles.length) return;
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const delay = parseInt(el.getAttribute('data-delay') || '0', 10);
+                setTimeout(() => el.classList.add('in-view'), Math.max(0, delay));
+                io.unobserve(el);
+            }
+        });
+    }, { threshold: 0.15 });
+    tiles.forEach(t => io.observe(t));
+});
+
 // FAQ Accordion Functionality
 document.addEventListener('DOMContentLoaded', function() {
     const faqQuestions = document.querySelectorAll('.faq-question');
@@ -842,8 +895,10 @@ function toggleAdditionalProjects() {
         
         // Update button
         btnText.textContent = 'Show less';
-        btnIcon.classList.remove('fa-chevron-down');
-        btnIcon.classList.add('fa-chevron-up');
+        if (btnIcon) {
+            btnIcon.classList.remove('fa-chevron-down');
+            btnIcon.classList.add('fa-chevron-up');
+        }
         btn.classList.add('expanded');
         
         // Smooth scroll to make sure the new content is visible
@@ -861,8 +916,35 @@ function toggleAdditionalProjects() {
         
         // Update button
         btnText.textContent = 'More projects';
-        btnIcon.classList.remove('fa-chevron-up');
-        btnIcon.classList.add('fa-chevron-down');
+        if (btnIcon) {
+            btnIcon.classList.remove('fa-chevron-up');
+            btnIcon.classList.add('fa-chevron-down');
+        }
         btn.classList.remove('expanded');
     }
+}
+
+// Newsletter Subscribe handler (shared)
+function handleSubscribe(e) {
+    try {
+        if (e) e.preventDefault();
+        const form = e && e.target ? e.target : document.getElementById('subscribeForm');
+        const emailInput = form ? form.querySelector('input[type="email"]') : null;
+        const success = document.getElementById('subscribeSuccess');
+        if (!emailInput) return false;
+        const email = emailInput.value.trim();
+        if (!email) { emailInput.focus(); return false; }
+        if (success) {
+            success.hidden = false;
+            success.style.opacity = '0';
+            requestAnimationFrame(() => {
+                success.style.transition = 'opacity 240ms ease';
+                success.style.opacity = '1';
+            });
+        }
+        form.reset();
+    } catch (_) {
+        // no-op
+    }
+    return false;
 }
