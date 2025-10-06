@@ -8,11 +8,8 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="../styles.css">
-	<style>
-		/* small top margin helper in case page lacks hero */
-		main.page-content { margin-top: 90px; }
-	</style>
-	</head>
+
+</head>
 <body>
 	<!-- Navigation Bar -->
 	<nav class="navbar" id="navbar">
@@ -42,16 +39,16 @@
 				</div>
 				<ul class="nav-list">
 					<li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
-					<li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-					<li class="nav-item"><a href="team.html" class="nav-link">Team</a></li>
-					<li class="nav-item"><a href="industries.html" class="nav-link active">Industries</a></li>
+					<li class="nav-item"><a href="/components/about.html" class="nav-link">About</a></li>
+					<li class="nav-item"><a href="/components/team.html" class="nav-link">Team</a></li>
+					<li class="nav-item"><a href="/components/industries.html" class="nav-link active">Industries</a></li>
 					<li class="nav-item"><a href="../Blog/blog1.html" class="nav-link">Blog</a></li>
 					<li class="nav-item">
 						<a href="../index.html#services" class="nav-link">
 							<i class="fas fa-search"></i> Services
 						</a>
 					</li>
-					<li class="nav-item"><a href="contact.html" class="nav-link">Contacts</a></li>
+					<li class="nav-item"><a href="/components/contact.html" class="nav-link">Contacts</a></li>
 				</ul>
 			</div>
             
@@ -74,14 +71,536 @@
 	<!-- Mobile Menu Overlay -->
 	<div class="menu-overlay" id="menu-overlay"></div>
 
-	<!-- Page Content -->
-	<main class="page-content container py-5">
-		<h1>Industries We Serve</h1>
-		<p>We’ll expand this page soon. Navigation and mobile menu now match the homepage.</p>
-	</main>
+	<!-- Industries Hero -->
+	<section class="hero hero-industries">
+		<div class="hero-container">
+			<div class="hero-content">
+				<!-- Left: Text -->
+				<div class="hero-left">
+					<div class="hero-text">
+						<h1 class="hero-title">Bringing your business<br/>to the Top Position</h1>
+						<p class="hero-description">
+							Our digital marketing agency creates a strategy that drives revenue, no matter your industry or target market.
+						</p>
+						<button class="hero-cta-btn" onclick="location.href='../components/contact.html'">Book A Free Consultation</button>
+
+						<!-- Partner Logos -->
+						<div class="partners-logos">
+							<img src="../images/googlepartner.svg" alt="Google Partner" />
+							<img src="../images/MSadvertising.webp" alt="Microsoft Advertising Partner" />
+							<img src="../images/yelp.svg" alt="Yelp" />
+							<img src="../images/mailchimp.svg" alt="Mailchimp" />
+						</div>
+					</div>
+				</div>
+
+				<!-- Right: Image -->
+				<div class="hero-right">
+					<div class="hero-image-container">
+						<div class="hero-main-image">
+							<img src="../images/bman.webp" alt="Marketing specialist" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<!-- Industries We Serve Section -->
+	<section class="industries-section">
+		<div class="container px-3 px-lg-5">
+			<h2 class="industries-title">Industries We Serve</h2>
+			<div class="row g-4 g-lg-5">
+				<div class="col-12 col-md-6 col-lg-4">
+					<div class="industry-card h-100">
+						<h3>Automotive</h3>
+						<img class="industry-image" src="../images/automotive.jpeg" alt="Automotive" />
+					</div>
+				</div>
+				<div class="col-12 col-md-6 col-lg-4">
+					<div class="industry-card h-100">
+						<h3>Business &amp; Finance</h3>
+						<img class="industry-image" src="../images/b&f.jpg" alt="Business and Finance" />
+					</div>
+				</div>
+				<div class="col-12 col-md-6 col-lg-4">
+					<div class="industry-card h-100">
+						<h3>Home Improvement</h3>
+						<img class="industry-image" src="../images/home.jpg" alt="Home Improvement" />
+					</div>
+				</div>
+
+				<div class="col-12 col-md-6 col-lg-4">
+					<div class="industry-card h-100">
+						<h3>Real Estate</h3>
+						<img class="industry-image" src="../images/realestate.jpg" alt="Health and Wellness" />
+					</div>
+				</div>
+				<div class="col-12 col-md-6 col-lg-4">
+					<div class="industry-card h-100">
+						<h3>Entertainment & Events</h3>
+						<img class="industry-image" src="../images/entertainment.jpg" alt="Entertainment and Events" />
+					</div>
+				</div>
+				<div class="col-12 col-md-6 col-lg-4">
+					<div class="industry-card h-100">
+						<h3>Beauty & Personal Care</h3>
+						<img class="industry-image" src="../images/beauty.webp" alt="Beauty and Personal Care" />
+					</div>
+				</div>
+
+				<div class="col-12 col-md-6 col-lg-4">
+					<div class="industry-card h-100">
+						<h3>Health & Fitness</h3>
+						<img class="industry-image" src="../images/health.avif" alt="Health and Fitness" />
+					</div>
+				</div>
+				<div class="col-12 col-md-6 col-lg-4">
+					<div class="industry-card h-100">
+						<h3>Recruitment & Staffing</h3>
+						<img class="industry-image" src="../images/recruitment.jpg" alt="Recruitment and Staffing" />
+					</div>
+				</div>
+				<div class="col-12 col-md-6 col-lg-4">
+					<div class="industry-card h-100">
+						<h3>Professional Services</h3>
+						<img class="industry-image" src="../images/profressional service.jfif" alt="Professional Services" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+    <!-- Why Choose Top Position Section -->
+	<section class="why-section">
+		<div class="container px-3 px-lg-5">
+			<h2 class="why-title reveal-up">Why choose Top Position as your digital marketing agency?</h2>
+			<p class="why-subtitle reveal-up">We are a team of professionals ready to expand your client base and bring more revenue to your business online.</p>
+			<div class="row stats-row justify-content-center g-4">
+				<div class="col-12 col-md-4">
+					<div class="why-stat reveal-up">
+						<div class="stat-number" data-target="18" data-suffix="+">0</div>
+						<div class="stat-label">Digital marketing specialists</div>
+					</div>
+				</div>
+				<div class="col-12 col-md-4">
+					<div class="why-stat reveal-up">
+						<div class="stat-number" data-target="100" data-suffix="%">0</div>
+						<div class="stat-label">Results-driven culture in every project we handle</div>
+					</div>
+				</div>
+				<div class="col-12 col-md-4">
+					<div class="why-stat reveal-up">
+						<div class="stat-number" data-target="95" data-suffix="%">0</div>
+						<div class="stat-label">Client satisfaction score</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+    <!-- Request Consultation Section (Teal) -->
+	<section class="rc-section">
+		<div class="container-fluid px-3 px-lg-5">
+			<div class="row align-items-center g-4">
+				<!-- Left Teal Panel -->
+				<div class="col-lg-7 col-12 order-2 order-lg-1">
+					<div class="rc-left">
+						<div>
+							<span class="rc-badge"><i class="fas fa-star"></i> Free consultation</span>
+							<h2 class="rc-title">Request a consultation today!</h2>
+							<p class="rc-subtitle">To help customers contact you easily</p>
+							<ul class="rc-points">
+								<li><i class="fas fa-check"></i> Tailored growth strategy for your niche</li>
+								<li><i class="fas fa-check"></i> Clear roadmap and quick wins</li>
+								<li><i class="fas fa-check"></i> No obligation, no hard sell</li>
+							</ul><br>
+                            <span class="rc-badge"><i class="fas fa-phone"></i> (+974) 50755597</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Right Contact Form -->
+				<div class="col-lg-5 col-12 order-1 order-lg-2">
+					<div class="contact-form-container">
+						<form class="contact-form" id="contactForm">
+							<div class="form-group">
+								<label for="contactName" class="form-label">Name</label>
+								<input type="text" class="form-control" id="contactName" placeholder="Enter your Name" required>
+							</div>
+							<div class="form-group">
+								<label for="businessName" class="form-label">Business Name</label>
+								<input type="text" class="form-control" id="businessName" placeholder="Enter your Company Name" required>
+							</div>
+							<div class="form-group">
+								<label for="contactEmail" class="form-label">Email</label>
+								<input type="email" class="form-control" id="contactEmail" placeholder="Enter your Email" required>
+							</div>
+							<div class="form-group">
+								<label for="phoneNumber" class="form-label">Phone number</label>
+								<input type="tel" class="form-control" id="phoneNumber" placeholder="Enter your phone" required>
+							</div>
+							<div class="form-group checkbox-group">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="privacyCheck" required>
+									<label class="form-check-label" for="privacyCheck">I have read and accept the privacy policy.</label>
+								</div>
+							</div>
+							<button type="submit" class="contact-submit-btn">Book A Free Consultation</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Footer Section -->
+	<footer class="footer-section">
+		<div class="container-fluid px-3 px-lg-5">
+			<div class="row">
+				<!-- Left Column - Company Info -->
+				<div class="col-lg-4 col-md-6 col-12 mb-4">
+					<div class="footer-company">
+						<div class="footer-logo">
+							<img src="../images/logo.png" alt="ROI Logo" class="footer-logo-image" />
+							<div class="footer-logo-content">
+								<span class="footer-logo-text">Royal Orbit Innovations</span>
+								<span class="footer-logo-subtitle">Digital Marketing Agency</span>
+							</div>
+						</div>
+						<p class="footer-description">
+							Our team knows what is business. Either it is small or medium size. Our passion is always find creative ways to cut the cost and expand your profits by using the latest digital tools and having intelligent people working on your project.
+						</p>
+						<!-- Google Map -->
+						<div class="footer-map">
+							<iframe 
+								src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.0234567891234!2d51.5022374!3d25.2861336!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e45c5e4c5e4c5e4%3A0x5e4c5e4c5e4c5e4c!2z25%C2%B017%2710.1%22N%2051%C2%B030%2717.3%22E!5e0!3m2!1sen!2sqa!4v1640123456789!5m2!1sen!2sqa" 
+								width="100%" 
+								height="200" 
+								style="border:0; border-radius: 10px;" 
+								allowfullscreen="" 
+								loading="lazy"></iframe>
+						</div>
+						<!-- CTA Button -->
+						<button class="footer-cta-btn">Book A Free Consultation</button>
+					</div>
+				</div>
+
+				<!-- Middle Left Column - Company Links -->
+				<div class="col-lg-2 col-md-6 col-6 mb-4">
+					<div class="footer-links">
+						<h4 class="footer-title">Company</h4>
+						<ul class="footer-nav">
+							<li><a href="about.html">About</a></li>
+							<li><a href="team.html">Team</a></li>
+							<li><a href="industries.html">Industries</a></li>
+							<li><a href="../Blog/blog1.html">Blog</a></li>
+							<li><a href="contact.html">Contacts</a></li>
+							<li><a href="#careers">Careers</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Middle Right Column - Services -->
+				<div class="col-lg-3 col-md-6 col-6 mb-4">
+					<div class="footer-links">
+						<h4 class="footer-title">Services</h4>
+						<ul class="footer-nav">
+							<li><a href="../index.html#services">Website Call Tracking</a></li>
+							<li><a href="../index.html#services">Social Media Design</a></li>
+							<li><a href="../index.html#services">Landing Page Design</a></li>
+							<li><a href="../index.html#services">PPC Services</a></li>
+							<li><a href="../index.html#services">SEO Services</a></li>
+							<li><a href="../index.html#services">Email Marketing</a></li>
+							<li><a href="../index.html#services">Video Production</a></li>
+							<li><a href="../index.html#services">Outsource Staffing Services</a></li>
+							<li><a href="../index.html#services">HR Outsourcing Services</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Right Column - Extended Services & Contact -->
+				<div class="col-lg-3 col-md-6 col-12 mb-4">
+					<div class="footer-links">
+						<h4 class="footer-title">More Services</h4>
+						<ul class="footer-nav">
+							<li><a href="../index.html#services">Website Design & Development</a></li>
+							<li><a href="../index.html#services">Social Media Advertising</a></li>
+							<li><a href="../index.html#services">Social Media Management</a></li>
+							<li><a href="../index.html#services">Conversion Rate Optimization</a></li>
+							<li><a href="../index.html#services">Listing Management Services</a></li>
+							<li><a href="../index.html#services">Google My Business Services</a></li>
+							<li><a href="../index.html#services">Google My Business Management</a></li>
+							<li><a href="../index.html#services">Google My Business Setup Service</a></li>
+							<li><a href="../index.html#services">Google My Business Support Service</a></li>
+							<li><a href="../index.html#services">Google My Business Optimization Service</a></li>
+							<li><a href="../index.html#services">Google My Business Reinstatement Service</a></li>
+						</ul>
+					</div>
+
+					<!-- Contact Info -->
+					<div class="footer-contact mt-4">
+						<h4 class="footer-title">Contact</h4>
+						<div class="contact-item">
+							<i class="fas fa-phone"></i>
+							<span>(+974) 50755597</span>
+						</div>
+						<!-- Social Media -->
+						<div class="footer-social">
+							<a href="https://www.linkedin.com/company/royal-orbit-innovations/" class="social-link linkedin"><i class="fab fa-linkedin-in"></i></a>
+							<a href="https://www.facebook.com/share/12HbEYaXDaq/?mibextid=wwXIfr" class="social-link facebook"><i class="fab fa-facebook-f"></i></a>
+							<a href="https://www.instagram.com/roi_marketing.qa?igsh=MXNrZThkMHJmZTJqNA==" class="social-link instagram"><i class="fab fa-instagram"></i></a>
+							<a href="https://www.tiktok.com/@roi_marketing.qa" class="social-link tiktok"><i class="fab fa-tiktok"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Footer Bottom -->
+			<div class="footer-bottom">
+				<div class="row align-items-center">
+					<div class="col-md-6 col-12">
+						<p class="footer-copyright">Copyright © 2025, Royal Orbit Innovations. All rights reserved.</p>
+					</div>
+					<div class="col-md-6 col-12">
+						<div class="footer-bottom-links">
+							<a href="#terms">Terms and Conditions</a>
+							<a href="#privacy">Privacy Policy</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
 
 	<!-- Bootstrap JS -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="../script.js"></script>
+	<script>
+	// Local scroll-reveal and counters for this page
+	(function(){
+		const revealEls = document.querySelectorAll('.reveal-up');
+		const counters = document.querySelectorAll('.why-section .stat-number');
+		const io = new IntersectionObserver((entries)=>{
+			entries.forEach(e=>{
+				if(e.isIntersecting){
+					e.target.classList.add('is-visible');
+					io.unobserve(e.target);
+				}
+			});
+		},{ threshold: 0.2 });
+		revealEls.forEach(el=>io.observe(el));
+
+		const seen = new WeakSet();
+		const countObs = new IntersectionObserver((entries)=>{
+			entries.forEach(e=>{
+				if(!e.isIntersecting || seen.has(e.target)) return;
+				seen.add(e.target);
+				const el = e.target;
+				const target = parseFloat(el.dataset.target||'0');
+				const suffix = el.dataset.suffix||'';
+				const duration = 1200; // ms
+				const start = performance.now();
+				function tick(now){
+					const p = Math.min(1,(now-start)/duration);
+					const val = Math.floor(target * p);
+					el.textContent = val + suffix;
+					if(p<1) requestAnimationFrame(tick);
+				}
+				requestAnimationFrame(tick);
+				countObs.unobserve(el);
+			});
+		},{ threshold: 0.6 });
+		counters.forEach(c=>countObs.observe(c));
+	})();
+	</script>
 </body>
+
+<style>
+		/* small top margin helper in case page lacks hero */
+		main.page-content { margin-top: 90px; }
+
+		/* Partners logos row inside hero */
+		.partners-logos {
+			display: flex;
+			align-items: center;
+			gap: 24px;
+			flex-wrap: wrap;
+			margin-top: 2rem;
+		}
+		.partners-logos img {
+			height: 46px;
+			object-fit: contain;
+			filter: grayscale(0%);
+		}
+		@media (max-width: 576px) {
+			.partners-logos {
+				gap: 14px;
+				flex-direction: column; /* stack one per row */
+				align-items: center;   /* center horizontally */
+				justify-content: center; /* center vertically within area */
+				width: 100%;
+			}
+			.partners-logos img {
+				height: 50px;
+				width: auto;
+				display: block;
+			}
+
+			/* Mobile: add teal triangular background behind the hero image */
+			.hero.hero-industries .hero-image-container { position: relative; z-index: 0; }
+			.hero.hero-industries .hero-main-image { position: relative; z-index: 2; width:500px; height: 350px; }
+			.hero.hero-industries .hero-image-container::before {
+				content: "";
+				position: absolute;
+				right: -18%;
+				top: -6%;
+				width: 600px;
+				height: 170%;
+				background: linear-gradient(135deg, var(--primary-teal), var(--dark-teal));
+				/* right-side wedge with a diagonal left edge */
+				clip-path: polygon(100% 0, 100% 100%, 22% 100%);
+				z-index: 1; /* sits behind the image but above section background */
+				border-radius: 4px;
+				filter: drop-shadow(0 8px 20px rgba(0,0,0,0.15));
+			}
+		}
+
+		/* Industries We Serve grid */
+		.industries-section {
+			padding: 60px 0;
+			background: #fff;
+		}
+		.industries-title {
+			font-weight: 700;
+			text-align: center;
+			color: #006058;
+			margin-bottom: 30px;
+            font-size: 2.5rem;
+
+		}
+		.industry-card {
+			background: #ffffff;
+			border-radius: 18px;
+			padding: 24px;
+			box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+			transition: transform .2s ease, box-shadow .2s ease;
+			height: 100%;
+		}
+		.industry-card:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 14px 40px rgba(0,0,0,0.1);
+		}
+		.industry-card h3 {
+			font-size: 1.4rem;
+			color: #0f2a3f;
+			margin-bottom: 18px;
+		}
+		.industry-image {
+			width: 100%;
+			aspect-ratio: 4/3;
+			border-radius: 14px;
+			object-fit: cover;
+			background: #f1f4f8;
+		}
+
+		/* Why Choose section */
+		.why-section {
+			position: relative;
+			background: linear-gradient(135deg, var(--primary-teal), var(--dark-teal));
+			color: #fff;
+			padding: 80px 0 120px;
+			overflow: hidden;
+		}
+		/* soft arc accent */
+		.why-section::after {
+			content: "";
+			position: absolute;
+			left: 50%;
+			bottom: -140px;
+			transform: translateX(-50%);
+			width: 1200px;
+			height: 360px;
+			background: radial-gradient(ellipse at center, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.1) 55%, rgba(255,255,255,0.06) 70%, transparent 72%);
+			pointer-events: none;
+		}
+		.why-title {
+			text-align: center;
+			font-weight: 800;
+			font-size: 2.4rem;
+			line-height: 1.2;
+			margin: 0 auto 14px;
+			max-width: 1100px;
+		}
+		.why-subtitle {
+			text-align: center;
+			color: #e6efff;
+			max-width: 980px;
+			margin: 0 auto 48px;
+			font-size: 1.1rem;
+		}
+		.why-stat {
+			text-align: center;
+			padding: 10px 12px;
+		}
+		.stat-number {
+			font-weight: 800;
+			font-size: 2.6rem;
+			letter-spacing: .5px;
+		}
+		.stat-label {
+			color: #e6efff;
+			font-size: 1.05rem;
+			max-width: 360px;
+			margin: 6px auto 0;
+		}
+		/* vertical separators between stats on md+ */
+		@media (min-width: 768px) {
+			.stats-row > [class*='col-'] + [class*='col-'] { position: relative; }
+			.stats-row > [class*='col-'] + [class*='col-']::before {
+				content: "";
+				position: absolute;
+				left: -12px;
+				top: 10%;
+				bottom: 10%;
+				width: 1px;
+				background: rgba(255,255,255,0.35);
+			}
+		}
+		/* reveal on scroll */
+		.reveal-up { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+		.reveal-up.is-visible { opacity: 1; transform: translateY(0); }
+
+		/* Request Consultation (teal) */
+		.rc-section { padding: 80px 0; position: relative; background: linear-gradient(180deg,#f8fffe 0%, #f4fbfa 100%); }
+		.rc-left {
+			background: linear-gradient(135deg, var(--primary-teal), var(--dark-teal));
+			background-size: 200% 200%;
+			animation: rcGradientShift 12s ease infinite;
+			border-radius: 28px;
+			min-height: 420px;
+			padding: 64px 48px;
+			color: #fff;
+			position: relative;
+			overflow: hidden;
+		}
+		.rc-left::before{
+			content:""; position:absolute; left:-100px; top:-100px; width:320px; height:320px; border-radius:50%; background: rgba(255,255,255,0.22); filter: blur(6px);
+		}
+		.rc-left::after{
+			content:""; position:absolute; right:-120px; bottom:-120px; width:420px; height:420px; border-radius:50%; background: rgba(255,255,255,0.18); filter: blur(8px);
+		}
+		.rc-badge{ display:inline-flex; align-items:center; gap:8px; background: rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.35); padding:6px 12px; border-radius:999px; font-weight:600; margin-bottom:14px; }
+		.rc-badge i{ color:#fff; }
+        .rc-badge:hover { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.45); cursor: pointer;}
+		.rc-title{ font-weight:800; font-size:2.6rem; line-height:1.2; margin-bottom:10px; }
+		.rc-subtitle{ color:#eafffb; opacity:.95; font-size:1.1rem; margin-bottom:16px; }
+		.rc-points{ list-style:none; padding:0; margin:0; display:grid; grid-template-columns:1fr 1fr; gap:10px 18px; }
+		.rc-points li{ display:flex; align-items:center; gap:10px; font-weight:600; color:#f5fffd; opacity:.95; }
+		.rc-points i{ color:#ffffff; background: rgba(255,255,255,0.25); width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; border-radius:50%; font-size:12px; }
+		@keyframes rcGradientShift{ 0%{ background-position:0% 0%; } 50%{ background-position:100% 100%; } 100%{ background-position:0% 0%; } }
+		@media (max-width: 991.98px){ .rc-left{ min-height: 280px; padding: 40px 28px; } .rc-title{ font-size:2.1rem; } .rc-points{ grid-template-columns:1fr; } }
+	</style>
+
 </html>
