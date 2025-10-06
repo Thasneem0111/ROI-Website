@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Contact Us - ROI Digital Marketing Agency</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo">
+                    <img src="../images/logo.png" alt="ROI Logo" class="logo-image" />
+                    <div class="logo-content">
+                        <span class="logo-text">Royal Orbit Innovations</span>
+                        <span class="logo-subtitle">Digital Marketing Agency</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-menu" id="nav-menu">
+                <div class="mobile-menu-header">
+                    <div class="mobile-logo">
+                        <img src="../images/logo.png" alt="ROI Logo" class="mobile-logo-image" />
+                        <div class="mobile-logo-content">
+                            <span class="mobile-logo-text">Royal Orbit Innovations</span>
+                            <span class="mobile-logo-subtitle">Digital Marketing Agency</span>
+                        </div>
+                    </div>
+                    <button class="close-menu" id="close-menu">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="/components/about.html" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="/components/team.html" class="nav-link">Team</a></li>
+                    <li class="nav-item"><a href="/components/industries.html" class="nav-link">Industries</a></li>
+                    <li class="nav-item"><a href="/components/Blog/blog1.html" class="nav-link">Blog</a></li>
+                    <li class="nav-item"><a href="../index.html#services" class="nav-link">Services</a></li>
+                    <li class="nav-item"><a href="/components/contact.html" class="nav-link active">Contacts</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i> Search
+                </button>
+                <button class="cta-btn">
+                    <i class="fas fa-phone"></i> Request a call back
+                </button>
+            </div>
+            
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+                <span class="hamburger-fallback">☰</span>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="menu-overlay" id="menu-overlay"></div>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container-fluid px-3 px-lg-5">
+            <div class="row align-items-center min-vh-100">
+                <!-- Left Side - Contact Info and Reviews -->
+                <div class="col-lg-6 col-12 mb-5 mb-lg-0">
+                    <div class="contact-left-content">
+                        <!-- Reviews Badge -->
+                        <div class="reviews-badge mb-4">
+                            <div class="stars-container">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <span class="reviews-text">BASED ON 100+ REVIEWS FROM OUR CLIENTS</span>
+                        </div>
+
+                        <!-- Main Title -->
+                        <h1 class="contact-title">Contact Us</h1>
+                        
+                        <!-- Description -->
+                        <p class="contact-description">
+                            Talk to one of our digital marketing specialists to learn how we 
+                            can bring more customers and revenue to your business.
+                        </p>
+
+                        <!-- Phone Call Section -->
+                        <div class="phone-section">
+                            <div class="phone-card">
+                                <div class="phone-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="phone-content">
+                                    <span class="phone-label">speak with a specialist</span>
+                                    <h2 class="phone-number">(+974) 50755597 </h2>
+                                </div>
+                            </div>
+                            
+                            <!-- Speech Bubble -->
+                            <div class="speech-bubble">
+                                <p>Would you prefer to talk to someone in person?</p>
+                                <div class="bubble-arrow"></div>
+                            </div>
+                        </div>
+
+                        <!-- Partner Logos -->
+                        <div class="partner-logos">
+                            <div class="partner-logo">
+                                <img src="../images/googlepartner.svg" alt="Google Partner" class="partner-image">                                
+                            </div>
+                            <div class="partner-logo">
+                                <img src="../images/yelp.svg" alt="Yelp" class="partner-image">                                
+                            </div>
+                            <div class="partner-logo">
+                                <img src="../images/mailchimp.svg" alt="MailChimp" class="partner-image">                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Contact Form -->
+                <div class="col-lg-6 col-12">
+                    <div class="contact-form-container">
+                        <form class="contact-form" id="contactForm">
+                            <!-- Name Field -->
+                            <div class="form-group">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your Name" required>
+                            </div>
+
+                            <!-- Business Name Field -->
+                            <div class="form-group">
+                                <label for="businessName" class="form-label">Business Name</label>
+                                <input type="text" class="form-control" id="businessName" name="businessName" placeholder="Enter your Company Name">
+                            </div>
+
+                            <!-- Email Field -->
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your Email" required>
+                            </div>
+
+                            <!-- Phone Field -->
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Phone number</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter your phone">
+                            </div>
+
+                            <!-- Privacy Policy Checkbox -->
+                            <div class="form-group checkbox-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="privacyPolicy" name="privacyPolicy" required>
+                                    <label class="form-check-label" for="privacyPolicy">
+                                        I have read and accept the privacy policy.
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="contact-submit-btn">
+                                Book A Free Consultation
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>

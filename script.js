@@ -1,14 +1,16 @@
-// Navbar scroll effect
-window.addEventListener('scroll', function() {
+// Navbar scroll effect (init on load and on scroll)
+function updateNavbarOnScroll() {
     const navbar = document.getElementById('navbar');
+    if (!navbar) return;
     const scrolled = window.scrollY > 50;
-    
     if (scrolled) {
         navbar.classList.add('scrolled');
     } else {
         navbar.classList.remove('scrolled');
     }
-});
+}
+window.addEventListener('scroll', updateNavbarOnScroll);
+window.addEventListener('DOMContentLoaded', updateNavbarOnScroll);
 
 // Mobile menu toggle
 const hamburger = document.getElementById('hamburger');
@@ -17,38 +19,73 @@ const menuOverlay = document.getElementById('menu-overlay');
 const closeMenu = document.getElementById('close-menu');
 
 function openMobileMenu() {
-    navMenu.classList.add('active');
-    menuOverlay.classList.add('active');
+    if (navMenu) navMenu.classList.add('active');
+    if (menuOverlay) menuOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
 
 function closeMobileMenu() {
-    navMenu.classList.remove('active');
-    menuOverlay.classList.remove('active');
-    hamburger.classList.remove('active');
+    if (navMenu) navMenu.classList.remove('active');
+    if (menuOverlay) menuOverlay.classList.remove('active');
+    if (hamburger) hamburger.classList.remove('active');
     document.body.style.overflow = 'auto';
 }
 
-hamburger.addEventListener('click', function() {
-    openMobileMenu();
-});
+if (hamburger) {
+    hamburger.addEventListener('click', function() {
+        openMobileMenu();
+    });
+}
 
 // Close menu when clicking close button
-closeMenu.addEventListener('click', function() {
-    closeMobileMenu();
-});
+if (closeMenu) {
+    closeMenu.addEventListener('click', function() {
+        closeMobileMenu();
+    });
+}
 
 // Close menu when clicking overlay
-menuOverlay.addEventListener('click', function() {
-    closeMobileMenu();
-});
+if (menuOverlay) {
+    menuOverlay.addEventListener('click', function() {
+        closeMobileMenu();
+    });
+}
 
 // Close mobile menu when clicking on a link
 const navLinks = document.querySelectorAll('.nav-link');
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
+let navNavigating = false;
+function handleNavActivate(link, e) {
+    if (navNavigating) return;
+    const href = link.getAttribute('href') || '';
+    // In-page hash links: smooth scroll after closing menu
+    if (href.startsWith('#')) {
+        if (e) e.preventDefault();
+        if (e && typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
         closeMobileMenu();
-    });
+        const target = document.querySelector(href);
+        if (target) {
+            const offsetTop = target.offsetTop - 80;
+            setTimeout(() => {
+                window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+            }, 150);
+        }
+        return;
+    }
+    // Other links: force navigate to ensure it works in mobile overlay contexts
+    closeMobileMenu();
+    if (href) {
+        if (e) e.preventDefault();
+        navNavigating = true;
+        // Use assign for better compatibility
+        window.location.assign(href);
+        // Fallback in case assign is blocked
+        setTimeout(() => { if (!document.hidden) window.location.href = href; }, 250);
+    }
+}
+
+navLinks.forEach(link => {
+    link.addEventListener('click', (e) => handleNavActivate(link, e));
+    link.addEventListener('touchend', (e) => handleNavActivate(link, e), { passive: false });
 });
 
 // Smooth scrolling for navigation links
@@ -259,14 +296,18 @@ document.addEventListener('DOMContentLoaded', function() {
 // Add loading animation
 window.addEventListener('load', function() {
     document.body.classList.add('loaded');
+    // Ensure navbar state correct on initial load
+    updateNavbarOnScroll();
 });
 
 // Resize event listener for responsive adjustments
 window.addEventListener('resize', function() {
     // Close mobile menu on resize
     if (window.innerWidth > 768) {
-        navMenu.classList.remove('active');
-        hamburger.classList.remove('active');
+        if (navMenu) navMenu.classList.remove('active');
+        if (hamburger) hamburger.classList.remove('active');
+        if (menuOverlay) menuOverlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
     }
 });
 
@@ -748,33 +789,33 @@ document.addEventListener('DOMContentLoaded', function() {
 // Contact Form Submission
 document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.getElementById('contactForm');
-    
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // Get form data
-            const formData = {
-                name: document.getElementById('contactName').value,
-                businessName: document.getElementById('businessName').value,
-                email: document.getElementById('contactEmail').value,
-                phone: document.getElementById('phoneNumber').value,
-                privacyAccepted: document.getElementById('privacyCheck').checked
+            // Support both index and contact page field IDs
+            const getVal = (ids) => {
+                for (const id of ids) {
+                    const el = document.getElementById(id);
+                    if (el) return el.type === 'checkbox' ? el.checked : el.value;
+                }
+                return '';
             };
-            
-            // Basic validation
+            const formData = {
+                name: getVal(['contactName', 'name']),
+                businessName: getVal(['businessName']),
+                email: getVal(['contactEmail', 'email']),
+                phone: getVal(['phoneNumber', 'phone']),
+                privacyAccepted: getVal(['privacyCheck', 'privacyPolicy'])
+            };
             if (!formData.privacyAccepted) {
                 alert('Please accept the privacy policy to continue.');
                 return;
             }
-            
-            // Show success message (you can replace this with actual form submission)
             const submitBtn = document.querySelector('.contact-submit-btn');
+            if (!submitBtn) return;
             const originalText = submitBtn.textContent;
-            
             submitBtn.textContent = 'Sending...';
             submitBtn.disabled = true;
-            
             setTimeout(() => {
                 submitBtn.textContent = 'Message Sent!';
                 setTimeout(() => {

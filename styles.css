@@ -143,7 +143,7 @@ body {
     background: transparent;
     border: 2px solid var(--primary-teal);
     color: var(--primary-teal);
-    padding: 0.1rem 1rem;
+    padding: 0.1rem .6rem;
     border-radius: 25px;
     cursor: pointer;
     font-weight: normal;
@@ -5365,6 +5365,356 @@ body {
     }
     
     .contact-item {
+        font-size: 0.95rem;
+    }
+}
+
+/* Contact Page Styles */
+.contact-section {
+    background: linear-gradient(135deg, #f8fffe 0%, #ffffff 100%);
+    padding: 120px 0 60px 0;
+    min-height: 100vh;
+}
+
+.contact-left-content {
+    padding-right: 2rem;
+}
+
+.reviews-badge {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stars-container {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.star {
+    color: #ffd700;
+    font-size: 1.2rem;
+}
+
+.reviews-text {
+    color: #000000;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.contact-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.contact-description {
+    font-size: 1.1rem;
+    color: #4a5568;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+}
+
+.phone-section {
+    position: relative;
+    margin-bottom: 3rem;
+}
+
+.phone-card {
+    background: #04b284;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 96, 62, 0.3);
+    margin-bottom: 1rem;
+}
+.phone-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 96, 62, 0.4);
+    transform: translateY(-2px);
+}
+.phone-icon {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.phone-icon i {
+    font-size: 1rem;
+    color: #ffffff;
+}
+
+.phone-content {
+    flex: 1;
+}
+
+.phone-label {
+    font-size: 0.9rem;
+    color: #ffffff;
+    text-transform: lowercase;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.phone-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+}
+
+.speech-bubble {
+    position: relative;
+    background: #ffffff;
+    padding: 1rem 1.5rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-left: 3rem;
+    max-width: 280px;
+}
+
+.speech-bubble p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #00674d;
+    font-style: italic;
+}
+
+.bubble-arrow {
+    position: absolute;
+    top: -10px;
+    left: 30px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #ffffff;
+}
+
+.partner-logos {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.partner-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.partner-image {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    border-radius: 8px;
+    padding-left: 20px;
+}
+
+
+.contact-form-container {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #1a365d;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.form-control {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    background: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-teal);
+    box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.1);
+}
+
+.form-control::placeholder {
+    color: #a0aec0;
+}
+
+.checkbox-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.form-check-input {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 4px;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-teal);
+    border-color: var(--primary-teal);
+}
+
+.form-check-label {
+    font-size: 0.95rem;
+    color: #4a5568;
+    line-height: 1.4;
+    cursor: pointer;
+}
+
+.contact-submit-btn {
+    width: 100%;
+    background: #00c695;
+    color: #000000;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.contact-submit-btn:hover {
+    background:#007860 ;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 98, 65, 0.3);
+    color: rgb(255, 255, 255);
+}
+
+.nav-link.active {
+    color: var(--primary-teal) !important;
+    font-weight: 600;
+}
+
+/* Mobile Responsive Styles for Contact Page */
+@media (max-width: 768px) {
+    .contact-section {
+        padding: 100px 0 40px 0;
+    }
+    
+    .contact-left-content {
+        padding-right: 0;
+        margin-bottom: 3rem;
+        text-align: left;
+    }
+
+    .reviews-badge {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .reviews-text {
+        font-size: 0.8rem;
+        text-align: left;
+    }
+
+    .contact-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .contact-description {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .phone-card {
+        text-align: left;
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+
+    .phone-number {
+        font-size: 1.5rem;
+    }
+
+    .speech-bubble {
+        margin-left: 0;
+        margin-top: 1rem;
+        max-width: 100%;
+    }
+
+    .bubble-arrow {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .partner-logos {
+        justify-content: center;
+        gap: 1.5rem;
+    }
+
+    .contact-form-container {
+        padding: 1.5rem;
+        margin: 0 1rem;
+    }
+
+    .contact-submit-btn {
+        font-size: 1rem;
+        padding: 0.9rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-title {
+        font-size: 2rem;
+    }
+
+    .phone-number {
+        font-size: 1.3rem;
+    }
+
+    .partner-logos {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .contact-form-container {
+        padding: 1.25rem;
+        margin: 0 0.5rem;
+    }
+
+    .form-control {
+        padding: 0.9rem 1rem;
         font-size: 0.95rem;
     }
 }
