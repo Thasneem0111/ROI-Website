@@ -71,23 +71,27 @@ function handleNavActivate(link, e) {
         }
         return;
     }
-    // Other links: navigate immediately to avoid losing the click when menu closes on mobile
+    // Other links: close the menu and force navigation to avoid mobile/browser quirks
     if (href) {
-        if (e) { try { e.preventDefault(); e.stopPropagation(); } catch(_) {} }
+        // Let browser navigate; also add a fallback in case navigation is swallowed
         navNavigating = true;
-        // Resolve absolute URL to avoid relative path issues
-        let targetUrl = href;
-        try { targetUrl = new URL(href, window.location.href).href; } catch(_) {}
-        window.location.href = targetUrl;
+        const before = window.location.href;
+        const targetUrl = link.href; // fully resolved absolute
+        closeMobileMenu();
+        // Fallback: if still on same URL shortly after, force navigation
+        setTimeout(() => {
+            if (window.location.href === before) {
+                try { window.location.assign(targetUrl); } catch(_) { window.location.href = targetUrl; }
+            }
+        }, 120);
         return;
     }
 }
 
+// Use click only to avoid double-firing on touch devices
 navLinks.forEach(link => {
     link.addEventListener('click', (e) => handleNavActivate(link, e));
     link.addEventListener('touchend', (e) => handleNavActivate(link, e), { passive: false });
-    link.addEventListener('touchstart', (e) => handleNavActivate(link, e), { passive: false });
-    link.addEventListener('pointerdown', (e) => handleNavActivate(link, e));
 });
 
 // Event delegation fallback for mobile menu to ensure taps always navigate
@@ -99,8 +103,6 @@ if (navMenu) {
     };
     navMenu.addEventListener('click', delegatedHandler);
     navMenu.addEventListener('touchend', delegatedHandler, { passive: false });
-    navMenu.addEventListener('touchstart', delegatedHandler, { passive: false });
-    navMenu.addEventListener('pointerdown', delegatedHandler);
 }
 
 // Document-level capture fallback: if default navigation didn't happen (some mobile quirks), force it

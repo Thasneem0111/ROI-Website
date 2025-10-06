@@ -1170,6 +1170,16 @@ body {
         transform: scale(1.1);
     }
 
+    /* Ensure mobile menu links are dark even when navbar is scrolled */
+    .navbar.scrolled .nav-menu.active .nav-link,
+    .nav-menu.active .nav-link {
+        color: #333333 !important;
+    }
+    .navbar.scrolled .nav-menu.active .nav-link:hover,
+    .nav-menu.active .nav-link:hover {
+        color: var(--primary-teal) !important;
+    }
+
     .nav-container {
         justify-content: space-between;
         align-items: center;
