@@ -4,6 +4,10 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>Team - Royal Orbit Innovations</title>
+	<!-- Page removed: redirect to home and prevent indexing -->
+	<meta http-equiv="refresh" content="0; url=../index.html">
+	<meta name="robots" content="noindex">
+	<script>window.location.replace('../index.html');</script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -22,111 +26,17 @@
 
 			<nav id="primaryNav" aria-label="Primary">
 				<ul class="nav-list">
-					<li><a href="../index.html">Home</a></li>
-					<li><a href="../components/about.html">About</a></li>
-					<li><a href="../Blog/mainBlog.html">Blog</a></li>
-					<li class="nav-services">
-						<a href="#" role="button" aria-haspopup="true" aria-expanded="false">Services <i class="fa-solid fa-chevron-down nav-caret" aria-hidden="true"></i></a>
-						<!-- Mega menu -->
-						<div class="mega-menu" role="menu" aria-label="All services">
-							<div class="mega-content">
-								<div class="mega-col">
-									<h4><span class="cat-ico"><i class="fa-solid fa-chart-line"></i></span> Digital Marketing</h4>
-									<ul>
-										<li><a href="../components/services/Digital-Marketing/PPCservices.html">PPC Services</a></li>
-										<li><a href="../components/services/Digital-Marketing/SEOservices.html">SEO Services</a></li>
-										<li><a href="../components/services/Digital-Marketing/emailMarketing.html">Email Marketing</a></li>
-									</ul>
-								</div>
-								<div class="mega-col">
-									<h4><span class="cat-ico"><i class="fa-solid fa-screwdriver-wrench"></i></span> Development &amp; Design</h4>
-									<ul>
-										<li><a href="../components/services/Development-Design/websiteDesign-Development.html">Website Design &amp; Development</a></li>
-										<li><a href="../components/services/Development-Design/socialMediaDesign.html">Social Media Design</a></li>
-										<li><a href="../components/services/Development-Design/landingPageDsign.html">Landing Page Design</a></li>
-									</ul>
-								</div>
-								<div class="mega-col">
-									<h4><span class="cat-ico"><i class="fa-solid fa-bullhorn"></i></span> Advertising &amp; Management</h4>
-									<ul>
-										<li><a href="../components/services/Advertise-Management/smAdvertising.html">Social Media Advertising</a></li>
-										<li><a href="../components/services/Advertise-Management/smManagement.html">Social Media Management</a></li>
-										<li><a href="../components/services/Advertise-Management/lisitngManagementservice.html">Listing Management Services</a></li>
-									</ul>
-								</div>
-								<div class="mega-col">
-									<h4><span class="cat-ico"><i class="fa-brands fa-google"></i></span> Google My Business</h4>
-									<ul>
-										<li><a href="../components/services/Google-My-Business/GMBservices.html">Google My Business Services</a></li>
-										<li><a href="../components/services/Google-My-Business/GMBmanagement.html">Google My Business Management</a></li>
-										<li><a href="../components/services/Google-My-Business/GMBsetupService.html">Google My Business Setup Service</a></li>
-										<li><a href="../components/services/Google-My-Business/GMBsupportService.html">Google My Business Support Service</a></li>
-										<li><a href="../components/services/Google-My-Business/GMBoptimizationServies.html">Google My Business Optimization Service</a></li>
-										<li><a href="../components/services/Google-My-Business/GMBreinstatementService.html">Google My Business Reinstatement Service</a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="mega-quick">
-								<a class="quick-link" href="../components/services/websiteCallTracking.html"><span class="ql-ico"><i class="fa-solid fa-phone"></i></span> Website Call Tracking</a>
-								<a class="quick-link" href="../components/services/videoProduction.html"><span class="ql-ico"><i class="fa-solid fa-video"></i></span> Video Production</a>
-								<a class="quick-link" href="../components/services/conversationRate.html"><span class="ql-ico"><i class="fa-solid fa-chart-simple"></i></span> Conversion Rate Optimization</a>
-								<a class="quick-link" href="../components/services/outsourceStaff.html"><span class="ql-ico"><i class="fa-solid fa-users"></i></span> Outsource staffing services</a>
-								<a class="quick-link" href="../components/services/hrOutsource.html"><span class="ql-ico"><i class="fa-solid fa-people-group"></i></span> HR Outsourcing Services</a>
-							</div>
-						</div>
-					</li>
-					<li><a href="../components/team.html">Team</a></li>
-					<li><a href="../components/industries.html">Industries</a></li>
-					<li><a href="../components/contact.html">Contacts</a></li>
-				</ul>
-			</nav>
-
-			<div class="actions">
-				<a class="btn-primary" href="tel:+974 50755597">
-					<i class="fa-solid fa-phone"></i>
-					<span style="margin-left:8px">Call: +974 50755597</span>
-				</a>
-				<button class="hamburger" id="navToggle" aria-label="Open menu" aria-expanded="false">
-					<i class="fa-solid fa-bars" aria-hidden="true"></i>
-					<span class="burger-fallback" aria-hidden="true">☰</span>
-				</button>
-			</div>
-		</div>
-	</header>
-
-	<!-- Team Hero Section -->
-	<section class="hero team-hero">
-		<div class="container text-center">
-			<p class="team-hero-eyebrow">GREAT ACHIEVEMENTS ARE MADE POSSIBLE BY PROFESSIONAL PEOPLE</p>
-			<h1 class="team-hero-title">Royal Orbit Innovations Digital Marketing Agency Team</h1>
-			<p class="team-hero-sub">We are a fast‑growing team and we recognize that the first step to delivering exceptional outcomes for our customers is to have inspired and motivated professionals.</p>
-		</div>
-
-		<!-- Decorative spark (left) -->
-		<div class="deco deco-spark" aria-hidden="true">
-			<img src="../images/spark.webp" alt="" />
-		</div>
-
-		<!-- Decorative rocket (right) -->
-		<div class="deco deco-rocket" aria-hidden="true">
-			<img src="../images/rocket.webp" alt="" />
-		</div>
-	</section>
-
-	<!-- Page Content -->
-	<main class="page-content container py-5">
-		
-		<!-- Co-Founders Section -->
-		<section class="cofounders-section mt-4">
-			<h2 class="cofounders-title">Co‑Founders</h2>
-			<div class="cofounder-grid">
-				<article class="cofounder-card">
-					<div class="avatar-wrap">
-						<img src="../images/bman.webp" alt="Co‑Founder portrait" />
-					</div>
-					<h3 class="name">Mr. Kaleel</h3>
-					<p class="role">Co‑Founder</p>
-				</article>
+					<!DOCTYPE html>
+					<html lang="en">
+					<head>
+					  <meta http-equiv="refresh" content="0; url=../index.html">
+					  <title>Page moved</title>
+					  <meta name="robots" content="noindex">
+					</head>
+					<body>
+					  <p>This page has moved. <a href="../index.html">Go to Home</a>.</p>
+					</body>
+					</html>
 				<article class="cofounder-card">
 					<div class="avatar-wrap">
 						<img src="../images/bman.webp" alt="Co‑Founder portrait" />
@@ -480,7 +390,7 @@
 						<h4 class="footer-title">Company</h4>
 						<ul class="footer-nav">
 							<li><a href="/components/about.html">About</a></li>
-							<li><a href="/components/team.html">Team</a></li>
+                            
 							<li><a href="/components/industries.html">Industries</a></li>
 							<li><a href="/Blog/blog1.html">Blog</a></li>
 							<li><a href="/components/contact.html">Contacts</a></li>

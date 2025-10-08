@@ -74,7 +74,6 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="../components/team.html">Team</a></li>
                     <li><a href="../components/industries.html">Industries</a></li>
                     <li><a href="../components/contact.html">Contacts</a></li>
                 </ul>
@@ -403,6 +402,83 @@
                 </div>
             </div>
         </section>        
+        
+        <!-- Co‑Founders Section (copied from team.html) -->
+        <section class="cofounders-section mt-4">
+            <h2 class="cofounders-title">Co‑Founders</h2>
+            <div class="cofounder-grid">
+                <article class="cofounder-card">
+                    <div class="avatar-wrap">
+                        <img src="../images/bman.webp" alt="Co‑Founder portrait" />
+                    </div>
+                    <h3 class="name">Mr. Kaleel</h3>
+                    <p class="role">Co‑Founder</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Our Professional Team (copied from team.html) -->
+        <section class="pro-team-section">
+            <h2 class="pro-team-title">Our Professional Team</h2>
+            <div class="pro-team-grid">
+                <article class="pro-card">
+                    <div class="avatar-frame bg-soft">
+                        <img src="../images/man.jpg" alt="Team Member" />
+                    </div>
+                    <h3 class="name">Member Name</h3>
+                    <p class="role">Web Developer</p>
+                </article>
+                <article class="pro-card">
+                    <div class="avatar-frame bg-red">
+                        <img src="../images/bman.webp" alt="Team Member" />
+                    </div>
+                    <h3 class="name">Member Name</h3>
+                    <p class="role">Talent Acquisition Specialist</p>
+                </article>
+                <article class="pro-card">
+                    <div class="avatar-frame bg-yellow">
+                        <img src="../images/man.jpg" alt="Team Member" />
+                    </div>
+                    <h3 class="name">Member Name</h3>
+                    <p class="role">Account Manager</p>
+                </article>
+                <article class="pro-card">
+                    <div class="avatar-frame bg-blue">
+                        <img src="../images/bman.webp" alt="Team Member" />
+                    </div>
+                    <h3 class="name">Member Name</h3>
+                    <p class="role">Web Developer</p>
+                </article>
+                <article class="pro-card">
+                    <div class="avatar-frame bg-green">
+                        <img src="../images/man.jpg" alt="Team Member" />
+                    </div>
+                    <h3 class="name">Member Name</h3>
+                    <p class="role">Web Developer</p>
+                </article>
+                <article class="pro-card">
+                    <div class="avatar-frame bg-green">
+                        <img src="../images/man.jpg" alt="Team Member" />
+                    </div>
+                    <h3 class="name">Member Name</h3>
+                    <p class="role">Web Developer</p>
+                </article>
+                <article class="pro-card">
+                    <div class="avatar-frame bg-green">
+                        <img src="../images/man.jpg" alt="Team Member" />
+                    </div>
+                    <h3 class="name">Member Name</h3>
+                    <p class="role">Web Developer</p>
+                </article>
+                <article class="pro-card">
+                    <div class="avatar-frame bg-green">
+                        <img src="../images/man.jpg" alt="Team Member" />
+                    </div>
+                    <h3 class="name">Member Name</h3>
+                    <p class="role">Web Developer</p>
+                </article>
+            </div>
+        </section>
 
     </main>
 
@@ -865,7 +941,7 @@
                         <h4 class="footer-title">Company</h4>
                         <ul class="footer-nav">
                             <li><a href="/components/about.html">About</a></li>
-                            <li><a href="/components/team.html">Team</a></li>
+                            
                             <li><a href="/components/industries.html">Industries</a></li>
                             <li><a href="/Blog/blog1.html">Blog</a></li>
                             <li><a href="/components/contact.html">Contacts</a></li>
@@ -1479,5 +1555,35 @@
         .ca-label { margin: 6px auto 0; max-width: 260px; color: rgba(255,255,255,.92); }
         @media (max-width: 992px) { .choose-stats { grid-template-columns: 1fr 1fr; } .ca-stat:not(:last-child)::after { display: none; } }
         @media (max-width: 560px) { .choose-stats { grid-template-columns: 1fr; } }
+
+    /* Co‑Founders section (from team.html) */
+    .cofounders-section { padding: 16px 0 16px; }
+    .cofounders-title { text-align: center; font-size: clamp(26px, 3.4vw, 44px); margin: 8px 0 24px; color: #025f5f; }
+    .cofounder-grid { display: grid; grid-template-columns: 1fr; justify-items: center; gap: 24px; max-width: 600px; margin: 0 auto; }
+    .cofounder-card { background: #fff; border-radius: 18px; padding: 18px 18px 16px; box-shadow: 0 8px 28px rgba(0, 113, 87, 0.08); text-align: center; border: 1px solid rgba(0,0,0,.05); width: min(420px, 100%); }
+    .cofounder-card .avatar-wrap { background: #e9f2ff; border-radius: 16px; padding: 14px; margin-bottom: 14px; }
+    .cofounder-card img { width: 100%; height: 100%; display: block; border-radius: 12px; object-fit: cover; }
+    .cofounder-card .name { font-size: 20px; color: #036c67; margin: 6px 0 4px; font-weight: 700; }
+    .cofounder-card .role { margin: 0; color: #08958b; font-weight: 600; }
+    @media (max-width: 700px) { .cofounder-grid { grid-template-columns: 1fr; max-width: 560px; } }
+
+    /* Our Professional Team (from team.html) */
+    .pro-team-section { padding: 28px 0 40px; }
+    .pro-team-title { text-align: center; font-size: clamp(28px, 3.8vw, 48px); margin: 8px 0 22px; color: #035c4c; }
+    .pro-team-grid { display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; margin: 0 auto; }
+    .pro-card { width: 200px; background: #fff; border-radius: 18px; padding: 14px 14px 16px; box-shadow: 0 8px 28px rgba(0,0,0,.08); text-align: center; border: 1px solid rgba(0,0,0,.05); }
+    .pro-card:hover { box-shadow: 0 12px 36px rgba(0,0,0,.12); transform: translateY(-3px); }
+    .avatar-frame { border-radius: 16px; overflow: hidden; height: 200px; display: flex; align-items: center; justify-content: center; }
+    .avatar-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .avatar-frame img:hover { transform: scale(1.05); transition: transform .3s ease; }
+    .name { font-size: 18px; color: #0b6d5e; margin: 10px 0 6px; font-weight: 800; }
+    .role { margin: 0 0 2px; color: #5b6a78; font-weight: 600; }
+    .bg-soft { background: #eef3f8; }
+    .bg-red { background: #f0463d; }
+    .bg-yellow { background: #ffcc27; }
+    .bg-blue { background: #2e6bff; }
+    .bg-green { background: #28a66f; }
+    @media (max-width: 700px) { .avatar-frame { height: 200px; } }
+    @media (max-width: 480px) { .pro-card { width: min(92vw, 320px); } .avatar-frame { height: 220px; } }
     </style>
 </html>
