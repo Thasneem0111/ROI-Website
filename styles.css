@@ -5464,20 +5464,20 @@ body {
     }
     
     .footer-title {
-        text-align: center;
+        text-align: left;
         font-size: 1rem;
     }
     
     .footer-nav {
-        text-align: center;
+        text-align: left;
     }
     
     .footer-contact {
-        text-align: center;
+        text-align: left;
     }
     
     .contact-item {
-        justify-content: center;
+        justify-content: left;
     }
     
     .footer-social {

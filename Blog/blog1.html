@@ -7,127 +7,400 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles.css">
+        <link rel="stylesheet" href="/styles.css">
+        <style>
+            :root {
+                --teal-600: #0f766e; /* primary */
+                --teal-700: #0b5f59;
+                --teal-100: #e6f4f3;
+                --ink-900: #0b2a2a;
+                --ink-700: #143c3c;
+                --ink-500: #335c5c;
+                --white: #ffffff;
+                --shadow: 0 6px 24px rgba(15, 118, 110, 0.12);
+            }
+            /* Header (copied from mainBlog.html) */
+            .site-header { position: sticky; top: 0; z-index: 50; background: var(--white); box-shadow: 0 1px 0 rgba(0,0,0,0.06); }
+            .site-header .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 72px; }
+            .site-header .brand { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; align-items: center; column-gap: 10px; min-width: 160px; text-decoration: none; }
+            .site-header .brand img { height: 36px; width: auto; grid-row: 1 / span 2; }
+            .site-header .brand .brand-name { grid-column: 2; grid-row: 1; font-weight: 700; color: var(--teal-700); letter-spacing: .3px; line-height: 1.1; }
+            .site-header .brand .logo-subtitle { grid-column: 2; grid-row: 2; font-size: 12px; color: var(--ink-500); line-height: 1.1; margin-top: 2px; }
+            nav#primaryNav { display: flex; align-items: center; gap: 8px; }
+            nav#primaryNav .nav-list { display: flex; align-items: center; gap: 22px; list-style: none; margin: 0; padding: 0; }
+            nav#primaryNav .nav-list a { color: var(--ink-700); font-weight: 600; text-decoration: none; }
+            nav#primaryNav .nav-list a:hover, nav#primaryNav .nav-list a:focus { color: var(--teal-600); }
+            .nav-services .nav-caret { color: #018052; margin-left: 6px; font-size: .85em; transition: transform .2s ease; }
+            .nav-services a:hover .nav-caret { transform: translateY(1px) rotate(0.001deg); }
+            .nav-services { position: relative; }
+            .nav-services > a { display: inline-flex; align-items: center; }
+            .mega-menu { position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%); width: min(1100px, 92vw); background: #fff; border-radius: 14px; box-shadow: 0 16px 48px rgba(0,0,0,.14); padding: 22px 22px 14px; display: none; z-index: 1000; }
+            .nav-services:hover .mega-menu, .nav-services:focus-within .mega-menu, .nav-services .mega-menu:hover { display: block; }
+            .nav-services:hover .nav-caret, .nav-services:focus-within .nav-caret { transform: rotate(180deg); }
+            .mega-content { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; border-bottom: 1px solid rgba(0,0,0,.06); padding-bottom: 12px; margin-bottom: 12px; }
+            .mega-col h4 { font-size: 16px; font-weight: 800; margin: 0 0 10px; color: var(--ink-900); display:flex; align-items:center; gap:10px; }
+            .cat-ico { display:inline-grid; place-items:center; height:32px; width:32px; border-radius:8px; background: #eef7f6; color: var(--teal-700); box-shadow: inset 0 0 0 1px rgba(0,0,0,.05); }
+            .cat-ico i { font-size: 14px; }
+            .mega-col ul { list-style: none; margin: 0; padding: 0; }
+            .mega-col li { margin: 8px 0; }
+            .mega-col a { color: #2b2b2b; text-decoration: none; font-weight: 600; }
+            .mega-col a:hover { color: var(--teal-600); }
+            .mega-quick { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+            .quick-link { display: flex; align-items:center; gap:12px; padding: 14px 16px; background: rgba(15,118,110,.08); border-radius: 12px; font-weight: 700; color: var(--teal-700); text-decoration: none; }
+            .ql-ico { display:inline-grid; place-items:center; height:36px; width:36px; border-radius:10px; background:#fff; color:#0f6d6d; box-shadow: 0 1px 0 rgba(0,0,0,.06), inset 0 0 0 1px rgba(0,0,0,.06); }
+            .ql-ico i { font-size:14px; }
+            .quick-link:hover { background: rgba(15,118,110,.14); }
+            .actions { display: flex; align-items: center; gap: 12px; }
+            .btn-primary { background: var(--teal-600); color: #fff; border: none; padding: 8px 16px; border-radius: 999px; font-weight: 700; box-shadow: var(--shadow); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+            .btn-primary:hover, .btn-primary:focus, .btn-primary:visited { background: var(--teal-700); text-decoration: none; }
+            .hamburger { display: none; height: 40px; width: 40px; border-radius: 10px; border: 1px solid #e5e7eb; background: #fff; color: #111827; cursor: pointer; align-items: center; justify-content: center; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+            .hamburger:hover { background: #f8fafc; border-color: #d1d5db; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
+            .hamburger i { display: inline-block; font-size: 22px; color: #111827; }
+            .hamburger .burger-fallback { display: none; font-size: 22px; line-height: 1; }
+            .hamburger.fa-fallback i { display: none !important; }
+            .hamburger.fa-fallback .burger-fallback { display: inline-block !important; }
+            @media (max-width: 900px) {
+                nav#primaryNav .nav-list { display: none; }
+                .actions .btn-primary { display: none; }
+                .hamburger { display: inline-grid; }
+                body.nav-open nav#primaryNav .nav-list { display: flex; position: fixed; top: 72px; right: 0; left: 0; padding: 12px 8px; border-radius: 14px; background: #fff; flex-direction: column; gap: 8px; align-items: flex-start; text-align: left; box-shadow: var(--shadow); z-index: 60; }
+                body.nav-open nav#primaryNav .nav-list li { width: 100%; }
+                body.nav-open nav#primaryNav .nav-list a { display: block; width: 100%; padding: 10px 14px; border-radius: 10px; }
+                body.nav-open nav#primaryNav .nav-list a:hover { background: var(--teal-100); color: var(--teal-700); }
+                .nav-services .mega-menu { position: static; transform: none; width: 100%; box-shadow: none; border: 1px solid rgba(0,0,0,.06); border-radius: 12px; margin-top: 6px; }
+                .nav-services .mega-content { grid-template-columns: 1fr 1fr; }
+                .nav-services .mega-quick { grid-template-columns: 1fr; }
+            }
+            @media (max-width: 520px) {
+                .site-header .brand .brand-name { font-size: 14px; }
+                .site-header .brand .logo-subtitle { font-size: 11px; }
+                .nav-services .mega-content { grid-template-columns: 1fr; }
+            }
+                /* Shared container width (match mainBlog) */
+                .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+                /* Hero (match mainBlog) */
+                .hero { background: linear-gradient(180deg, #f6fbfb, #ffffff); padding: 32px 0 56px; }
+                .site-header + .hero { padding-top: 10px; }
+                .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 32px; }
+                .eyebrow { color: var(--teal-600); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 8px 0; }
+                h1.hero-title { font-size: clamp(28px, 4.2vw, 60px); line-height: 1.05; margin: 0 0 18px 0; color: #0a2b2b; }
+                .post-meta { display: flex; flex-wrap: wrap; gap: 10px 14px; margin-bottom: 20px; }
+                .pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; background: var(--teal-100); color: var(--ink-500); font-weight: 600; }
+                .hero-media { border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); background: #dff4f1; }
+                .hero-media img { display: block; width: 100%; height: auto; }
+                @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+                @media (max-width: 520px) { .site-header + .hero { padding-top: 6px !important; } .hero { padding-top: 6px !important; } }
+
+                        /* ===== Blog content section (share rail + article + sidebar) ===== */
+                        .blog-section { padding: 28px 0 48px; background: #ffffff; }
+                        .blog-grid { display: grid; grid-template-columns: 64px 1fr 380px; gap: 24px; align-items: start; }
+                        /* Share rail */
+                        .share-rail { position: sticky; top: 90px; display: grid; gap: 12px; justify-items: center; }
+                        .share-title { writing-mode: vertical-rl; transform: rotate(180deg); color: var(--ink-500); font-weight: 700; letter-spacing: .06em; }
+                        .share-list { list-style: none; padding: 0; margin: 6px 0 0; display: grid; gap: 10px; }
+                        .share-link { display: grid; place-items: center; height: 44px; width: 44px; border-radius: 50%; background: #ffffff; color: var(--teal-700); box-shadow: 0 8px 24px rgba(0,0,0,.08); border: 1px solid rgba(15,118,110,.15); }
+                        .share-link:hover { background: var(--teal-100); color: var(--teal-700); }
+                        .share-link i { font-size: 16px; }
+                        /* Article body */
+                        .blog-body { color: #0a1f1f; }
+                        .blog-body h2, .blog-body h3 { color: #0a2b2b; font-weight: 800; line-height: 1.2; margin: 24px 0 12px; }
+                        .blog-body h2 { font-size: clamp(26px, 2.6vw, 40px); }
+                        .blog-body h3 { font-size: clamp(20px, 2vw, 28px); }
+                        .blog-body p { color: #1a2f2f; line-height: 1.8; margin: 0 0 12px; }
+                        .blog-body ul, .blog-body ol { padding-left: 18px; }
+                        .blog-body li { margin: 6px 0; }
+                        /* Sidebar */
+                        .sidebar { display: grid; gap: 18px; }
+                        .consult-card { background: var(--teal-600); color: #ffffff; border-radius: 18px; padding: 20px; box-shadow: var(--shadow); }
+                        .consult-title { font-size: 24px; font-weight: 800; margin: 0 0 12px; text-align: center; }
+                        .consult-form { display: grid; gap: 10px; }
+                        .consult-form label { display: grid; gap: 6px; color: #e9f9f8; font-size: 13px; }
+                        .consult-form input { height: 44px; border-radius: 12px; border: none; padding: 0 12px; }
+                        .consult-btn { background: #f97316; color: #fff; border: none; padding: 14px 16px; border-radius: 14px; font-weight: 800; box-shadow: 0 10px 24px rgba(0,0,0,.18); cursor: pointer; }
+                        .consult-btn:hover { filter: brightness(.95); }
+                        .latest { background: #f6fbfb; border-radius: 18px; padding: 16px; box-shadow: 0 8px 24px rgba(0,0,0,.06); }
+                        .latest h4 { margin: 0 0 10px; color: var(--teal-700); font-weight: 800; }
+                        .latest-item { display: grid; grid-template-columns: 100px 1fr; gap: 12px; align-items: center; padding: 10px; border-radius: 12px; }
+                        .latest-item:hover { background: rgba(15,118,110,.06); }
+                        .latest-thumb { border-radius: 12px; overflow: hidden; }
+                        .latest-thumb img { width: 100%; height: 72px; object-fit: cover; display: block; }
+                        .latest-meta { font-size: 12px; color: var(--ink-500); margin-top: 4px; }
+
+                        /* Responsive */
+                        @media (max-width: 1100px) { .blog-grid { grid-template-columns: 48px 1fr 320px; } }
+                        @media (max-width: 900px) {
+                            .blog-grid { grid-template-columns: 1fr; }
+                            .share-rail { order: 1; position: static; display: flex; align-items: center; gap: 10px; }
+                            .share-title { writing-mode: initial; transform: none; }
+                            .share-list { display: flex; gap: 10px; margin: 0 0 0 6px; }
+                            .sidebar { order: 3; }
+                            .blog-body { order: 2; }
+                        }
+        </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <div class="logo">
-                    <img src="/images/logo.png" alt="ROI Logo" class="logo-image" />
-                    <div class="logo-content">
-                        <span class="logo-text">Royal Orbit Innovations</span>
-                        <span class="logo-subtitle">Digital Marketing Agency</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="nav-menu" id="nav-menu">
-                <div class="mobile-menu-header">
-                    <button class="close-menu" id="close-menu">
-                        <i class="fas fa-times"></i>
+        <!-- Header (copied from mainBlog.html) -->
+        <header class="site-header">
+            <div class="container header-inner">
+                <a class="brand" href="../index.html" aria-label="Royal Orbit Innovations home">
+                    <img src="../images/logo.png" alt="Royal Orbit Innovations logo" />
+                    <span class="brand-name">Royal Orbit Innovations</span>
+                    <span class="logo-subtitle">Digital Marketing Agency</span>
+                </a>
+
+                <nav id="primaryNav" aria-label="Primary">
+                    <ul class="nav-list">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../components/about.html">About</a></li>
+                        <li><a href="./mainBlog.html">Blog</a></li>
+                        <li class="nav-services">
+                            <a href="#" role="button" aria-haspopup="true" aria-expanded="false">Services <i class="fa-solid fa-chevron-down nav-caret" aria-hidden="true"></i></a>
+                            <div class="mega-menu" role="menu" aria-label="All services">
+                                <div class="mega-content">
+                                    <div class="mega-col">
+                                        <h4><span class="cat-ico"><i class="fa-solid fa-chart-line"></i></span> Digital Marketing</h4>
+                                        <ul>
+                                            <li><a href="../components/services/Digital-Marketing/PPCservices.html">PPC Services</a></li>
+                                            <li><a href="../components/services/Digital-Marketing/SEOservices.html">SEO Services</a></li>
+                                            <li><a href="../components/services/Digital-Marketing/emailMarketing.html">Email Marketing</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="mega-col">
+                                        <h4><span class="cat-ico"><i class="fa-solid fa-screwdriver-wrench"></i></span> Development &amp; Design</h4>
+                                        <ul>
+                                            <li><a href="../components/services/Development-Design/websiteDesign-Development.html">Website Design &amp; Development</a></li>
+                                            <li><a href="../components/services/Development-Design/socialMediaDesign.html">Social Media Design</a></li>
+                                            <li><a href="../components/services/Development-Design/landingPageDsign.html">Landing Page Design</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="mega-col">
+                                        <h4><span class="cat-ico"><i class="fa-solid fa-bullhorn"></i></span> Advertising &amp; Management</h4>
+                                        <ul>
+                                            <li><a href="../components/services/Advertise-Management/smAdvertising.html">Social Media Advertising</a></li>
+                                            <li><a href="../components/services/Advertise-Management/smManagement.html">Social Media Management</a></li>
+                                            <li><a href="../components/services/Advertise-Management/lisitngManagementservice.html">Listing Management Services</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="mega-col">
+                                        <h4><span class="cat-ico"><i class="fa-brands fa-google"></i></span> Google My Business</h4>
+                                        <ul>
+                                            <li><a href="../components/services/Google-My-Business/GMBservices.html">Google My Business Services</a></li>
+                                            <li><a href="../components/services/Google-My-Business/GMBmanagement.html">Google My Business Management</a></li>
+                                            <li><a href="../components/services/Google-My-Business/GMBsetupService.html">Google My Business Setup Service</a></li>
+                                            <li><a href="../components/services/Google-My-Business/GMBsupportService.html">Google My Business Support Service</a></li>
+                                            <li><a href="../components/services/Google-My-Business/GMBoptimizationServies.html">Google My Business Optimization Service</a></li>
+                                            <li><a href="../components/services/Google-My-Business/GMBreinstatementService.html">Google My Business Reinstatement Service</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mega-quick">
+                                    <a class="quick-link" href="../components/services/websiteCallTracking.html"><span class="ql-ico"><i class="fa-solid fa-phone"></i></span> Website Call Tracking</a>
+                                    <a class="quick-link" href="../components/services/videoProduction.html"><span class="ql-ico"><i class="fa-solid fa-video"></i></span> Video Production</a>
+                                    <a class="quick-link" href="../components/services/conversationRate.html"><span class="ql-ico"><i class="fa-solid fa-chart-simple"></i></span> Conversion Rate Optimization</a>
+                                    <a class="quick-link" href="../components/services/outsourceStaff.html"><span class="ql-ico"><i class="fa-solid fa-users"></i></span> Outsource staffing services</a>
+                                    <a class="quick-link" href="../components/services/hrOutsource.html"><span class="ql-ico"><i class="fa-solid fa-people-group"></i></span> HR Outsourcing Services</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li><a href="../components/team.html">Team</a></li>
+                        <li><a href="../components/industries.html">Industries</a></li>
+                        <li><a href="../components/contact.html">Contacts</a></li>
+                    </ul>
+                </nav>
+
+                <div class="actions">
+                    <a class="btn-primary" href="tel:+974 50755597">
+                        <i class="fa-solid fa-phone"></i>
+                        <span style="margin-left:8px">Call: +974 50755597</span>
+                    </a>
+                    <button class="hamburger" id="navToggle" aria-label="Open menu" aria-expanded="false">
+                        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                        <span class="burger-fallback" aria-hidden="true">☰</span>
                     </button>
                 </div>
-                <ul class="nav-list">
-                    <li class="nav-item"><a href="/index.html" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="/components/about.html" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="/components/team.html" class="nav-link">Team</a></li>
-                    <li class="nav-item"><a href="/components/industries.html" class="nav-link">Industries</a></li>
-                    <li class="nav-item"><a href="/Blog/blog1.html" class="nav-link">Blog</a></li>
-                    <li class="nav-item">
-                        <a href="/index.html" class="nav-link">
-                            <i class="fas fa-search"></i> Services
-                        </a>
-                    </li>
-                    <li class="nav-item"><a href="/components/contact.html" class="nav-link">Contacts</a></li>
-                </ul>
             </div>
-            
-            <div class="nav-actions">
-                <button class="search-btn">
-                    <i class="fas fa-search"></i> Search
-                </button>
-                <button class="cta-btn">
-                    <i class="fas fa-phone"></i> Request a call back
-                </button>
-            </div>
-            
-            <div class="hamburger" id="hamburger">
-                <i class="fas fa-bars"></i>
-                <span class="hamburger-fallback">☰</span>
-            </div>
-        </div>
-    </nav>
+        </header>
 
-    <!-- Blog Article Section -->
-    <section class="blog-article-section py-5 mt-5">
-        <div class="container-fluid px-3 px-lg-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 col-12">
-                    <!-- Back Button -->
-                    <div class="back-button-container mb-4">
-                        <a href="/index.html" class="back-button">
-                            <i class="fas fa-arrow-left"></i> Back to Home
-                        </a>
-                    </div>
-
-                    <!-- Article Header -->
-                    <div class="article-header mb-5">
-                        <div class="article-meta mb-3">
-                            <span class="new-label">New</span>
-                            <span class="article-date">October 5, 2025</span>
-                        </div>
-                        <h1 class="article-title">The #1 Mistake Small Businesses Make With Digital Marketing Budgets</h1>
-                        <div class="article-image-container">
-                            <img src="/images/blog 1.webp" alt="Digital Marketing Budget Mistakes" class="article-image">
-                        </div>
-                    </div>
-
-                    <!-- Article Content -->
-                    <div class="article-content">
-                        <p class="lead">Most small businesses don't fail at marketing because they don't spend enough. They fail because they don't know how to distribute digital marketing budgets properly.</p>
-                        
-                        <p>When it comes to digital marketing, many small business owners make the critical mistake of spreading their budget too thin across multiple channels without understanding which ones will give them the best return on investment.</p>
-                        
-                        <h2>The Problem: Scattering Your Budget</h2>
-                        <p>Small businesses often try to be everywhere at once - social media, Google Ads, email marketing, content marketing, and more. While diversification can be good, doing everything poorly is worse than doing a few things exceptionally well.</p>
-                        
-                        <h2>The Solution: Strategic Budget Allocation</h2>
-                        <p>Instead of spreading your budget thin, focus on 2-3 channels that align with your business goals and target audience. Here's how to approach it:</p>
-                        
-                        <ul>
-                            <li><strong>Analyze your audience:</strong> Where do your customers spend their time online?</li>
-                            <li><strong>Start with proven channels:</strong> Google Ads and Facebook/Instagram ads often provide measurable results.</li>
-                            <li><strong>Test and measure:</strong> Use analytics to track which channels generate the most leads and sales.</li>
-                            <li><strong>Scale what works:</strong> Once you find winning channels, invest more heavily in them.</li>
-                        </ul>
-                        
-                        <h2>Common Budget Distribution Mistakes</h2>
-                        <p>Here are the most common mistakes we see small businesses make:</p>
-                        
-                        <ol>
-                            <li><strong>Equal distribution:</strong> Splitting budget equally across all channels</li>
-                            <li><strong>Vanity metrics focus:</strong> Prioritizing likes and follows over actual conversions</li>
-                            <li><strong>No tracking system:</strong> Not measuring ROI for each marketing channel</li>
-                            <li><strong>Impatience:</strong> Switching strategies too quickly before giving them time to work</li>
-                        </ol>
-                        
-                        <h2>Ready to Optimize Your Marketing Budget?</h2>
-                        <p>At Royal Orbit Innovations, we help small businesses create strategic digital marketing plans that maximize ROI. Our experts can analyze your current spending and create a custom strategy that focuses your budget where it will have the most impact.</p>
-                        
-                        <div class="cta-box">
-                            <h3>Get Your Free Marketing Budget Analysis</h3>
-                            <p>Let our experts review your current marketing spend and show you how to get better results with the same budget.</p>
-                            <a href="/components/contact.html" class="cta-button">Book Free Consultation</a>
-                        </div>
+        <!-- Blog Hero (same look as mainBlog hero) -->
+        <section class="hero blog-hero">
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <p class="eyebrow">Blog</p>
+                    <h1 class="hero-title">The #1 Mistake Small Businesses Make With Digital Marketing Budgets</h1>
+                    <div class="post-meta">
+                        <span class="pill"><i class="fa-regular fa-user"></i> by Royal Orbit Innovations</span>
+                        <span class="pill"><i class="fa-regular fa-calendar"></i> October 05, 2025</span>
+                        <span class="pill"><i class="fa-regular fa-clock"></i> 5 minute read</span>
                     </div>
                 </div>
+                <div class="hero-media">
+                    <img src="../images/blog 1.webp" alt="Arrows missing a target and a balloon in the middle" />
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+                <!-- Blog Content + Sidebar Section -->
+                <section class="blog-section">
+                    <div class="container blog-grid">
+                        <!-- Left: Share rail -->
+                        <aside class="share-rail" aria-label="Share this article">
+                            <span class="share-title">Shares</span>
+                            <ul class="share-list">
+                                <li><a class="share-link" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=https://example.com"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a class="share-link" target="_blank" rel="noopener" href="https://t.me/share/url?url=https://example.com&text=Great%20read"><i class="fab fa-telegram"></i></a></li>
+                                <li><a class="share-link" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?text=https://example.com"><i class="fab fa-whatsapp"></i></a></li>
+                                <li><a class="share-link" target="_blank" rel="noopener" href="https://vk.com/share.php?url=https://example.com"><i class="fab fa-vk"></i></a></li>
+                            </ul>
+                        </aside>
+
+                        <!-- Center: Article body -->
+                        <article class="blog-body">
+                            <p>Most small businesses don’t fail at marketing because they don’t spend enough. They fail because they don’t know how to distribute digital marketing budgets properly across platforms.</p>
+                            <p>When you see marketing as “money out” instead of “money that should grow,” you end up cutting the wrong costs, spreading budgets too thin, and missing out on real results.</p>
+
+                            <h2>What Most Small Businesses Get Wrong About Marketing Budgets</h2>
+                            <p>Most small business owners don’t fail at marketing because they lack money, but more often, they fail because they allocate it poorly. The main issue isn’t the size of the budget, but how it’s planned and executed.</p>
+
+                            <h3>Why overspending on ads without a strategy kills ROI</h3>
+                            <p>Many business owners assume that giving a lot of money to Google or Meta ads will automatically bring results. But without a strategy, targeting, creative, and tracking in place, ads quickly turn into wasted spend. People will see it and forget in a moment.</p>
+                           
+                            <h3>Ad spend inflation in 2025 (Google, Meta, TikTok)</h3>
+                            <p>The average cost-per-click on Google and Meta has risen year over year. Even TikTok, once the “cheap” channel with the easiest algorithms, turned into a premium ad marketplace. Thus, now, the same $500 that brought you strong returns in 2022 delivers a fraction of the results in 2025.</p>
+                            
+                            <h3>Why targeting the wrong audience drains budgets</h3>
+                            <p>A common mistake small businesses make is trying to be everywhere at once—Google, Meta, TikTok, LinkedIn, YouTube, and more. With limited budgets, this approach spreads money too thin and weakens results.</p>
+
+                            <h2>Spending too thin across platforms</h2>
+                            <p>Trying to be everywhere with a small budget spreads spend too thin. Focus on 2–3 channels that match your audience and goals.
+                                <br>
+                                When budgets are divided into small amounts across too many platforms, no channel gets enough investment to deliver real traction. For example, putting a few hundred dollars into Google Ads and the same into social media usually leaves campaigns stuck in “testing mode,” where results are unclear and ROI can’t be measured. <br>
+                                This often creates a cycle of frustration: budgets get cut, strategies keep changing, and marketing gets blamed for poor performance when the real issue is poor allocation.<br>
+                                The smarter move is to focus. You can just pick two or three platforms where your audience actually spends time and invest properly there. This gives your campaigns enough room to optimize and turn your budget into measurable ROI instead of wasted spend.                     
+                            </p>
+
+                            <h2>The #1 Mistake: Treating Digital Marketing as a Cost, Not an Investment</h2>
+                            <p>The biggest flaw in most digital marketing budgets is the mindset behind them. Too many small businesses treat marketing as money spent, like paying rent or utilities, instead of a growth lever that should generate measurable returns. This is why even businesses that dedicate thousands each month often see little to no progress.</p>
+
+                            <h3>Why mindset matters more than money</h3>
+                            <p>Marketing results don’t depend only on how much you spend, but on how you frame that spend. A business that views marketing as an investment will set ROI goals, measure performance, and refine campaigns. A business that sees it as a cost will cut budgets the moment revenue dips, undermining long-term growth.</p>
+
+                            <h2>How budget psychology impacts decision-making</h2>
+                            <p>When marketing is seen as an expense, owners tend to:</p>
+                            <ul>
+                                <li>Slash spending during slow seasons, just when visibility is most needed.</li>
+                                <li>Avoid testing or experimentation because it feels “too risky.”</li>
+                                <li>Focus only on immediate sales rather than customer lifetime value.</li>
+                            </ul>
+                            <p>By contrast, businesses with an investment mindset ask: If I spend $1, how many dollars will it bring back over time? That simple question changes budget allocation from guesswork into strategy.</p>
+                            
+                            <h2>How Businesses Undervalue Long-Term Channels (SEO, content)</h2>
+                            <p>
+                                One of the clearest signs of a “cost” mindset is ignoring channels like SEO and content marketing. Ads can drive quick results, but once you stop paying, traffic disappears. SEO and content may take months to build, but they create ROI-driven marketing pipelines that keep delivering leads long after the budget is spent.
+                                <br> For example, a blog post optimized for search in 2025 can rank for years, generating thousands of visitors with no additional spend. Yet many small businesses neglect it, funneling 100% of their budget into short-term ads.
+                            </p>
+
+                            <h2>Short-term vs long-term spend balance</h2>
+                            <p>A healthy marketing investment strategy balances short-term visibility with long-term sustainability. Short-term tactics (ads, promotions, influencer campaigns) provide immediate traffic, but long-term tactics (SEO, email lists, brand building) ensure that traffic doesn’t dry up once ad spend stops. <br>
+                            
+                            Consider this example: A $2,000/month budget spent only on ads may deliver clicks and short-term sales, but with no SEO or content investment, the pipeline collapses as soon as the campaign ends. On the other hand, splitting that budget between ads and long-term content ensures that new traffic keeps flowing, even when ad spend slows.
+                            </p>
+                            <h2>How to Build a Smarter Small Business Marketing Budget in 2025</h2>
+                            <p>A smarter marketing budget isn’t about spending more, but it’s about spending with intention. With ad costs rising and new tools emerging, small businesses in 2025 need frameworks that balance stability, growth, and innovation.</p>
+
+                            <h3>The 70/20/10 allocation framework</h3>
+                            <ul>
+                                <li><strong>70%</strong> — Proven channels (SEO, PPC, Social)</li>
+                                <li><strong>20%</strong> — Growth initiatives (new platforms, influencers)</li>
+                                <li><strong>10%</strong> — Experimentation (AI tools, emerging tech)</li>
+                            </ul>
+
+                            <h3>Tracking ROI with the right metrics</h3>
+                            <p>Use ROAS, CPL, CAC, and CLV to make spending decisions based on performance—not guesses.</p>
+                        </article>
+
+                        <!-- Right: Sidebar -->
+                        <aside class="sidebar" aria-label="Sidebar">
+                            <!-- Consultation card -->
+                            <div class="consult-card">
+                                <h3 class="consult-title">Book a Free Consultation</h3>
+                                <form class="consult-form" onsubmit="event.preventDefault(); alert('Thanks! We will contact you soon.');">
+                                    <label>
+                                        <span>Name</span>
+                                        <input type="text" placeholder="Enter your Name" required />
+                                    </label>
+                                    <label>
+                                        <span>Email</span>
+                                        <input type="email" placeholder="Enter your Email" required />
+                                    </label>
+                                    <label>
+                                        <span>Phone number</span>
+                                        <input type="tel" placeholder="Enter your phone" />
+                                    </label>
+                                    <button type="submit" class="consult-btn">Book A Free Consultation</button>
+                                </form>
+                            </div>
+
+                            <!-- Latest news -->
+                            <div class="latest">
+                                <h4>The Latest</h4>
+                                <a class="latest-item" href="./blog1.html">
+                                    <div class="latest-thumb"><img src="../images/blog 1.webp" alt="The #1 Mistake Small Businesses Make" /></div>
+                                    <div>
+                                        <div class="latest-title">The #1 Mistake Small Businesses Make With Digital Marketing Budgets</div>
+                                        <div class="latest-meta">September 24, 2025</div>
+                                    </div>
+                                </a>
+                                <a class="latest-item" href="./email.html">
+                                    <div class="latest-thumb"><img src="../images/target emai.webp" alt="Email marketing still works" /></div>
+                                    <div>
+                                        <div class="latest-title">Does Targeted Email Marketing Still Work in 2025?</div>
+                                        <div class="latest-meta">September 22, 2025</div>
+                                    </div>
+                                </a>
+                                <a class="latest-item" href="./seo.html">
+                                    <div class="latest-thumb"><img src="../images/seo.webp" alt="Mobile friendly website SEO" /></div>
+                                    <div>
+                                        <div class="latest-title">Why You Need a Mobile Friendly Website for SEO Success</div>
+                                        <div class="latest-meta">August 14, 2025</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+
+        
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../script.js"></script>
+        <script>
+            // Mobile nav toggle (copied from mainBlog)
+            (function () {
+                const toggle = document.getElementById('navToggle');
+                const links = document.querySelectorAll('#primaryNav .nav-list a');
+                const body = document.body;
+                function closeNav() { body.classList.remove('nav-open'); toggle?.setAttribute('aria-expanded', 'false'); }
+                function openNav() { body.classList.add('nav-open'); toggle?.setAttribute('aria-expanded', 'true'); }
+                toggle?.addEventListener('click', () => { if (body.classList.contains('nav-open')) closeNav(); else openNav(); });
+                links.forEach((a) => a.addEventListener('click', closeNav));
+                document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav(); });
+            })();
+            // Mega menu toggle on mobile + hover on desktop (copied)
+            (function () {
+                const navServices = document.querySelector('.nav-services');
+                if (!navServices) return; const trigger = navServices.querySelector('a'); const menu = navServices.querySelector('.mega-menu'); if (!trigger || !menu) return;
+                function isMobile() { return window.matchMedia('(max-width: 900px)').matches; }
+                trigger.addEventListener('click', (e) => {
+                    if (isMobile()) { e.preventDefault(); const open = menu.style.display === 'block'; menu.style.display = open ? 'none' : 'block'; trigger.setAttribute('aria-expanded', String(!open)); }
+                    else { e.preventDefault(); }
+                });
+                let hideTimer; navServices.addEventListener('mouseleave', () => { if (isMobile()) return; hideTimer = setTimeout(() => { if (!isMobile()) menu.style.display = 'none'; }, 120); });
+                navServices.addEventListener('mouseenter', () => { if (isMobile()) return; clearTimeout(hideTimer); menu.style.display = 'block'; });
+                menu.addEventListener('mouseenter', () => clearTimeout(hideTimer));
+            })();
+            // Show fallback hamburger if Font Awesome fails
+            (function () { try { const btn = document.querySelector('.hamburger'); if (!btn) return; const enableFallback = () => btn.classList.add('fa-fallback'); if (document.fonts && !document.fonts.check('1em "Font Awesome 6 Free"')) { setTimeout(() => { if (!document.fonts.check('1em "Font Awesome 6 Free"')) enableFallback(); }, 400); } } catch (_) {} })();
+        </script>
 </body>
 </html>

@@ -94,176 +94,7 @@
         </div>
     </header>
 
-    <!-- Scoped header behavior (same as blog) -->
-    <script>
-        // Mobile nav toggle
-        (function () {
-            const toggle = document.getElementById('navToggle');
-            const links = document.querySelectorAll('#primaryNav .nav-list a');
-            const body = document.body;
-
-            function closeNav() {
-                body.classList.remove('nav-open');
-                toggle?.setAttribute('aria-expanded', 'false');
-            }
-            function openNav() {
-                body.classList.add('nav-open');
-                toggle?.setAttribute('aria-expanded', 'true');
-            }
-            toggle?.addEventListener('click', () => {
-                if (body.classList.contains('nav-open')) closeNav();
-                else openNav();
-            });
-            // Close menu when a link is clicked
-            links.forEach((a) => a.addEventListener('click', closeNav));
-            // Close menu on ESC
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') closeNav();
-            });
-        })();
-
-        // Toggle mega menu on touch/click for mobile; prevent navigation on desktop
-        (function () {
-            const navServices = document.querySelector('.nav-services');
-            if (!navServices) return;
-            const trigger = navServices.querySelector('a');
-            const menu = navServices.querySelector('.mega-menu');
-            if (!trigger || !menu) return;
-
-            function isMobile() { return window.matchMedia('(max-width: 900px)').matches; }
-
-            trigger.addEventListener('click', (e) => {
-                if (isMobile()) {
-                    e.preventDefault();
-                    const open = menu.style.display === 'block';
-                    menu.style.display = open ? 'none' : 'block';
-                    trigger.setAttribute('aria-expanded', String(!open));
-                } else {
-                    e.preventDefault();
-                }
-            });
-
-            let hideTimer;
-            navServices.addEventListener('mouseleave', () => {
-                if (isMobile()) return;
-                hideTimer = setTimeout(() => { if (!isMobile()) menu.style.display = 'none'; }, 120);
-            });
-            navServices.addEventListener('mouseenter', () => {
-                if (isMobile()) return;
-                clearTimeout(hideTimer);
-                menu.style.display = 'block';
-            });
-            menu.addEventListener('mouseenter', () => clearTimeout(hideTimer));
-        })();
-
-        // Show only ONE hamburger: use fallback if FA isn't available, hide FA when fallback is shown
-        (function () {
-            try {
-                const btn = document.querySelector('.hamburger');
-                const icon = btn?.querySelector('i');
-                const fallback = btn?.querySelector('.burger-fallback');
-                if (!btn || !icon || !fallback) return;
-                const enableFallback = () => {
-                    btn.classList.add('fa-missing'); // CSS will hide FA icon and show fallback
-                };
-                if (document.fonts) {
-                    if (!document.fonts.check('1em "Font Awesome 6 Free"')) {
-                        setTimeout(() => {
-                            if (!document.fonts.check('1em "Font Awesome 6 Free"')) enableFallback();
-                        }, 400);
-                    }
-                }
-            } catch (_) { /* no-op */ }
-        })();
-    </script>
-
-    <!-- Scoped header styles (same as blog) -->
-    <style>
-        :root {
-            --teal-600: #0f766e;
-            --teal-700: #0b5f59;
-            --teal-100: #e6f4f3;
-            --ink-900: #0b2a2a;
-            --ink-700: #143c3c;
-            --ink-500: #335c5c;
-            --white: #ffffff;
-            --shadow: 0 6px 24px rgba(15, 118, 110, 0.12);
-        }
-
-        /* Header */
-        .site-header { position: sticky; top: 0; z-index: 50; background: var(--white); box-shadow: 0 1px 0 rgba(0,0,0,0.06); }
-        .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 72px; }
-        .brand { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; align-items: center; column-gap: 10px; min-width: 160px; text-decoration: none; }
-        .brand img { height: 36px; width: auto; grid-row: 1 / span 2; }
-        .brand .brand-name { grid-column: 2; grid-row: 1; font-weight: 700; color: var(--teal-700); letter-spacing: .3px; line-height: 1.1; display: inline-block; }
-        .brand .logo-subtitle { grid-column: 2; grid-row: 2; font-size: 12px; color: var(--ink-500); line-height: 1.1; margin-top: 2px; display: inline-block; }
-
-        nav#primaryNav { display: flex; align-items: center; gap: 8px; }
-        .nav-list { display: flex; align-items: center; gap: 22px; list-style: none; margin: 0; padding: 0; }
-        .nav-list a { color: var(--ink-700); font-weight: 600; text-decoration: none; }
-        .nav-list a:hover, .nav-list a:focus { color: var(--teal-600); }
-
-        /* Services caret + mega-menu */
-        .nav-services .nav-caret { color: #018052; margin-left: 6px; font-size: .85em; transition: transform .2s ease; }
-        .nav-services a:hover .nav-caret { transform: translateY(1px) rotate(0.001deg); }
-        .nav-services { position: relative; }
-        .nav-services > a { display: inline-flex; align-items: center; }
-        .mega-menu { position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%); width: min(1100px, 92vw); background: #fff; border-radius: 14px; box-shadow: 0 16px 48px rgba(0,0,0,.14); padding: 22px 22px 14px; display: none; z-index: 1000; }
-        .nav-services:hover .mega-menu, .nav-services:focus-within .mega-menu, .nav-services .mega-menu:hover { display: block; }
-        .nav-services:hover .nav-caret, .nav-services:focus-within .nav-caret { transform: rotate(180deg); }
-        .mega-content { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; border-bottom: 1px solid rgba(0,0,0,.06); padding-bottom: 12px; margin-bottom: 12px; }
-        .mega-col h4 { font-size: 16px; font-weight: 800; margin: 0 0 10px; color: var(--ink-900); display:flex; align-items:center; gap:10px; }
-        .cat-ico { display:inline-grid; place-items:center; height:32px; width:32px; border-radius:8px; background: #eef7f6; color: var(--teal-700); box-shadow: inset 0 0 0 1px rgba(0,0,0,.05); }
-        .cat-ico i { font-size: 14px; }
-        .mega-col ul { list-style: none; margin: 0; padding: 0; }
-        .mega-col li { margin: 8px 0; }
-        .mega-col a { color: #2b2b2b; text-decoration: none; font-weight: 600; }
-        .mega-col a:hover { color: var(--teal-600); }
-        .mega-quick { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
-        .quick-link { display: flex; align-items:center; gap:12px; padding: 14px 16px; background: rgba(15,118,110,.08); border-radius: 12px; font-weight: 700; color: var(--teal-700); text-decoration: none; }
-        .ql-ico { display:inline-grid; place-items:center; height:36px; width:36px; border-radius:10px; background:#fff; color:#0f6d6d; box-shadow: 0 1px 0 rgba(0,0,0,.06), inset 0 0 0 1px rgba(0,0,0,.06); }
-        .ql-ico i { font-size:14px; }
-        .quick-link:hover { background: rgba(15,118,110,.14); }
-
-        .actions { display: flex; align-items: center; gap: 12px; }
-        .btn-primary { background: var(--teal-600); color: #fff; border: none; padding: 10px 16px; border-radius: 999px; font-weight: 700; box-shadow: var(--shadow); cursor: pointer; text-decoration: none; }
-        .btn-primary:hover { background: var(--teal-700); }
-        .hamburger { display: none; height: 40px; width: 40px; border-radius: 10px; border: 1px solid #000000; background: var(--white); color: #000000; cursor: pointer; align-items: center; justify-content: center; position: relative; }
-        .hamburger i { display: inline-block; font-size: 22px; color: #000; }
-    .hamburger .burger-fallback { display: none; }
-    /* When Font Awesome is missing, show fallback and hide FA icon */
-    .hamburger.fa-missing i { display: none !important; }
-    .hamburger.fa-missing .burger-fallback { display: inline-block !important; }
-
-    /* Tighten space below header for the hero and align content to top (override global styles.css) */
-    .site-header + .hero { padding-top: 16px; }
-    .hero { padding-top: 16px; min-height: auto; align-items: flex-start; }
-
-        /* Mobile nav (<= 900px) */
-        @media (max-width: 900px) {
-            .nav-list { display: none; }
-            .actions .btn-primary { display: none; }
-            .hamburger { display: inline-grid; place-items: center; }
-            body.nav-open .nav-list { display: flex; position: fixed; top: 72px; right: 0; left: 0; padding: 12px 8px; border-radius: 14px; background: var(--white); flex-direction: column; gap: 8px; align-items: flex-start; text-align: left; box-shadow: var(--shadow); z-index: 60; }
-            body.nav-open .nav-list li { width: 100%; }
-            body.nav-open .nav-list a { display: block; width: 100%; padding: 10px 14px; border-radius: 10px; }
-            body.nav-open .nav-list a:hover { background: var(--teal-100); color: var(--teal-700); }
-
-            /* Mega menu inside mobile nav */
-            .nav-services { width: 100%; }
-            .nav-services .mega-menu { position: static; transform: none; width: 100%; box-shadow: none; border: 1px solid rgba(0,0,0,.06); border-radius: 12px; margin-top: 6px; }
-            .nav-services .mega-content { grid-template-columns: 1fr 1fr; }
-            .nav-services .mega-quick { grid-template-columns: 1fr; }
-        }
-
-        /* Small devices */
-        @media (max-width: 520px) {
-            .brand .brand-name { font-size: 14px; }
-            .brand .logo-subtitle { font-size: 11px; }
-            .nav-services .mega-content { grid-template-columns: 1fr; }
-        }
-    </style>
-
+    
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-container">
@@ -1800,4 +1631,175 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
+
+<!-- Scoped header behavior (same as blog) -->
+    <script>
+        // Mobile nav toggle
+        (function () {
+            const toggle = document.getElementById('navToggle');
+            const links = document.querySelectorAll('#primaryNav .nav-list a');
+            const body = document.body;
+
+            function closeNav() {
+                body.classList.remove('nav-open');
+                toggle?.setAttribute('aria-expanded', 'false');
+            }
+            function openNav() {
+                body.classList.add('nav-open');
+                toggle?.setAttribute('aria-expanded', 'true');
+            }
+            toggle?.addEventListener('click', () => {
+                if (body.classList.contains('nav-open')) closeNav();
+                else openNav();
+            });
+            // Close menu when a link is clicked
+            links.forEach((a) => a.addEventListener('click', closeNav));
+            // Close menu on ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeNav();
+            });
+        })();
+
+        // Toggle mega menu on touch/click for mobile; prevent navigation on desktop
+        (function () {
+            const navServices = document.querySelector('.nav-services');
+            if (!navServices) return;
+            const trigger = navServices.querySelector('a');
+            const menu = navServices.querySelector('.mega-menu');
+            if (!trigger || !menu) return;
+
+            function isMobile() { return window.matchMedia('(max-width: 900px)').matches; }
+
+            trigger.addEventListener('click', (e) => {
+                if (isMobile()) {
+                    e.preventDefault();
+                    const open = menu.style.display === 'block';
+                    menu.style.display = open ? 'none' : 'block';
+                    trigger.setAttribute('aria-expanded', String(!open));
+                } else {
+                    e.preventDefault();
+                }
+            });
+
+            let hideTimer;
+            navServices.addEventListener('mouseleave', () => {
+                if (isMobile()) return;
+                hideTimer = setTimeout(() => { if (!isMobile()) menu.style.display = 'none'; }, 120);
+            });
+            navServices.addEventListener('mouseenter', () => {
+                if (isMobile()) return;
+                clearTimeout(hideTimer);
+                menu.style.display = 'block';
+            });
+            menu.addEventListener('mouseenter', () => clearTimeout(hideTimer));
+        })();
+
+        // Show only ONE hamburger: use fallback if FA isn't available, hide FA when fallback is shown
+        (function () {
+            try {
+                const btn = document.querySelector('.hamburger');
+                const icon = btn?.querySelector('i');
+                const fallback = btn?.querySelector('.burger-fallback');
+                if (!btn || !icon || !fallback) return;
+                const enableFallback = () => {
+                    btn.classList.add('fa-missing'); // CSS will hide FA icon and show fallback
+                };
+                if (document.fonts) {
+                    if (!document.fonts.check('1em "Font Awesome 6 Free"')) {
+                        setTimeout(() => {
+                            if (!document.fonts.check('1em "Font Awesome 6 Free"')) enableFallback();
+                        }, 400);
+                    }
+                }
+            } catch (_) { /* no-op */ }
+        })();
+    </script>
+
+    <!-- Scoped header styles (same as blog) -->
+    <style>
+        :root {
+            --teal-600: #0f766e;
+            --teal-700: #0b5f59;
+            --teal-100: #e6f4f3;
+            --ink-900: #0b2a2a;
+            --ink-700: #143c3c;
+            --ink-500: #335c5c;
+            --white: #ffffff;
+            --shadow: 0 6px 24px rgba(15, 118, 110, 0.12);
+        }
+
+        /* Header */
+        .site-header { position: sticky; top: 0; z-index: 50; background: var(--white); box-shadow: 0 1px 0 rgba(0,0,0,0.06); }
+        .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 72px; }
+        .brand { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; align-items: center; column-gap: 10px; min-width: 160px; text-decoration: none; }
+        .brand img { height: 36px; width: auto; grid-row: 1 / span 2; }
+        .brand .brand-name { grid-column: 2; grid-row: 1; font-weight: 700; color: var(--teal-700); letter-spacing: .3px; line-height: 1.1; display: inline-block; }
+        .brand .logo-subtitle { grid-column: 2; grid-row: 2; font-size: 12px; color: var(--ink-500); line-height: 1.1; margin-top: 2px; display: inline-block; }
+
+        nav#primaryNav { display: flex; align-items: center; gap: 8px; }
+        .nav-list { display: flex; align-items: center; gap: 22px; list-style: none; margin: 0; padding: 0; }
+        .nav-list a { color: var(--ink-700); font-weight: 600; text-decoration: none; }
+        .nav-list a:hover, .nav-list a:focus { color: var(--teal-600); }
+
+        /* Services caret + mega-menu */
+        .nav-services .nav-caret { color: #018052; margin-left: 6px; font-size: .85em; transition: transform .2s ease; }
+        .nav-services a:hover .nav-caret { transform: translateY(1px) rotate(0.001deg); }
+        .nav-services { position: relative; }
+        .nav-services > a { display: inline-flex; align-items: center; }
+        .mega-menu { position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%); width: min(1100px, 92vw); background: #fff; border-radius: 14px; box-shadow: 0 16px 48px rgba(0,0,0,.14); padding: 22px 22px 14px; display: none; z-index: 1000; }
+        .nav-services:hover .mega-menu, .nav-services:focus-within .mega-menu, .nav-services .mega-menu:hover { display: block; }
+        .nav-services:hover .nav-caret, .nav-services:focus-within .nav-caret { transform: rotate(180deg); }
+        .mega-content { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; border-bottom: 1px solid rgba(0,0,0,.06); padding-bottom: 12px; margin-bottom: 12px; }
+        .mega-col h4 { font-size: 16px; font-weight: 800; margin: 0 0 10px; color: var(--ink-900); display:flex; align-items:center; gap:10px; }
+        .cat-ico { display:inline-grid; place-items:center; height:32px; width:32px; border-radius:8px; background: #eef7f6; color: var(--teal-700); box-shadow: inset 0 0 0 1px rgba(0,0,0,.05); }
+        .cat-ico i { font-size: 14px; }
+        .mega-col ul { list-style: none; margin: 0; padding: 0; }
+        .mega-col li { margin: 8px 0; }
+        .mega-col a { color: #2b2b2b; text-decoration: none; font-weight: 600; }
+        .mega-col a:hover { color: var(--teal-600); }
+        .mega-quick { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+        .quick-link { display: flex; align-items:center; gap:12px; padding: 14px 16px; background: rgba(15,118,110,.08); border-radius: 12px; font-weight: 700; color: var(--teal-700); text-decoration: none; }
+        .ql-ico { display:inline-grid; place-items:center; height:36px; width:36px; border-radius:10px; background:#fff; color:#0f6d6d; box-shadow: 0 1px 0 rgba(0,0,0,.06), inset 0 0 0 1px rgba(0,0,0,.06); }
+        .ql-ico i { font-size:14px; }
+        .quick-link:hover { background: rgba(15,118,110,.14); }
+
+        .actions { display: flex; align-items: center; gap: 12px; }
+        .btn-primary { background: var(--teal-600); color: #fff; border: none; padding: 10px 16px; border-radius: 999px; font-weight: 700; box-shadow: var(--shadow); cursor: pointer; text-decoration: none; }
+        .btn-primary:hover { background: var(--teal-700); }
+        .hamburger { display: none; height: 40px; width: 40px; border-radius: 10px; border: 1px solid #000000; background: var(--white); color: #000000; cursor: pointer; align-items: center; justify-content: center; position: relative; }
+        .hamburger i { display: inline-block; font-size: 22px; color: #000; }
+    .hamburger .burger-fallback { display: none; }
+    /* When Font Awesome is missing, show fallback and hide FA icon */
+    .hamburger.fa-missing i { display: none !important; }
+    .hamburger.fa-missing .burger-fallback { display: inline-block !important; }
+
+    /* Tighten space below header for the hero and align content to top (override global styles.css) */
+    .site-header + .hero { padding-top: 16px; }
+    .hero { padding-top: 16px; min-height: auto; align-items: flex-start; }
+
+        /* Mobile nav (<= 900px) */
+        @media (max-width: 900px) {
+            .nav-list { display: none; }
+            .actions .btn-primary { display: none; }
+            .hamburger { display: inline-grid; place-items: center; }
+            body.nav-open .nav-list { display: flex; position: fixed; top: 72px; right: 0; left: 0; padding: 12px 8px; border-radius: 14px; background: var(--white); flex-direction: column; gap: 8px; align-items: flex-start; text-align: left; box-shadow: var(--shadow); z-index: 60; }
+            body.nav-open .nav-list li { width: 100%; }
+            body.nav-open .nav-list a { display: block; width: 100%; padding: 10px 14px; border-radius: 10px; }
+            body.nav-open .nav-list a:hover { background: var(--teal-100); color: var(--teal-700); }
+
+            /* Mega menu inside mobile nav */
+            .nav-services { width: 100%; }
+            .nav-services .mega-menu { position: static; transform: none; width: 100%; box-shadow: none; border: 1px solid rgba(0,0,0,.06); border-radius: 12px; margin-top: 6px; }
+            .nav-services .mega-content { grid-template-columns: 1fr 1fr; }
+            .nav-services .mega-quick { grid-template-columns: 1fr; }
+        }
+
+        /* Small devices */
+        @media (max-width: 520px) {
+            .brand .brand-name { font-size: 14px; }
+            .brand .logo-subtitle { font-size: 11px; }
+            .nav-services .mega-content { grid-template-columns: 1fr; }
+        }
+    </style>
+    
 </html>
