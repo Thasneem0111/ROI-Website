@@ -5363,8 +5363,8 @@ body {
 }
 
 .social-link.linkedin {
-    background: rgba(0, 119, 181, 0.2);
-    border: 2px solid rgba(0, 119, 181, 0.3);
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .social-link.linkedin:hover {
@@ -5374,8 +5374,8 @@ body {
 }
 
 .social-link.facebook {
-    background: rgba(24, 119, 242, 0.2);
-    border: 2px solid rgba(24, 119, 242, 0.3);
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .social-link.facebook:hover {
@@ -5385,8 +5385,8 @@ body {
 }
 
 .social-link.instagram {
-    background: rgba(225, 48, 108, 0.2);
-    border: 2px solid rgba(225, 48, 108, 0.3);
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .social-link.instagram:hover {
@@ -5396,8 +5396,8 @@ body {
 }
 
 .social-link.tiktok {
-    background: rgba(0, 0, 0, 0.2);
-    border: 2px solid rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .social-link.tiktok:hover {

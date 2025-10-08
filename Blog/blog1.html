@@ -2,142 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>The #1 Mistake Small Businesses Make With Digital Marketing Budgets - ROI</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="/styles.css">
-        <style>
-            :root {
-                --teal-600: #0f766e; /* primary */
-                --teal-700: #0b5f59;
-                --teal-100: #e6f4f3;
-                --ink-900: #0b2a2a;
-                --ink-700: #143c3c;
-                --ink-500: #335c5c;
-                --white: #ffffff;
-                --shadow: 0 6px 24px rgba(15, 118, 110, 0.12);
-            }
-            /* Header (copied from mainBlog.html) */
-            .site-header { position: sticky; top: 0; z-index: 50; background: var(--white); box-shadow: 0 1px 0 rgba(0,0,0,0.06); }
-            .site-header .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 72px; }
-            .site-header .brand { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; align-items: center; column-gap: 10px; min-width: 160px; text-decoration: none; }
-            .site-header .brand img { height: 36px; width: auto; grid-row: 1 / span 2; }
-            .site-header .brand .brand-name { grid-column: 2; grid-row: 1; font-weight: 700; color: var(--teal-700); letter-spacing: .3px; line-height: 1.1; }
-            .site-header .brand .logo-subtitle { grid-column: 2; grid-row: 2; font-size: 12px; color: var(--ink-500); line-height: 1.1; margin-top: 2px; }
-            nav#primaryNav { display: flex; align-items: center; gap: 8px; }
-            nav#primaryNav .nav-list { display: flex; align-items: center; gap: 22px; list-style: none; margin: 0; padding: 0; }
-            nav#primaryNav .nav-list a { color: var(--ink-700); font-weight: 600; text-decoration: none; }
-            nav#primaryNav .nav-list a:hover, nav#primaryNav .nav-list a:focus { color: var(--teal-600); }
-            .nav-services .nav-caret { color: #018052; margin-left: 6px; font-size: .85em; transition: transform .2s ease; }
-            .nav-services a:hover .nav-caret { transform: translateY(1px) rotate(0.001deg); }
-            .nav-services { position: relative; }
-            .nav-services > a { display: inline-flex; align-items: center; }
-            .mega-menu { position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%); width: min(1100px, 92vw); background: #fff; border-radius: 14px; box-shadow: 0 16px 48px rgba(0,0,0,.14); padding: 22px 22px 14px; display: none; z-index: 1000; }
-            .nav-services:hover .mega-menu, .nav-services:focus-within .mega-menu, .nav-services .mega-menu:hover { display: block; }
-            .nav-services:hover .nav-caret, .nav-services:focus-within .nav-caret { transform: rotate(180deg); }
-            .mega-content { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; border-bottom: 1px solid rgba(0,0,0,.06); padding-bottom: 12px; margin-bottom: 12px; }
-            .mega-col h4 { font-size: 16px; font-weight: 800; margin: 0 0 10px; color: var(--ink-900); display:flex; align-items:center; gap:10px; }
-            .cat-ico { display:inline-grid; place-items:center; height:32px; width:32px; border-radius:8px; background: #eef7f6; color: var(--teal-700); box-shadow: inset 0 0 0 1px rgba(0,0,0,.05); }
-            .cat-ico i { font-size: 14px; }
-            .mega-col ul { list-style: none; margin: 0; padding: 0; }
-            .mega-col li { margin: 8px 0; }
-            .mega-col a { color: #2b2b2b; text-decoration: none; font-weight: 600; }
-            .mega-col a:hover { color: var(--teal-600); }
-            .mega-quick { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
-            .quick-link { display: flex; align-items:center; gap:12px; padding: 14px 16px; background: rgba(15,118,110,.08); border-radius: 12px; font-weight: 700; color: var(--teal-700); text-decoration: none; }
-            .ql-ico { display:inline-grid; place-items:center; height:36px; width:36px; border-radius:10px; background:#fff; color:#0f6d6d; box-shadow: 0 1px 0 rgba(0,0,0,.06), inset 0 0 0 1px rgba(0,0,0,.06); }
-            .ql-ico i { font-size:14px; }
-            .quick-link:hover { background: rgba(15,118,110,.14); }
-            .actions { display: flex; align-items: center; gap: 12px; }
-            .btn-primary { background: var(--teal-600); color: #fff; border: none; padding: 8px 16px; border-radius: 999px; font-weight: 700; box-shadow: var(--shadow); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
-            .btn-primary:hover, .btn-primary:focus, .btn-primary:visited { background: var(--teal-700); text-decoration: none; }
-            .hamburger { display: none; height: 40px; width: 40px; border-radius: 10px; border: 1px solid #e5e7eb; background: #fff; color: #111827; cursor: pointer; align-items: center; justify-content: center; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
-            .hamburger:hover { background: #f8fafc; border-color: #d1d5db; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
-            .hamburger i { display: inline-block; font-size: 22px; color: #111827; }
-            .hamburger .burger-fallback { display: none; font-size: 22px; line-height: 1; }
-            .hamburger.fa-fallback i { display: none !important; }
-            .hamburger.fa-fallback .burger-fallback { display: inline-block !important; }
-            @media (max-width: 900px) {
-                nav#primaryNav .nav-list { display: none; }
-                .actions .btn-primary { display: none; }
-                .hamburger { display: inline-grid; }
-                body.nav-open nav#primaryNav .nav-list { display: flex; position: fixed; top: 72px; right: 0; left: 0; padding: 12px 8px; border-radius: 14px; background: #fff; flex-direction: column; gap: 8px; align-items: flex-start; text-align: left; box-shadow: var(--shadow); z-index: 60; }
-                body.nav-open nav#primaryNav .nav-list li { width: 100%; }
-                body.nav-open nav#primaryNav .nav-list a { display: block; width: 100%; padding: 10px 14px; border-radius: 10px; }
-                body.nav-open nav#primaryNav .nav-list a:hover { background: var(--teal-100); color: var(--teal-700); }
-                .nav-services .mega-menu { position: static; transform: none; width: 100%; box-shadow: none; border: 1px solid rgba(0,0,0,.06); border-radius: 12px; margin-top: 6px; }
-                .nav-services .mega-content { grid-template-columns: 1fr 1fr; }
-                .nav-services .mega-quick { grid-template-columns: 1fr; }
-            }
-            @media (max-width: 520px) {
-                .site-header .brand .brand-name { font-size: 14px; }
-                .site-header .brand .logo-subtitle { font-size: 11px; }
-                .nav-services .mega-content { grid-template-columns: 1fr; }
-            }
-                /* Shared container width (match mainBlog) */
-                .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-                /* Hero (match mainBlog) */
-                .hero { background: linear-gradient(180deg, #f6fbfb, #ffffff); padding: 32px 0 56px; }
-                .site-header + .hero { padding-top: 10px; }
-                .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 32px; }
-                .eyebrow { color: var(--teal-600); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 8px 0; }
-                h1.hero-title { font-size: clamp(28px, 4.2vw, 60px); line-height: 1.05; margin: 0 0 18px 0; color: #0a2b2b; }
-                .post-meta { display: flex; flex-wrap: wrap; gap: 10px 14px; margin-bottom: 20px; }
-                .pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; background: var(--teal-100); color: var(--ink-500); font-weight: 600; }
-                .hero-media { border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); background: #dff4f1; }
-                .hero-media img { display: block; width: 100%; height: auto; }
-                @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
-                @media (max-width: 520px) { .site-header + .hero { padding-top: 6px !important; } .hero { padding-top: 6px !important; } }
-
-                        /* ===== Blog content section (share rail + article + sidebar) ===== */
-                        .blog-section { padding: 28px 0 48px; background: #ffffff; }
-                        .blog-grid { display: grid; grid-template-columns: 64px 1fr 380px; gap: 24px; align-items: start; }
-                        /* Share rail */
-                        .share-rail { position: sticky; top: 90px; display: grid; gap: 12px; justify-items: center; }
-                        .share-title { writing-mode: vertical-rl; transform: rotate(180deg); color: var(--ink-500); font-weight: 700; letter-spacing: .06em; }
-                        .share-list { list-style: none; padding: 0; margin: 6px 0 0; display: grid; gap: 10px; }
-                        .share-link { display: grid; place-items: center; height: 44px; width: 44px; border-radius: 50%; background: #ffffff; color: var(--teal-700); box-shadow: 0 8px 24px rgba(0,0,0,.08); border: 1px solid rgba(15,118,110,.15); }
-                        .share-link:hover { background: var(--teal-100); color: var(--teal-700); }
-                        .share-link i { font-size: 16px; }
-                        /* Article body */
-                        .blog-body { color: #0a1f1f; }
-                        .blog-body h2, .blog-body h3 { color: #0a2b2b; font-weight: 800; line-height: 1.2; margin: 24px 0 12px; }
-                        .blog-body h2 { font-size: clamp(26px, 2.6vw, 40px); }
-                        .blog-body h3 { font-size: clamp(20px, 2vw, 28px); }
-                        .blog-body p { color: #1a2f2f; line-height: 1.8; margin: 0 0 12px; }
-                        .blog-body ul, .blog-body ol { padding-left: 18px; }
-                        .blog-body li { margin: 6px 0; }
-                        /* Sidebar */
-                        .sidebar { display: grid; gap: 18px; }
-                        .consult-card { background: var(--teal-600); color: #ffffff; border-radius: 18px; padding: 20px; box-shadow: var(--shadow); }
-                        .consult-title { font-size: 24px; font-weight: 800; margin: 0 0 12px; text-align: center; }
-                        .consult-form { display: grid; gap: 10px; }
-                        .consult-form label { display: grid; gap: 6px; color: #e9f9f8; font-size: 13px; }
-                        .consult-form input { height: 44px; border-radius: 12px; border: none; padding: 0 12px; }
-                        .consult-btn { background: #f97316; color: #fff; border: none; padding: 14px 16px; border-radius: 14px; font-weight: 800; box-shadow: 0 10px 24px rgba(0,0,0,.18); cursor: pointer; }
-                        .consult-btn:hover { filter: brightness(.95); }
-                        .latest { background: #f6fbfb; border-radius: 18px; padding: 16px; box-shadow: 0 8px 24px rgba(0,0,0,.06); }
-                        .latest h4 { margin: 0 0 10px; color: var(--teal-700); font-weight: 800; }
-                        .latest-item { display: grid; grid-template-columns: 100px 1fr; gap: 12px; align-items: center; padding: 10px; border-radius: 12px; }
-                        .latest-item:hover { background: rgba(15,118,110,.06); }
-                        .latest-thumb { border-radius: 12px; overflow: hidden; }
-                        .latest-thumb img { width: 100%; height: 72px; object-fit: cover; display: block; }
-                        .latest-meta { font-size: 12px; color: var(--ink-500); margin-top: 4px; }
-
-                        /* Responsive */
-                        @media (max-width: 1100px) { .blog-grid { grid-template-columns: 48px 1fr 320px; } }
-                        @media (max-width: 900px) {
-                            .blog-grid { grid-template-columns: 1fr; }
-                            .share-rail { order: 1; position: static; display: flex; align-items: center; gap: 10px; }
-                            .share-title { writing-mode: initial; transform: none; }
-                            .share-list { display: flex; gap: 10px; margin: 0 0 0 6px; }
-                            .sidebar { order: 3; }
-                            .blog-body { order: 2; }
-                        }
-        </style>
+    <link rel="stylesheet" href="/styles.css">
+        
 </head>
 <body>
         <!-- Header (copied from mainBlog.html) -->
@@ -371,6 +242,137 @@
                 </section>
 
         
+        <!-- Post navigation (Previous + Back to Blog) -->
+        <section class="blog-post-nav">
+            <div class="container nav-row">
+                <a class="prev-link" href="../index.html"><span class="prev-badge"><i class="fa-solid fa-arrow-left"></i></span><span>Previous</span></a>
+                <a class="btn-back-blog" href="./mainBlog.html">Back to Blog</a>
+            </div>
+        </section>
+
+        <!-- Footer Section -->
+        <footer class="footer-section">
+            <div class="container-fluid px-3 px-lg-5">
+                <div class="row">
+                    <!-- Left Column - Company Info -->
+                    <div class="col-lg-4 col-md-6 col-12 mb-4">
+                        <div class="footer-company">
+                            <div class="footer-logo">
+                                <img src="../images/logo.png" alt="ROI Logo" class="footer-logo-image" />
+                                <div class="footer-logo-content">
+                                    <span class="footer-logo-text">Royal Orbit Innovations</span>
+                                    <span class="footer-logo-subtitle">Digital Marketing Agency</span>
+                                </div>
+                            </div>
+                            <p class="footer-description">
+                                Our team knows what is business. Either it is small or medium size. Our passion is always find creative ways to cut the cost and expand your profits by using the latest digital tools and having intelligent people working on your project.
+                            </p>
+                            
+                            <!-- Google Map -->
+                            <div class="footer-map">
+                                <iframe 
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.0234567891234!2d51.5022374!3d25.2861336!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e45c5e4c5e4c5e4%3A0x5e4c5e4c5e4c5e4c!2z25%C2%B017%2710.1%22N%2051%C2%B030%2717.3%22E!5e0!3m2!1sen!2sqa!4v1640123456789!5m2!1sen!2sqa" 
+                                    width="100%" 
+                                    height="200" 
+                                    style="border:0; border-radius: 10px;" 
+                                    allowfullscreen="" 
+                                    loading="lazy">
+                                </iframe>
+                            </div>
+                            
+                            <!-- CTA Button -->
+                            <button class="footer-cta-btn">Book A Free Consultation</button>
+                        </div>
+                    </div>
+
+                    <!-- Middle Left Column - Company Links -->
+                    <div class="col-lg-2 col-md-6 col-6 mb-4">
+                        <div class="footer-links">
+                            <h4 class="footer-title">Company</h4>
+                            <ul class="footer-nav">
+                                <li><a href="/components/about.html">About</a></li>
+                                <li><a href="/components/team.html">Team</a></li>
+                                <li><a href="/components/industries.html">Industries</a></li>
+                                <li><a href="/Blog/blog1.html">Blog</a></li>
+                                <li><a href="/components/contact.html">Contacts</a></li>
+                                <li><a href="#careers">Careers</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Middle Right Column - Services -->
+                    <div class="col-lg-3 col-md-6 col-6 mb-4">
+                        <div class="footer-links">
+                            <h4 class="footer-title">Services</h4>
+                            <ul class="footer-nav">
+                                <li><a href="/index.html#services">Website Call Tracking</a></li>
+                                <li><a href="/index.html#services">Social Media Design</a></li>
+                                <li><a href="/index.html#services">Landing Page Design</a></li>
+                                <li><a href="/index.html#services">PPC Services</a></li>
+                                <li><a href="/index.html#services">SEO Services</a></li>
+                                <li><a href="/index.html#services">Email Marketing</a></li>
+                                <li><a href="/index.html#services">Video Production</a></li>
+                                <li><a href="/index.html#services">Outsource Staffing Services</a></li>
+                                <li><a href="/index.html#services">HR Outsourcing Services</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Extended Services & Contact -->
+                    <div class="col-lg-3 col-md-6 col-12 mb-4">
+                        <div class="footer-links">
+                            <h4 class="footer-title">More Services</h4>
+                            <ul class="footer-nav">
+                                <li><a href="/index.html#services">Website Design & Development</a></li>
+                                <li><a href="/index.html#services">Social Media Advertising</a></li>
+                                <li><a href="/index.html#services">Social Media Management</a></li>
+                                <li><a href="/index.html#services">Conversion Rate Optimization</a></li>
+                                <li><a href="/index.html#services">Listing Management Services</a></li>
+                                <li><a href="/index.html#services">Google My Business Services</a></li>
+                                <li><a href="/index.html#services">Google My Business Management</a></li>
+                                <li><a href="/index.html#services">Google My Business Setup Service</a></li>
+                                <li><a href="/index.html#services">Google My Business Support Service</a></li>
+                                <li><a href="/index.html#services">Google My Business Optimization Service</a></li>
+                                <li><a href="/index.html#services">Google My Business Reinstatement Service</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Contact Info -->
+                        <div class="footer-contact mt-4">
+                            <h4 class="footer-title">Contact</h4>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>(+974) 50755597</span>
+                            </div>
+                            
+                            <!-- Social Media -->
+                            <div class="footer-social">
+                                <a href="https://www.linkedin.com/company/royal-orbit-innovations/" class="social-link linkedin"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="https://www.facebook.com/share/12HbEYaXDaq/?mibextid=wwXIfr" class="social-link facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="https://www.instagram.com/roi_marketing.qa?igsh=MXNrZThkMHJmZTJqNA==" class="social-link instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="https://www.tiktok.com/@roi_marketing.qa" class="social-link tiktok"><i class="fab fa-tiktok"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Bottom -->
+                <div class="footer-bottom">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 col-12">
+                            <p class="footer-copyright">Copyright © 2025, Royal Orbit Innovations. All rights reserved.</p>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="footer-bottom-links">
+                                <a href="#terms">Terms and Conditions</a>
+                                <a href="#privacy">Privacy Policy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="../script.js"></script>
@@ -403,4 +405,144 @@
             (function () { try { const btn = document.querySelector('.hamburger'); if (!btn) return; const enableFallback = () => btn.classList.add('fa-fallback'); if (document.fonts && !document.fonts.check('1em "Font Awesome 6 Free"')) { setTimeout(() => { if (!document.fonts.check('1em "Font Awesome 6 Free"')) enableFallback(); }, 400); } } catch (_) {} })();
         </script>
 </body>
+
+<style>
+    :root {
+        --teal-600: #0f766e; /* primary */
+        --teal-700: #0b5f59;
+        --teal-100: #e6f4f3;
+        --ink-900: #0b2a2a;
+        --ink-700: #143c3c;
+        --ink-500: #335c5c;
+        --white: #ffffff;
+        --shadow: 0 6px 24px rgba(15, 118, 110, 0.12);
+    }
+    /* Header (copied from mainBlog.html) */
+    .site-header { position: sticky; top: 0; z-index: 50; background: var(--white); box-shadow: 0 1px 0 rgba(0,0,0,0.06); }
+    .site-header .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 72px; }
+    .site-header .brand { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; align-items: center; column-gap: 10px; min-width: 160px; text-decoration: none; }
+    .site-header .brand img { height: 36px; width: auto; grid-row: 1 / span 2; }
+    .site-header .brand .brand-name { grid-column: 2; grid-row: 1; font-weight: 700; color: var(--teal-700); letter-spacing: .3px; line-height: 1.1; }
+    .site-header .brand .logo-subtitle { grid-column: 2; grid-row: 2; font-size: 12px; color: var(--ink-500); line-height: 1.1; margin-top: 2px; }
+    nav#primaryNav { display: flex; align-items: center; gap: 8px; }
+    nav#primaryNav .nav-list { display: flex; align-items: center; gap: 22px; list-style: none; margin: 0; padding: 0; }
+    nav#primaryNav .nav-list a { color: var(--ink-700); font-weight: 600; text-decoration: none; }
+    nav#primaryNav .nav-list a:hover, nav#primaryNav .nav-list a:focus { color: var(--teal-600); }
+    .nav-services .nav-caret { color: #018052; margin-left: 6px; font-size: .85em; transition: transform .2s ease; }
+    .nav-services a:hover .nav-caret { transform: translateY(1px) rotate(0.001deg); }
+    .nav-services { position: relative; }
+    .nav-services > a { display: inline-flex; align-items: center; }
+    .mega-menu { position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%); width: min(1100px, 92vw); background: #fff; border-radius: 14px; box-shadow: 0 16px 48px rgba(0,0,0,.14); padding: 22px 22px 14px; display: none; z-index: 1000; }
+    .nav-services:hover .mega-menu, .nav-services:focus-within .mega-menu, .nav-services .mega-menu:hover { display: block; }
+    .nav-services:hover .nav-caret, .nav-services:focus-within .nav-caret { transform: rotate(180deg); }
+    .mega-content { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; border-bottom: 1px solid rgba(0,0,0,.06); padding-bottom: 12px; margin-bottom: 12px; }
+    .mega-col h4 { font-size: 16px; font-weight: 800; margin: 0 0 10px; color: var(--ink-900); display:flex; align-items:center; gap:10px; }
+    .cat-ico { display:inline-grid; place-items:center; height:32px; width:32px; border-radius:8px; background: #eef7f6; color: var(--teal-700); box-shadow: inset 0 0 0 1px rgba(0,0,0,.05); }
+    .cat-ico i { font-size: 14px; }
+    .mega-col ul { list-style: none; margin: 0; padding: 0; }
+    .mega-col li { margin: 8px 0; }
+    .mega-col a { color: #2b2b2b; text-decoration: none; font-weight: 600; }
+    .mega-col a:hover { color: var(--teal-600); }
+    .mega-quick { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+    .quick-link { display: flex; align-items:center; gap:12px; padding: 14px 16px; background: rgba(15,118,110,.08); border-radius: 12px; font-weight: 700; color: var(--teal-700); text-decoration: none; }
+    .ql-ico { display:inline-grid; place-items:center; height:36px; width:36px; border-radius:10px; background:#fff; color:#0f6d6d; box-shadow: 0 1px 0 rgba(0,0,0,.06), inset 0 0 0 1px rgba(0,0,0,.06); }
+    .ql-ico i { font-size:14px; }
+    .quick-link:hover { background: rgba(15,118,110,.14); }
+    .actions { display: flex; align-items: center; gap: 12px; }
+    .btn-primary { background: var(--teal-600); color: #fff; border: none; padding: 8px 16px; border-radius: 999px; font-weight: 700; box-shadow: var(--shadow); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-primary:hover, .btn-primary:focus, .btn-primary:visited { background: var(--teal-700); text-decoration: none; }
+    .hamburger { display: none; height: 40px; width: 40px; border-radius: 10px; border: 1px solid #e5e7eb; background: #fff; color: #111827; cursor: pointer; align-items: center; justify-content: center; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+    .hamburger:hover { background: #f8fafc; border-color: #d1d5db; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
+    .hamburger i { display: inline-block; font-size: 22px; color: #111827; }
+    .hamburger .burger-fallback { display: none; font-size: 22px; line-height: 1; }
+    .hamburger.fa-fallback i { display: none !important; }
+    .hamburger.fa-fallback .burger-fallback { display: inline-block !important; }
+    @media (max-width: 900px) {
+        nav#primaryNav .nav-list { display: none; }
+        .actions .btn-primary { display: none; }
+        .hamburger { display: inline-grid; }
+        body.nav-open nav#primaryNav .nav-list { display: flex; position: fixed; top: 72px; right: 0; left: 0; padding: 12px 8px; border-radius: 14px; background: #fff; flex-direction: column; gap: 8px; align-items: flex-start; text-align: left; box-shadow: var(--shadow); z-index: 60; }
+        body.nav-open nav#primaryNav .nav-list li { width: 100%; }
+        body.nav-open nav#primaryNav .nav-list a { display: block; width: 100%; padding: 10px 14px; border-radius: 10px; }
+        body.nav-open nav#primaryNav .nav-list a:hover { background: var(--teal-100); color: var(--teal-700); }
+        .nav-services .mega-menu { position: static; transform: none; width: 100%; box-shadow: none; border: 1px solid rgba(0,0,0,.06); border-radius: 12px; margin-top: 6px; }
+        .nav-services .mega-content { grid-template-columns: 1fr 1fr; }
+        .nav-services .mega-quick { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 520px) {
+        .site-header .brand .brand-name { font-size: 14px; }
+        .site-header .brand .logo-subtitle { font-size: 11px; }
+        .nav-services .mega-content { grid-template-columns: 1fr; }
+    }
+        /* Shared container width (match mainBlog) */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* Hero (match mainBlog) */
+        .hero { background: linear-gradient(180deg, #f6fbfb, #ffffff); padding: 32px 0 56px; }
+        .site-header + .hero { padding-top: 10px; }
+        .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 32px; }
+        .eyebrow { color: var(--teal-600); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 8px 0; }
+        h1.hero-title { font-size: clamp(28px, 4.2vw, 60px); line-height: 1.05; margin: 0 0 18px 0; color: #0a2b2b; }
+        .post-meta { display: flex; flex-wrap: wrap; gap: 10px 14px; margin-bottom: 20px; }
+        .pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; background: var(--teal-100); color: var(--ink-500); font-weight: 600; }
+        .hero-media { border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); background: #dff4f1; }
+        .hero-media img { display: block; width: 100%; height: auto; }
+                @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } .site-header + .hero { padding-top: 0 !important; } .hero { padding-top: 0 !important; } }
+                @media (max-width: 520px) { .site-header + .hero { padding-top: 0 !important; } .hero { padding-top: 0 !important; } }
+
+                /* ===== Blog content section (share rail + article + sidebar) ===== */
+                .blog-section { padding: 28px 0 48px; background: #ffffff; }
+                .blog-grid { display: grid; grid-template-columns: 64px 1fr 380px; gap: 24px; align-items: start; }
+                /* Share rail */
+                .share-rail { position: sticky; top: 90px; display: grid; gap: 12px; justify-items: center; }
+                .share-title { writing-mode:horizontal-tb; transform: rotate(0deg); color: var(--ink-500); font-weight: 700; letter-spacing: .06em; }
+                .share-list { list-style: none; padding: 0; margin: 6px 0 0; display: grid; gap: 10px; }
+                .share-link { display: grid; place-items: center; height: 44px; width: 44px; border-radius: 50%; background: #ffffff; color: var(--teal-700); box-shadow: 0 8px 24px rgba(0,0,0,.08); border: 1px solid rgba(15,118,110,.15); }
+                .share-link:hover { background: var(--teal-100); color: var(--teal-700); }
+                .share-link i { font-size: 16px; }
+                /* Article body */
+                .blog-body { color: #0a1f1f; }
+                .blog-body h2, .blog-body h3 { color: #0a2b2b; font-weight: 800; line-height: 1.2; margin: 24px 0 12px; }
+                .blog-body h2 { font-size: clamp(26px, 2.6vw, 40px); }
+                .blog-body h3 { font-size: clamp(20px, 2vw, 28px); }
+                .blog-body p { color: #1a2f2f; line-height: 1.8; margin: 0 0 12px; }
+                .blog-body ul, .blog-body ol { padding-left: 18px; }
+                .blog-body li { margin: 6px 0; }
+                /* Sidebar */
+                .sidebar { display: grid; gap: 18px; }
+                .consult-card { background: var(--teal-600); color: #ffffff; border-radius: 18px; padding: 20px; box-shadow: var(--shadow); }
+                .consult-title { font-size: 24px; font-weight: 800; margin: 0 0 12px; text-align: center; }
+                .consult-form { display: grid; gap: 10px; }
+                .consult-form label { display: grid; gap: 6px; color: #e9f9f8; font-size: 13px; }
+                .consult-form input { height: 44px; border-radius: 12px; border: none; padding: 0 12px; }
+                .consult-btn { background: #02877893; color: #fff; border: none; padding: 14px 16px; border-radius: 14px; font-weight: 800; box-shadow: 0 10px 24px rgba(0,0,0,.18); cursor: pointer; }
+                .consult-btn:hover { filter: brightness(.95); }
+                .latest { background: #f6fbfb; border-radius: 18px; padding: 16px; box-shadow: 0 8px 24px rgba(0,0,0,.06); }
+                .latest h4 { margin: 0 0 10px; color: var(--teal-700); font-weight: 800; }
+                .latest-item { display: grid; grid-template-columns: 100px 1fr; gap: 12px; align-items: center; padding: 10px; border-radius: 12px; }
+                .latest-item:hover { background: rgba(15,118,110,.06); }
+                .latest-thumb { border-radius: 12px; overflow: hidden; }
+                .latest-thumb img { width: 100%; height: 72px; object-fit: cover; display: block; }
+                .latest-meta { font-size: 12px; color: var(--ink-500); margin-top: 4px; }
+
+                /* Responsive */
+                @media (max-width: 1100px) { .blog-grid { grid-template-columns: 48px 1fr 320px; } }
+                @media (max-width: 900px) {
+                    .blog-grid { grid-template-columns: 1fr; }
+                    .share-rail { order: 1; position: static; display: flex; align-items: center; gap: 10px; }
+                    .share-title { writing-mode: initial; transform: none; }
+                    .share-list { display: flex; gap: 10px; margin: 0 0 0 6px; }
+                    .sidebar { order: 3; }
+                    .blog-body { order: 2; }
+                }
+
+                /* ===== Blog bottom navigation (Previous + Back to Blog) ===== */
+                .blog-post-nav { padding: 24px 0 48px; background: #ffffff; }
+                .blog-post-nav .nav-row { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+                .blog-post-nav .prev-link { display: inline-flex; align-items: center; gap: 10px; color: #008256; font-weight: 800; text-decoration: none; }
+                .blog-post-nav .prev-badge { display: inline-grid; place-items: center; height: 36px; width: 36px; border-radius: 50%; background: #07835a; color: #fff; box-shadow: 0 8px 22px rgba(18, 250, 161, 0.25); }
+                .btn-back-blog { display: inline-block; background: #008256; color: #fff; border: none; padding: 14px 22px; border-radius: 14px; font-weight: 800; box-shadow: 0 12px 28px rgba(18, 250, 161, 0.25); text-decoration: none; }
+                .btn-back-blog:hover { filter: brightness(.96); color: #fff; }
+                @media (max-width: 520px) { .blog-post-nav .nav-row { gap: 14px; } .btn-back-blog { width: 100%; text-align: center; } }
+</style>
 </html>
