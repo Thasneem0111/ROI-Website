@@ -100,13 +100,13 @@
             <div class="hero-content">
                 <div class="hero-left">
                     <div class="hero-text">
-                        <p class="hero-subtitle">100+ REVIEWS FROM OUR CLIENTS</p>
+                        <p class="hero-subtitle">99+ REVIEWS FROM OUR CLIENTS</p>
                         <h1 class="hero-title">Digital Marketing Agency</h1>
                         <p class="hero-description">
                             Royal Orbit Innovation is a full-service digital marketing agency dedicated to growing 
                             your client base and bringing your business to a new competitive level.
                         </p>
-                        <button class="hero-cta-btn">Book A Free Consultation</button>
+                        <button class="hero-cta-btn" id="heroConsultBtn" type="button">Book A Free Consultation</button>
                     </div>
                 </div>
                 
@@ -135,21 +135,21 @@
                         
                         <!-- Website Turnkey Badge - Right with Triangle -->
                         <div class="floating-badge turnkey-badge">
-                            <span>Website turnkey</span>
+                            <span>Ads and SEO</span>
                             <div class="badge-triangle"></div>
                         </div>
                         
                         <!-- Ads and SEO Badge - Top Right with Triangle -->
                         <div class="floating-badge ads-seo-badge">
-                            <span>Ads and SEO</span>
+                            <span>Social Media Management</span>
                             <div class="badge-triangle"></div>
                         </div>
                         
                         <!-- Daily Progress Chart - Bottom Right -->
                         <div class="floating-card revenue-chart-card">
                             <div class="chart-info">
-                                <span class="revenue-amount">$1.8k</span>
-                                <span class="revenue-period">/ Daily</span>
+                                <span class="revenue-amount">$2.1k</span>
+                                <span class="revenue-period">/ Week</span>
                             </div>
                             <div class="mini-chart">
                                 <div class="chart-bar" data-height="20"></div>
@@ -176,7 +176,7 @@
                                 </div>
                             </div>
                             <p class="testimonial-text">
-                                With Topposition I got 30 new clients and increased my income by 2 times.
+                                With Topposition I got more than 90 new clients and increased my income by 3 times.
                             </p>
                         </div>
                     </div>
@@ -184,6 +184,39 @@
             </div>
         </div>
     </section>
+
+    <!-- Consultation Modal (Popup) -->
+    <div class="consult-modal" id="consultModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="consultModalTitle">
+        <div class="consult-modal-backdrop" data-close-modal></div>
+        <div class="consult-modal-dialog" role="document">
+            <button class="consult-modal-close" type="button" aria-label="Close" data-close-modal>&times;</button>
+            <h2 class="consult-modal-title" id="consultModalTitle">Book A Free Consultation</h2>
+            <p class="consult-modal-intro">Fill in your details and our team will reach out shortly.</p>
+            <form id="consultForm" novalidate>
+                <div class="form-row">
+                    <label for="cfName">Name <span class="req">*</span></label>
+                    <input id="cfName" name="name" type="text" required maxlength="80" autocomplete="name" />
+                    <small class="field-error" data-error-for="cfName"></small>
+                </div>
+                <div class="form-row">
+                    <label for="cfEmail">Email address <span class="req">*</span></label>
+                    <input id="cfEmail" name="email" type="email" required maxlength="120" autocomplete="email" />
+                    <small class="field-error" data-error-for="cfEmail"></small>
+                </div>
+                <div class="form-row">
+                    <label for="cfPhone">Contact number <span class="req">*</span></label>
+                    <input id="cfPhone" name="phone" type="tel" required maxlength="30" autocomplete="tel" placeholder="+974 5xxxxxxx" />
+                    <small class="field-error" data-error-for="cfPhone"></small>
+                </div>
+                <div class="form-row actions">
+                    <button type="submit" class="consult-submit-btn" id="cfSubmit">Submit</button>
+                </div>
+                <div class="form-success" id="cfSuccess" role="alert" aria-live="polite" hidden>
+                    <span class="success-icon">✓</span> Thank you! We received your request.
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Our Clients Section -->
     <section class="clients-section py-5">
@@ -1645,6 +1678,111 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
+    <!-- Inline modal logic -->
+    <script>
+    (function(){
+        const openBtn = document.getElementById('heroConsultBtn');
+        const modal = document.getElementById('consultModal');
+        if(!openBtn || !modal) return;
+        const dialog = modal.querySelector('.consult-modal-dialog');
+        const closeEls = modal.querySelectorAll('[data-close-modal]');
+        let lastFocus;
+        function openModal(){
+            lastFocus = document.activeElement;
+            modal.setAttribute('aria-hidden','false');
+            document.body.classList.add('no-scroll');
+            setTimeout(()=>dialog.focus(),15);
+        }
+        function closeModal(){
+            modal.setAttribute('aria-hidden','true');
+            document.body.classList.remove('no-scroll');
+            if(lastFocus) lastFocus.focus();
+        }
+        openBtn.addEventListener('click', openModal);
+        closeEls.forEach(el=>el.addEventListener('click', closeModal));
+        modal.addEventListener('click', e=>{ if(e.target.matches('.consult-modal-backdrop')) closeModal(); });
+        document.addEventListener('keydown', e=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') closeModal(); });
+
+        const form = document.getElementById('consultForm');
+        if(!form) return;
+        const success = document.getElementById('cfSuccess');
+        const submitBtn = document.getElementById('cfSubmit');
+        const spinnerHTML = '<span class="spinner" aria-hidden="true"></span>';
+        form.addEventListener('submit', async e=>{
+            e.preventDefault();
+            success.hidden = true;
+            let valid = true;
+            const setErr=(field,msg)=>{
+                const box = form.querySelector(`[data-error-for="${field.id}"]`);
+                if(box) box.textContent = msg||'';
+                field.classList.toggle('invalid', !!msg);
+                if(msg && valid){ field.focus(); valid=false; }
+            };
+            const name = form.querySelector('#cfName');
+            const email = form.querySelector('#cfEmail');
+            const phone = form.querySelector('#cfPhone');
+            setErr(name, !name.value.trim()? 'Name is required':'' );
+            const emailVal = email.value.trim();
+            const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
+            setErr(email, !emailVal? 'Email is required': (!emailOk? 'Enter a valid email':''));
+            const phoneVal = phone.value.trim();
+            const phoneOk = /^[+()\d\s-]{7,}$/.test(phoneVal);
+            setErr(phone, !phoneVal? 'Phone is required': (!phoneOk? 'Enter a valid phone number':''));
+            if(!valid) return;
+            form.classList.add('submitting');
+            submitBtn.disabled = true;
+            const originalBtnTxt = submitBtn.textContent;
+            submitBtn.innerHTML = spinnerHTML + originalBtnTxt;
+            try {
+                // Determine API base (if user opened site with Live Server on 5500, backend is still on 3000)
+                const apiBase = (location.port === '3000') ? '' : 'http://localhost:3000';
+                const resp = await fetch(apiBase + '/api/consultation', {
+                    method:'POST',
+                    headers:{ 'Content-Type':'application/json' },
+                    body: JSON.stringify({ name: name.value.trim(), email: emailVal, phone: phoneVal })
+                });
+                if(!resp.ok) {
+                    let data; try { data = await resp.json(); } catch(_) { data = {}; }
+                    throw new Error(data.message || ('Failed (HTTP '+resp.status+')'));
+                }
+                form.reset();
+                success.hidden = false;
+            } catch(err){
+                alert('Error: '+ err.message);
+            } finally {
+                form.classList.remove('submitting');
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnTxt;
+            }
+        });
+    })();
+    </script>
+    <style>
+        body.no-scroll { overflow:hidden; }
+        .consult-modal { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; padding:32px 18px; background:rgba(17,24,39,.55); backdrop-filter:blur(4px); z-index:2000; opacity:0; pointer-events:none; transition:opacity .25s ease; }
+        .consult-modal[aria-hidden="false"] { opacity:1; pointer-events:auto; }
+        .consult-modal-backdrop { position:absolute; inset:0; }
+        .consult-modal-dialog { background:#fff; width:100%; max-width:480px; border-radius:18px; padding:30px 32px 34px; position:relative; box-shadow:0 24px 60px -8px rgba(0,0,0,.25), 0 4px 18px rgba(0,0,0,.12); outline:none; }
+        .consult-modal-title { margin:0 0 6px; font-size:24px; font-weight:700; color:#0b5f59; }
+        .consult-modal-intro { margin:0 0 20px; font-size:14px; color:#335c5c; }
+        .consult-modal-close { position:absolute; top:10px; right:10px; border:none; background:#0f766e; color:#fff; width:34px; height:34px; border-radius:50%; font-size:20px; line-height:1; cursor:pointer; display:grid; place-items:center; }
+        .consult-modal-close:hover { background:#0b5f59; }
+        #consultForm .form-row { display:flex; flex-direction:column; margin-bottom:16px; }
+        #consultForm label { font-weight:600; font-size:13px; color:#143c3c; margin-bottom:6px; letter-spacing:.3px; }
+        #consultForm input { border:1px solid #cbd5d5; background:#f8fbfb; border-radius:10px; padding:12px 14px; font-size:14px; font-family:inherit; outline:none; transition:border-color .2s, background .2s; }
+        #consultForm input:focus { border-color:#0f766e; background:#fff; box-shadow:0 0 0 3px rgba(15,118,110,.15); }
+        #consultForm input.invalid { border-color:#dc2626; background:#fff5f5; }
+        .field-error { color:#dc2626; font-size:12px; margin-top:4px; min-height:14px; }
+        .req { color:#dc2626; }
+        .consult-submit-btn { background:#0f766e; color:#fff; font-weight:700; border:none; padding:12px 20px; border-radius:999px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; box-shadow:0 6px 20px rgba(15,118,110,.25); }
+        .consult-submit-btn:hover { background:#0b5f59; }
+        #consultForm.submitting .consult-submit-btn { opacity:.7; cursor:progress; }
+    .spinner { width:16px; height:16px; border:3px solid rgba(255,255,255,.4); border-top-color:#fff; border-radius:50%; animation:spin 0.7s linear infinite; display:inline-block; }
+    @keyframes spin { to { transform:rotate(360deg);} }
+        .form-success { margin-top:8px; background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; padding:10px 14px; border-radius:12px; font-size:14px; display:flex; align-items:center; gap:8px; }
+        .success-icon { background:#10b981; color:#fff; width:22px; height:22px; display:grid; place-items:center; border-radius:50%; font-size:14px; }
+        @media (max-width:520px){ .consult-modal-dialog { padding:26px 22px 30px; border-radius:16px; } .consult-modal-title { font-size:21px; } }
+    </style>
 </body>
 
 <!-- Scoped header behavior (same as blog) -->
