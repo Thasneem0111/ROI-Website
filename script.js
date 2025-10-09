@@ -883,48 +883,70 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
     
-// Toggle Additional Projects Functionality
+// Toggle Additional Projects Functionality (generic: show first 2, toggle the rest)
 function toggleAdditionalProjects() {
-    const additionalProjects = document.getElementById('additional-projects');
+    const container = document.getElementById('client-cases-container');
     const btn = document.getElementById('more-projects-btn');
     const btnText = document.getElementById('btn-text');
     const btnIcon = document.getElementById('btn-icon');
-    
-    if (additionalProjects.classList.contains('client-case-hidden')) {
-        // Show the additional project
-        additionalProjects.classList.remove('client-case-hidden');
-        additionalProjects.classList.add('client-case-showing');
-        
-        // Update button
+    if (!container || !btn || !btnText) return;
+
+    const items = Array.from(container.querySelectorAll('.client-case-item'));
+    const visibleCount = 2;
+    if (items.length <= visibleCount) return; // nothing to toggle
+
+    const extras = items.slice(visibleCount);
+    const isCollapsed = extras.some(el => el.classList.contains('client-case-hidden'));
+
+    if (isCollapsed) {
+        // Expand: show all extra items
+        extras.forEach(el => {
+            el.classList.remove('client-case-hidden');
+            el.classList.add('client-case-showing');
+        });
         btnText.textContent = 'Show less';
-        if (btnIcon) {
-            btnIcon.classList.remove('fa-chevron-down');
-            btnIcon.classList.add('fa-chevron-up');
-        }
+        if (btnIcon) { btnIcon.classList.remove('fa-chevron-down'); btnIcon.classList.add('fa-chevron-up'); }
         btn.classList.add('expanded');
-        
-        // Smooth scroll to make sure the new content is visible
-        setTimeout(() => {
-            additionalProjects.scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'nearest' 
-            });
-        }, 200);
-        
+        // Smooth scroll to the first newly shown item
+        setTimeout(() => { extras[0]?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 200);
     } else {
-        // Hide the additional project
-        additionalProjects.classList.remove('client-case-showing');
-        additionalProjects.classList.add('client-case-hidden');
-        
-        // Update button
+        // Collapse: hide all extra items
+        extras.forEach(el => {
+            el.classList.remove('client-case-showing');
+            el.classList.add('client-case-hidden');
+        });
         btnText.textContent = 'More projects';
-        if (btnIcon) {
-            btnIcon.classList.remove('fa-chevron-up');
-            btnIcon.classList.add('fa-chevron-down');
-        }
+        if (btnIcon) { btnIcon.classList.remove('fa-chevron-up'); btnIcon.classList.add('fa-chevron-down'); }
         btn.classList.remove('expanded');
     }
 }
+
+// Ensure only first 2 client cases are visible on load
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('client-cases-container');
+    if (!container) return;
+    const items = Array.from(container.querySelectorAll('.client-case-item'));
+    const visibleCount = 2;
+    items.forEach((el, i) => {
+        if (i < visibleCount) {
+            el.classList.remove('client-case-hidden');
+        } else {
+            el.classList.add('client-case-hidden');
+            el.classList.remove('client-case-showing');
+        }
+    });
+    const btnText = document.getElementById('btn-text');
+    const btn = document.getElementById('more-projects-btn');
+    if (btnText) btnText.textContent = 'More projects';
+    if (btn) {
+        btn.classList.remove('expanded');
+        if (items.length <= visibleCount) {
+            btn.style.display = 'none';
+        } else {
+            btn.style.display = '';
+        }
+    }
+});
 
 // Newsletter Subscribe handler (shared)
 function handleSubscribe(e) {
