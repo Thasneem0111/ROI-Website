@@ -950,3 +950,154 @@ function handleSubscribe(e) {
     }
     return false;
 }
+
+// ===================== Global Consultation Modal Logic ===================== //
+// This enables every "Book A Free Consultation" button/link across any page to open the unified modal.
+(function(){
+    if (window.__consultModalInit) return; // guard
+    window.__consultModalInit = true;
+
+    function ensureModalPresent(){
+        if(document.getElementById('consultModal')) return;
+        // Minimal CSS injection if not already on index page
+        if(!document.getElementById('consultModalStyles')){
+            const style = document.createElement('style');
+            style.id='consultModalStyles';
+            style.textContent = `
+            .consult-modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:clamp(1rem,2vw,2rem);background:rgba(17,24,39,.55);backdrop-filter:blur(2px);z-index:1000;opacity:0;pointer-events:none;transition:opacity .25s ease;font-family:Inter,system-ui,sans-serif;}
+            .consult-modal[aria-hidden="false"]{opacity:1;pointer-events:auto;}
+            .consult-modal-dialog{background:#fff;width:100%;max-width:480px;border-radius:20px;padding:2rem 1.75rem 2.25rem;position:relative;box-shadow:0 10px 35px -5px rgba(0,0,0,.25);outline:none;}
+            .consult-modal-close{position:absolute;top:.75rem;right:.75rem;border:none;background:#f1f5f9;color:#0f172a;width:38px;height:38px;border-radius:50%;font-size:1.35rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .18s,color .18s;}
+            .consult-modal-close:hover{background:#e2e8f0;color:#020617;}
+            .consult-modal-title{margin:0 0 .35rem;font-size:1.55rem;line-height:1.25;font-weight:650;color:#0f172a;letter-spacing:.5px;}
+            .consult-modal-intro{margin:0 0 1.4rem;color:#475569;font-size:.95rem;}
+            #consultForm .form-row{margin-bottom:1rem;display:flex;flex-direction:column;gap:.4rem;}
+            #consultForm .form-row.actions{flex-direction:row;justify-content:center;align-items:center;margin-top:.35rem;margin-bottom:.25rem;}
+            #consultForm label{font-weight:550;font-size:.84rem;text-transform:uppercase;letter-spacing:.75px;color:#1e293b;}
+            #consultForm input{border:2px solid #e2e8f0;border-radius:11px;padding:.78rem .9rem;font-size:.95rem;background:#f8fafc;transition:border-color .18s,background .18s;}
+            #consultForm input:focus{outline:none;background:#fff;border-color:#0ea5e9;box-shadow:0 0 0 4px rgba(14,165,233,.15);}
+            #consultForm input.invalid{border-color:#dc2626;background:#fff1f1;}
+            .field-error{color:#dc2626;font-size:.7rem;min-height:14px;}
+            .consult-submit-btn{background:linear-gradient(135deg,#0d9488,#0f766e);border:none;color:#fff;padding:.95rem 1.35rem;font-weight:600;border-radius:50px;font-size:.95rem;cursor:pointer;display:inline-flex;align-items:center;gap:.55rem;transition:background .2s,transform .2s,box-shadow .2s;}
+            .consult-submit-btn:hover{transform:translateY(-3px);box-shadow:0 8px 18px -4px rgba(13,148,136,.45);}
+            .consult-submit-btn:disabled{opacity:.65;cursor:not-allowed;}
+            .spinner{--d:20px;display:inline-block;width:var(--d);height:var(--d);border:3px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .75s linear infinite;}
+            @keyframes spin{to{transform:rotate(360deg)}}
+            .form-success{margin-top:.75rem;padding:.85rem 1rem;border-radius:12px;background:linear-gradient(115deg,#0f766e,#0d9488);font-size:.83rem;color:#fff;display:flex;align-items:center;gap:.65rem;letter-spacing:.4px;}
+            .form-success .success-icon{background:#fff;color:#0f766e;font-size:.86rem;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:650;}
+            .no-scroll{overflow:hidden!important;touch-action:none;}
+            @media (max-width:460px){.consult-modal-dialog{padding:1.6rem 1.25rem 1.9rem;}.consult-modal-title{font-size:1.35rem;}}
+            `;
+            document.head.appendChild(style);
+        }
+        const template = `\n<div class="consult-modal" id="consultModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="consultModalTitle">\n  <div class="consult-modal-backdrop" data-close-modal></div>\n  <div class="consult-modal-dialog" role="document" tabindex="-1">\n    <button class="consult-modal-close" type="button" data-close-modal aria-label="Close">&times;</button>\n    <h2 class="consult-modal-title" id="consultModalTitle">Book A Free Consultation</h2>\n    <p class="consult-modal-intro">Fill in your details and our team will reach out shortly.</p>\n    <form id="consultForm" novalidate>\n      <div class="form-row">\n        <label for="cfName">Name <span class="req">*</span></label>\n        <input id="cfName" name="name" type="text" required maxlength="80" autocomplete="name" />\n        <small class="field-error" data-error-for="cfName"></small>\n      </div>\n      <div class="form-row">\n        <label for="cfEmail">Email address <span class="req">*</span></label>\n        <input id="cfEmail" name="email" type="email" required maxlength="120" autocomplete="email" />\n        <small class="field-error" data-error-for="cfEmail"></small>\n      </div>\n      <div class="form-row">\n        <label for="cfPhone">Contact number <span class="req">*</span></label>\n        <input id="cfPhone" name="phone" type="tel" required maxlength="30" autocomplete="tel" placeholder="+974 5xxxxxxx" />\n        <small class="field-error" data-error-for="cfPhone"></small>\n      </div>\n      <div class="form-row actions">\n        <button type="submit" class="consult-submit-btn" id="cfSubmit">Submit</button>\n      </div>\n      <div class="form-success" id="cfSuccess" role="alert" aria-live="polite" hidden>\n        <span class="success-icon">✓</span> Thank you! We received your request.\n      </div>\n    </form>\n  </div>\n</div>`;
+        document.body.insertAdjacentHTML('beforeend', template);
+    }
+
+    function bindModalLogic(){
+        const modal = document.getElementById('consultModal');
+        if(!modal || modal.dataset.bound) return;
+        modal.dataset.bound = 'true';
+        const dialog = modal.querySelector('.consult-modal-dialog');
+        const closeEls = modal.querySelectorAll('[data-close-modal]');
+        let lastFocus;
+        function openModal(){
+            lastFocus = document.activeElement;
+            modal.setAttribute('aria-hidden','false');
+            document.body.classList.add('no-scroll');
+            setTimeout(()=> dialog && dialog.focus(), 15);
+        }
+        function closeModal(){
+            modal.setAttribute('aria-hidden','true');
+            document.body.classList.remove('no-scroll');
+            if(lastFocus) try{ lastFocus.focus(); }catch(_){ }
+        }
+        modal.__openConsultModal = openModal; // expose globally for triggers
+        closeEls.forEach(el=> el.addEventListener('click', closeModal));
+        modal.addEventListener('click', e=>{ if(e.target.classList.contains('consult-modal-backdrop')) closeModal(); });
+        document.addEventListener('keydown', e=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') closeModal(); });
+
+        // Form wiring
+        const form = document.getElementById('consultForm');
+        if(form && !form.dataset.bound){
+            form.dataset.bound='true';
+            const success = document.getElementById('cfSuccess');
+            const submitBtn = document.getElementById('cfSubmit');
+            const spinnerHTML = '<span class="spinner" aria-hidden="true"></span>';
+            form.addEventListener('submit', async e=>{
+                e.preventDefault();
+                if(success) success.hidden = true;
+                let valid = true;
+                const setErr=(field,msg)=>{
+                    const box = form.querySelector(`[data-error-for="${field.id}"]`);
+                    if(box) box.textContent = msg||'';
+                    field.classList.toggle('invalid', !!msg);
+                    if(msg && valid){ field.focus(); valid=false; }
+                };
+                const name = form.querySelector('#cfName');
+                const email = form.querySelector('#cfEmail');
+                const phone = form.querySelector('#cfPhone');
+                setErr(name, !name.value.trim()? 'Name is required':'' );
+                const emailVal = email.value.trim();
+                const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
+                setErr(email, !emailVal? 'Email is required': (!emailOk? 'Enter a valid email':''));
+                const phoneVal = phone.value.trim();
+                const phoneOk = /^[+()\d\s-]{7,}$/.test(phoneVal);
+                setErr(phone, !phoneVal? 'Phone is required': (!phoneOk? 'Enter a valid phone number':''));
+                if(!valid) return;
+                form.classList.add('submitting');
+                submitBtn.disabled = true;
+                const originalBtnTxt = submitBtn.textContent;
+                submitBtn.innerHTML = spinnerHTML + originalBtnTxt;
+                try {
+                    const apiBase = (location.port === '3000') ? '' : 'http://localhost:3000';
+                    const resp = await fetch(apiBase + '/api/consultation', {
+                        method:'POST',
+                        headers:{ 'Content-Type':'application/json' },
+                        body: JSON.stringify({ name: name.value.trim(), email: emailVal, phone: phoneVal })
+                    });
+                    if(!resp.ok) {
+                        let data; try { data = await resp.json(); } catch(_) { data = {}; }
+                        throw new Error(data.message || ('Failed (HTTP '+resp.status+')'));
+                    }
+                    form.reset();
+                    if(success) success.hidden = false;
+                } catch(err){
+                    alert('Error: '+ err.message);
+                } finally {
+                    form.classList.remove('submitting');
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalBtnTxt;
+                }
+            });
+        }
+    }
+
+    function bindTriggers(){
+        const triggers = Array.from(document.querySelectorAll('a,button,[role="button"]')).filter(el=>{
+            if(el.dataset.consultTrigger) return true;
+            const txt = (el.textContent||'').trim();
+            if(!txt) return false;
+            return /book\s+a\s+free\s+consultation/i.test(txt);
+        });
+        triggers.forEach(el=>{
+            if(el.dataset.consultBound) return;
+            el.dataset.consultBound='true';
+            el.addEventListener('click', function(e){
+                // Skip if inside another form that isn't the consult modal form
+                if(el.closest('#consultForm')) return; // already inside modal
+                if(el.closest('#contactForm')){ e.preventDefault(); } // override contact form button
+                if(el.tagName==='A'){ e.preventDefault(); }
+                const modal = document.getElementById('consultModal');
+                if(modal && modal.__openConsultModal){ modal.__openConsultModal(); }
+            });
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+        ensureModalPresent();
+        bindModalLogic();
+        bindTriggers();
+    });
+})();
+// =================== End Global Consultation Modal Logic ==================== //

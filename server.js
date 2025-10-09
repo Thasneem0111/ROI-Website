@@ -6,7 +6,8 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+// Preferred port (can be overridden by environment) with automatic fallback if in use
+const PREFERRED_PORT = Number(process.env.PORT) || 3000;
 // Capture whether env vars were present at boot
 const mailConfiguredAtBoot = !!(process.env.MAIL_USER && process.env.MAIL_PASS);
 const envPath = path.join(__dirname,'.env');
@@ -37,6 +38,7 @@ app.get('/debug/mail-config', (req,res)=>{
     mailPassLength: process.env.MAIL_PASS ? process.env.MAIL_PASS.length : 0
   });
 });
+
 
 // Basic rate limit (very lightweight) in-memory
 const submissions = new Map();
@@ -140,4 +142,37 @@ app.get('/debug/send-test', async (req,res)=>{
   }
 });
 
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+// Graceful port binding with fallback to the next available port(s) if EADDRINUSE
+function startServer(startPort, maxAttempts = 15){
+  let attempt = 0;
+  const tryListen = (port) => {
+    const server = app.listen(port, () => {
+      if(port !== startPort){
+        console.log(`[Startup] Desired port ${startPort} was busy; server started on fallback port ${port}.`);
+      } else {
+        console.log(`Server running on http://localhost:${port}`);
+      }
+      process.env.ACTUAL_PORT = String(port);
+    });
+
+    server.on('error', (err) => {
+      if(err && err.code === 'EADDRINUSE'){
+        attempt++;
+        if(attempt < maxAttempts){
+          const nextPort = port + 1;
+            console.warn(`[Startup] Port ${port} in use, retrying with ${nextPort} (attempt ${attempt}/${maxAttempts-1})...`);
+            setTimeout(()=> tryListen(nextPort), 250);
+        } else {
+          console.error(`[Startup] All attempted ports (${startPort}..${port}) are in use. Giving up.`);
+          process.exit(1);
+        }
+      } else {
+        console.error('[Startup] Server error during listen:', err);
+        process.exit(1);
+      }
+    });
+  };
+  tryListen(startPort);
+}
+
+startServer(PREFERRED_PORT);

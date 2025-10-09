@@ -1,0 +1,17 @@
+{
+  "watch": ["server.js", ".env"],
+  "ext": "js json env",
+  "ignore": [
+    "images/*",
+    "**/*.html",
+    "**/*.css",
+    "**/*.png",
+    "**/*.jpg",
+    "**/*.webp",
+    "**/*.svg",
+    "**/*.jpeg",
+    "**/*.avif",
+    "**/*.jfif"
+  ],
+  "delay": "200ms"
+}
