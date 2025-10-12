@@ -548,8 +548,8 @@ body {
 
 /* Ads and SEO Badge - Top Right */
 .ads-seo-badge {
-    top: 2%;
-    right: -6%;
+    top: 0.1%;
+    right: -5%;
     animation: fadeInScale 1s ease 1.6s forwards;
 }
 
@@ -1551,7 +1551,7 @@ body {
 .client-logo {
     flex-shrink: 0;
     width: 180px;
-    height: 80px;
+    height: 150px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1608,8 +1608,8 @@ body {
 }
 
 .client-logo img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 100px;
+    max-height: 100px;
     object-fit: contain;
     filter: grayscale(100%) opacity(0.7);
     transition: all 0.3s ease;
