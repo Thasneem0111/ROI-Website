@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Branding Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+        
+</head>
+<body>
+        <!-- Header (copied from mainBlog.html) -->
+        <header class="site-header">
+            <div class="container header-inner">
+                <a class="brand" href="../index.html" aria-label="Royal Orbit Innovations home">
+                    <img src="../images/logo.png" alt="Royal Orbit Innovations logo" />
+                    <span class="brand-name">Royal Orbit Innovations</span>
+                    <span class="logo-subtitle">Digital Marketing Agency</span>
+                </a>
+
+                <nav id="primaryNav" aria-label="Primary">
+                    <ul class="nav-list">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../components/about.html">About</a></li>
+                        <li><a href="./mainBlog.html">Blog</a></li>
+                        <li class="nav-services">
+                            <a href="#" role="button" aria-haspopup="true" aria-expanded="false">Services <i class="fa-solid fa-chevron-down nav-caret" aria-hidden="true"></i></a>
+                            <div class="mega-menu" role="menu" aria-label="All services">
+                                <div class="mega-content">
+                                    <div class="mega-col">
+                                        <h4><span class="cat-ico"><i class="fa-solid fa-chart-line"></i></span> Digital Marketing</h4>
+                                        <ul>
+                                            <li><a href="../components/services/Digital-Marketing/PPCservices.html">PPC Services</a></li>
+                                            <li><a href="../components/services/Digital-Marketing/SEOservices.html">SEO Services</a></li>
+                                            <li><a href="../components/services/Digital-Marketing/emailMarketing.html">Email Marketing</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="mega-col">
+                                        <h4><span class="cat-ico"><i class="fa-solid fa-screwdriver-wrench"></i></span> Development &amp; Design</h4>
+                                        <ul>
+                                            <li><a href="../components/services/Development-Design/websiteDesign-Development.html">Website Design &amp; Development</a></li>
+                                            <li><a href="../components/services/Development-Design/socialMediaDesign.html">Social Media Design</a></li>
+                                            <li><a href="../components/services/Development-Design/landingPageDsign.html">Landing Page Design</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="mega-col">
+                                        <h4><span class="cat-ico"><i class="fa-solid fa-bullhorn"></i></span> Advertising &amp; Management</h4>
+                                        <ul>
+                                            <li><a href="../components/services/Advertise-Management/smAdvertising.html">Social Media Advertising</a></li>
+                                            <li><a href="../components/services/Advertise-Management/smManagement.html">Social Media Management</a></li>
+                                            <li><a href="../components/services/Advertise-Management/lisitngManagementservice.html">Listing Management Services</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="mega-col">
+                                        <h4><span class="cat-ico"><i class="fa-brands fa-google"></i></span> Google My Business</h4>
+                                        <ul>
+                                            <li><a href="../components/services/Google-My-Business/GMBservices.html">Google My Business Services</a></li>
+                                            <li><a href="../components/services/Google-My-Business/GMBmanagement.html">Google My Business Management</a></li>
+                                            <li><a href="../components/services/Google-My-Business/GMBsetupService.html">Google My Business Setup Service</a></li>
+                                            <li><a href="../components/services/Google-My-Business/GMBsupportService.html">Google My Business Support Service</a></li>
+                                            <li><a href="../components/services/Google-My-Business/GMBoptimizationServies.html">Google My Business Optimization Service</a></li>
+                                            <li><a href="../components/services/Google-My-Business/GMBreinstatementService.html">Google My Business Reinstatement Service</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <h4 class="mega-quick-title">Special Services</h4>
+                                <div class="mega-quick">
+                                    <a class="quick-link" href="../components/services/websiteCallTracking.html"><span class="ql-ico"><i class="fa-solid fa-phone"></i></span> Website Call Tracking</a>
+                                    <a class="quick-link" href="../components/services/videoProduction.html"><span class="ql-ico"><i class="fa-solid fa-video"></i></span> Video Production</a>
+                                    <a class="quick-link" href="../components/services/conversationRate.html"><span class="ql-ico"><i class="fa-solid fa-chart-simple"></i></span> Conversion Rate Optimization</a>
+                                    <a class="quick-link" href="#"><span class="ql-ico"><i class="fa-solid fa-diagram-project"></i></span> API Development</a>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <li><a href="../components/industries.html">Industries</a></li>
+                        <li><a href="../components/contact.html">Contacts</a></li>
+                    </ul>
+                </nav>
+
+                <div class="actions">
+                    <a class="btn-primary" href="tel:+974 50755597">
+                        <i class="fa-solid fa-phone"></i>
+                        <span style="margin-left:8px">Call: +974 50755597</span>
+                    </a>
+                    <button class="hamburger" id="navToggle" aria-label="Open menu" aria-expanded="false">
+                        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                        <span class="burger-fallback" aria-hidden="true">☰</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Blog Hero (same look as mainBlog hero) -->
+        <section class="hero blog-hero">
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <p class="eyebrow">Blog</p>
+                    <h1 class="hero-title">Why Branding Is So Important for Your Business?</h1>
+                    <p>Branding is more than just a logo or a nice color scheme. It is the complete identity of your business how you look, how you sound and how people feel when they interact with you.
+                       <br>It is your story, your values and also the experience you deliver and it plays a huge role in how customers see and remember your brand.
+                    </p>
+                    <div class="post-meta">
+                        <span class="pill"><i class="fa-regular fa-user"></i> by Royal Orbit Innovations</span>
+                        <span class="pill"><i class="fa-regular fa-calendar"></i> October 13, 2025</span>
+                        <span class="pill"><i class="fa-regular fa-clock"></i> 5 minute read</span>
+                    </div>
+                </div>
+                <div class="hero-media">
+                    <img src="../images/brandingBlog.jpg" alt="Branding" />
+                </div>
+            </div>
+        </section>
+
+                <!-- Blog Content + Sidebar Section -->
+                <section class="blog-section">
+                    <div class="container blog-grid">
+                        <!-- Left: Share rail -->
+                        <aside class="share-rail" aria-label="Share this article">
+                            <span class="share-title">Shares</span>
+                            <ul class="share-list">
+                                <li><a class="share-link" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=https://example.com"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a class="share-link" target="_blank" rel="noopener" href="https://t.me/share/url?url=https://example.com&text=Great%20read"><i class="fab fa-telegram"></i></a></li>
+                                <li><a class="share-link" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?text=https://example.com"><i class="fab fa-whatsapp"></i></a></li>
+                                <li><a class="share-link" target="_blank" rel="noopener" href="https://vk.com/share.php?url=https://example.com"><i class="fab fa-vk"></i></a></li>
+                            </ul>
+                        </aside>
+
+                        <!-- Center: Article body -->
+                        <article class="blog-body">
+                            <p>UX (User Experience) and marketing may seem like separate worlds, but they share a common goal: helping businesses connect with customers and drive growth.</p>
+                            <p>When UX and marketing work together, brands create experiences that are not only easy and enjoyable, but also persuasive and memorable. This partnership helps companies stand out, build trust, and turn visitors into loyal customers.</p>
+
+                            <h2>Why Branding Matters</h2>
+                            <p>Here are four big reasons branding is worth your attention:</p>
+                            <ul>
+                                <li> Builds Customer Loyalty:</li>
+                                <p>When your brand connects with people emotionally they are more likely to stick with you. A strong brand builds trust and trust builds loyalty.</p>
+                                <li>Increases Perceived Value:</li>
+                                <p>People are willing to pay more for brands that look professional and feel trustworthy. Great branding adds value without changing your product.</p>
+                                <li>Helps You Stand Out:</li> 
+                                <p>In a crowded market, branding shows what makes you different & better than your competitors. It gives people a reason to choose you.</p>
+                                <li> Creates Emotional Connection:</li>   
+                                <p>People don’t just buy products they buy stories, feelings & beliefs. A human  relatable brand builds stronger relationships with your audience.</p>
+                            </ul>
+                            
+                            <h2>What Makes a Strong Brand?</h2>
+                            <p>A great brand combines two key elements:</p>
+                            <ul>
+                                <li><strong>Visual Identity:</strong> This includes your logo, colors, fonts & overall design style. A consistent visual identity makes your brand recognizable and memorable.</li>
+                                <li><strong>Brand Voice:</strong> This is how you communicate with your audience through words and tone. Whether it’s friendly, professional or playful, your brand voice should reflect your values and resonate with your target customers.</li>
+                                <p>When these two work together, your brand is complete and consistent.</p>
+                            </ul>
+
+                            <h2>Quick Tips to Strengthen Your Brand</h2>
+                            <ul>
+                                <li><strong>Define Your Brand:</strong> Know your mission, values & what makes you unique.</li>
+                                <li><strong>Know Your Audience:</strong> Understand who your customers are and what they care about.</li>
+                                <li><strong>Be Consistent:</strong> Use the same colors, fonts & tone across all channels.</li>
+                                <li><strong>Create Quality Content:</strong> Share valuable information that helps and educates your audience.</li>
+                                <li><strong>Engage with Customers:</strong> Listen to feedback and respond to questions and reviews.</li>
+                                <li><strong>Use Data:</strong> Track how your brand is performing and make improvements based on insights.</li>
+                            </ul>
+                            <h2>Conclusion</h2>
+                            <p>Branding is the foundation of how your business is seen and  remembered. It builds trust, attracts the right audience and keeps customers coming back. With the right mix of visuals, messaging, and strategy, your brand becomes more than just a business it becomes an experience.</p>
+                            <h3>Want to elevate your brand?</h3>
+                            <p>
+                                At Royal Orbit Innovations, we specialize in creating strong brands that connect with customers and drive growth. Whether you need a new logo, a complete brand makeover, or a marketing strategy that aligns with your brand values, we are here to help. Contact us today for a free consultation and let’s build a brand that stands out and makes an impact.
+                            </p>
+
+                        </article>
+
+                        <!-- Right: Sidebar -->
+                        <aside class="sidebar" aria-label="Sidebar">
+                            <!-- Consultation card -->
+                            <div class="consult-card">
+                                <h3 class="consult-title">Book a Free Consultation</h3>
+                                <form class="consult-form" onsubmit="event.preventDefault(); alert('Thanks! We will contact you soon.');">
+                                    <label>
+                                        <span>Name</span>
+                                        <input type="text" placeholder="Enter your Name" required />
+                                    </label>
+                                    <label>
+                                        <span>Email</span>
+                                        <input type="email" placeholder="Enter your Email" required />
+                                    </label>
+                                    <label>
+                                        <span>Phone number</span>
+                                        <input type="tel" placeholder="Enter your phone" />
+                                    </label>
+                                    <button type="submit" class="consult-btn">Book A Free Consultation</button>
+                                </form>
+                            </div>
+
+                            <!-- Latest news -->
+                            <div class="latest">
+                                <h4>The Latest</h4>
+                                <a class="latest-item" href="./uxMarketing.html">
+                                    <div class="latest-thumb"><img src="../images/ux.jpg" alt="UX Marketing" /></div>
+                                    <div>
+                                        <div class="latest-title">The Importance of UX in Marketing</div>
+                                        <div class="latest-meta">October 13, 2025</div>
+                                    </div>
+                                </a>
+                                <a class="latest-item" href="./socialMedialog.html">
+                                    <div class="latest-thumb"><img src="../images/socialBlog.jpg" alt="Social Media Marketing" /></div>
+                                    <div>
+                                        <div class="latest-title">The Role of Social Media in Modern Marketing</div>
+                                        <div class="latest-meta">October 13, 2025</div>
+                                    </div>
+                                </a>
+                                <a class="latest-item" href="./seo.html">
+                                    <div class="latest-thumb"><img src="../images/seo.webp" alt="Mobile friendly website SEO" /></div>
+                                    <div>
+                                        <div class="latest-title">Why You Need a Mobile Friendly Website for SEO Success</div>
+                                        <div class="latest-meta">August 14, 2025</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+
+        
+        <!-- Post navigation (Previous + Back to Blog) -->
+        <section class="blog-post-nav">
+            <div class="container nav-row">
+                <a class="prev-link" href="../index.html"><span class="prev-badge"><i class="fa-solid fa-arrow-left"></i></span><span>Previous</span></a>
+                <a class="btn-back-blog" href="./mainBlog.html">Back to Blog</a>
+            </div>
+        </section>
+
+        <!-- Footer Section -->
+        <footer class="footer-section">
+            <div class="container-fluid px-3 px-lg-5">
+                <div class="row">
+                    <!-- Left Column - Company Info -->
+                    <div class="col-lg-4 col-md-6 col-12 mb-4">
+                        <div class="footer-company">
+                            <div class="footer-logo">
+                                <img src="../images/logo.png" alt="ROI Logo" class="footer-logo-image" />
+                                <div class="footer-logo-content">
+                                    <span class="footer-logo-text">Royal Orbit Innovations</span>
+                                    <span class="footer-logo-subtitle">Digital Marketing Agency</span>
+                                </div>
+                            </div>
+                            <p class="footer-description">
+                                Our team knows what is business. Either it is small or medium size. Our passion is always find creative ways to cut the cost and expand your profits by using the latest digital tools and having intelligent people working on your project.
+                            </p>
+                            
+                            <!-- Google Map -->
+                            <div class="footer-map">
+                                <iframe 
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.0234567891234!2d51.5022374!3d25.2861336!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e45c5e4c5e4c5e4%3A0x5e4c5e4c5e4c5e4c!2z25%C2%B017%2710.1%22N%2051%C2%B030%2717.3%22E!5e0!3m2!1sen!2sqa!4v1640123456789!5m2!1sen!2sqa" 
+                                    width="100%" 
+                                    height="200" 
+                                    style="border:0; border-radius: 10px;" 
+                                    allowfullscreen="" 
+                                    loading="lazy">
+                                </iframe>
+                            </div>
+                            
+                            <!-- CTA Button -->
+                            <button class="footer-cta-btn">Book A Free Consultation</button>
+                        </div>
+                    </div>
+
+                    <!-- Middle Left Column - Company Links -->
+                <div class="col-lg-2 col-md-6 col-6 mb-4">
+                    <div class="footer-links">
+                        <h4 class="footer-title">Company</h4>
+                        <ul class="footer-nav">
+                            <li><a href="/components/about.html">About</a></li>
+                            <li><a href="/components/industries.html">Industries</a></li>
+                            <li><a href="/Blog/mainBlog.html">Blog</a></li>
+                            <li><a href="/components/contact.html">Contacts</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Middle Right Column - Services -->
+                <div class="col-lg-3 col-md-6 col-6 mb-4">
+                    <div class="footer-links">
+                        <h4 class="footer-title">Services</h4>
+                        <ul class="footer-nav">
+                            <li><a href="/components/services/websiteCallTracking.html">Website Call Tracking</a></li>
+                            <li><a href="/components/services/Development-Design/socialMediaDesign.html">Social Media Design</a></li>
+                            <li><a href="/components/services/Development-Design/landingPageDesign.html">Landing Page Design</a></li>
+                            <li><a href="/components/services/Digital-Marketing/PPCservices.html">PPC Services</a></li>
+                            <li><a href="/components/services/Digital-Marketing/SEOservices.html">SEO Services</a></li>
+                            <li><a href="/components/services/Digital-Marketing/emailMarketing.html">Email Marketing</a></li>
+                            <li><a href="/components/services/videoProduction.html">Video Production</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Right Column - Extended Services & Contact -->
+                <div class="col-lg-3 col-md-6 col-12 mb-4">
+                    <div class="footer-links">
+                        <h4 class="footer-title">More Services</h4>
+                        <ul class="footer-nav">
+                            <li><a href="/components/services/Development-Design/websiteDesign-Development.html">Website Design & Development</a></li>
+                            <li><a href="/components/services/Advertise-Management/smAdvertising.html">Social Media Advertising</a></li>
+                            <li><a href="/components/services/Advertise-Management/smManagement.html">Social Media Management</a></li>
+                            <li><a href="/components/services/conversationRate.html">Conversion Rate Optimization</a></li>
+                            <li><a href="/components/services/Advertise-Management/listingManagement.html">Listing Management Services</a></li>
+                            <li><a href="/components/services/Google-My-Business/GMBservices.html">Google My Business Services</a></li>
+                            <li><a href="/components/services/Google-My-Business/GMBmanagement.html">Google My Business Management</a></li>
+                            <li><a href="/components/services/Google-My-Business/GMBsetupService.html">Google My Business Setup Service</a></li>
+                            <li><a href="/components/services/Google-My-Business/GMBsupportService.html">Google My Business Support Service</a></li>
+                            <li><a href="/components/services/Google-My-Business/GMBoptimizationServies.html">Google My Business Optimization Service</a></li>
+                            <li><a href="/components/services/Google-My-Business/GMBreinstatementService.html">Google My Business Reinstatement Service</a></li>
+                        </ul>
+                    </div>
+
+                        <!-- Contact Info -->
+                        <div class="footer-contact mt-4">
+                            <h4 class="footer-title">Contact</h4>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>(+974) 50755597</span>
+                            </div>
+                            
+                            <!-- Social Media -->
+                            <div class="footer-social">
+                                <a href="https://www.linkedin.com/company/royal-orbit-innovations/" class="social-link linkedin"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="https://www.facebook.com/share/12HbEYaXDaq/?mibextid=wwXIfr" class="social-link facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="https://www.instagram.com/roi_marketing.qa?igsh=MXNrZThkMHJmZTJqNA==" class="social-link instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="https://www.tiktok.com/@roi_marketing.qa" class="social-link tiktok"><i class="fab fa-tiktok"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Bottom -->
+                <div class="footer-bottom">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 col-12">
+                            <p class="footer-copyright">Copyright © 2025, Royal Orbit Innovations. All rights reserved.</p>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="footer-bottom-links">
+                                <a href="#terms">Terms and Conditions</a>
+                                <a href="#privacy">Privacy Policy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../script.js"></script>
+        <script>
+            // Mobile nav toggle (copied from mainBlog)
+            (function () {
+                const toggle = document.getElementById('navToggle');
+                const links = document.querySelectorAll('#primaryNav .nav-list a');
+                const body = document.body;
+                function closeNav() { body.classList.remove('nav-open'); toggle?.setAttribute('aria-expanded', 'false'); }
+                function openNav() { body.classList.add('nav-open'); toggle?.setAttribute('aria-expanded', 'true'); }
+                toggle?.addEventListener('click', () => { if (body.classList.contains('nav-open')) closeNav(); else openNav(); });
+                links.forEach((a) => a.addEventListener('click', closeNav));
+                document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav(); });
+            })();
+            // Mega menu toggle on mobile + hover on desktop (copied)
+            (function () {
+                const navServices = document.querySelector('.nav-services');
+                if (!navServices) return; const trigger = navServices.querySelector('a'); const menu = navServices.querySelector('.mega-menu'); if (!trigger || !menu) return;
+                function isMobile() { return window.matchMedia('(max-width: 900px)').matches; }
+                trigger.addEventListener('click', (e) => {
+                    if (isMobile()) { e.preventDefault(); const open = menu.style.display === 'block'; menu.style.display = open ? 'none' : 'block'; trigger.setAttribute('aria-expanded', String(!open)); }
+                    else { e.preventDefault(); }
+                });
+                let hideTimer; navServices.addEventListener('mouseleave', () => { if (isMobile()) return; hideTimer = setTimeout(() => { if (!isMobile()) menu.style.display = 'none'; }, 120); });
+                navServices.addEventListener('mouseenter', () => { if (isMobile()) return; clearTimeout(hideTimer); menu.style.display = 'block'; });
+                menu.addEventListener('mouseenter', () => clearTimeout(hideTimer));
+            })();
+            // Show fallback hamburger if Font Awesome fails
+            (function () { try { const btn = document.querySelector('.hamburger'); if (!btn) return; const enableFallback = () => btn.classList.add('fa-fallback'); if (document.fonts && !document.fonts.check('1em "Font Awesome 6 Free"')) { setTimeout(() => { if (!document.fonts.check('1em "Font Awesome 6 Free"')) enableFallback(); }, 400); } } catch (_) {} })();
+        </script>
+</body>
+
+<style>
+    :root {
+        --teal-600: #0f766e; /* primary */
+        --teal-700: #0b5f59;
+        --teal-100: #e6f4f3;
+        --ink-900: #0b2a2a;
+        --ink-700: #143c3c;
+        --ink-500: #335c5c;
+        --white: #ffffff;
+        --shadow: 0 6px 24px rgba(15, 118, 110, 0.12);
+    }
+    /* Header (copied from mainBlog.html) */
+    .site-header { position: sticky; top: 0; z-index: 50; background: var(--white); box-shadow: 0 1px 0 rgba(0,0,0,0.06); }
+    .site-header .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 72px; }
+    .site-header .brand { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; align-items: center; column-gap: 10px; min-width: 160px; text-decoration: none; }
+    .site-header .brand img { height: 36px; width: auto; grid-row: 1 / span 2; }
+    .site-header .brand .brand-name { grid-column: 2; grid-row: 1; font-weight: 700; color: var(--teal-700); letter-spacing: .3px; line-height: 1.1; }
+    .site-header .brand .logo-subtitle { grid-column: 2; grid-row: 2; font-size: 12px; color: var(--ink-500); line-height: 1.1; margin-top: 2px; }
+    nav#primaryNav { display: flex; align-items: center; gap: 8px; }
+    nav#primaryNav .nav-list { display: flex; align-items: center; gap: 22px; list-style: none; margin: 0; padding: 0; }
+    nav#primaryNav .nav-list a { color: var(--ink-700); font-weight: 600; text-decoration: none; }
+    nav#primaryNav .nav-list a:hover, nav#primaryNav .nav-list a:focus { color: var(--teal-600); }
+    .nav-services .nav-caret { color: #018052; margin-left: 6px; font-size: .85em; transition: transform .2s ease; }
+    .nav-services a:hover .nav-caret { transform: translateY(1px) rotate(0.001deg); }
+    .nav-services { position: relative; }
+    .nav-services > a { display: inline-flex; align-items: center; }
+    .mega-menu { position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%); width: min(1100px, 92vw); background: #fff; border-radius: 14px; box-shadow: 0 16px 48px rgba(0,0,0,.14); padding: 22px 22px 14px; display: none; z-index: 1000; }
+    .nav-services:hover .mega-menu, .nav-services:focus-within .mega-menu, .nav-services .mega-menu:hover { display: block; }
+    .nav-services:hover .nav-caret, .nav-services:focus-within .nav-caret { transform: rotate(180deg); }
+    .mega-content { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; border-bottom: 1px solid rgba(0,0,0,.06); padding-bottom: 12px; margin-bottom: 12px; }
+    .mega-col h4 { font-size: 16px; font-weight: 800; margin: 0 0 10px; color: var(--ink-900); display:flex; align-items:center; gap:10px; }
+    .cat-ico { display:inline-grid; place-items:center; height:32px; width:32px; border-radius:8px; background: #eef7f6; color: var(--teal-700); box-shadow: inset 0 0 0 1px rgba(0,0,0,.05); }
+    .cat-ico i { font-size: 14px; }
+    .mega-col ul { list-style: none; margin: 0; padding: 0; }
+    .mega-col li { margin: 8px 0; }
+    .mega-col a { color: #2b2b2b; text-decoration: none; font-weight: 600; }
+    .mega-col a:hover { color: var(--teal-600); }
+    .mega-quick-title { font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#335c5c; margin:2px 0 10px; padding:0 4px; }
+    .mega-quick { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; }
+    .quick-link { display: flex; align-items:center; gap:12px; padding: 14px 16px; background: rgba(15,118,110,.08); border-radius: 12px; font-weight: 700; color: var(--teal-700); text-decoration: none; }
+    .ql-ico { display:inline-grid; place-items:center; height:36px; width:36px; border-radius:10px; background:#fff; color:#0f6d6d; box-shadow: 0 1px 0 rgba(0,0,0,.06), inset 0 0 0 1px rgba(0,0,0,.06); }
+    .ql-ico i { font-size:14px; }
+    .quick-link:hover { background: rgba(15,118,110,.14); }
+    .actions { display: flex; align-items: center; gap: 12px; }
+    .btn-primary { background: var(--teal-600); color: #fff; border: none; padding: 8px 16px; border-radius: 999px; font-weight: 700; box-shadow: var(--shadow); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-primary:hover, .btn-primary:focus, .btn-primary:visited { background: var(--teal-700); text-decoration: none; }
+    .hamburger { display: none; height: 40px; width: 40px; border-radius: 10px; border: 1px solid #e5e7eb; background: #fff; color: #111827; cursor: pointer; align-items: center; justify-content: center; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+    .hamburger:hover { background: #f8fafc; border-color: #d1d5db; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
+    .hamburger i { display: inline-block; font-size: 22px; color: #111827; }
+    .hamburger .burger-fallback { display: none; font-size: 22px; line-height: 1; }
+    .hamburger.fa-fallback i { display: none !important; }
+    .hamburger.fa-fallback .burger-fallback { display: inline-block !important; }
+    @media (max-width: 900px) {
+        nav#primaryNav .nav-list { display: none; }
+        .actions .btn-primary { display: none; }
+        .hamburger { display: inline-grid; }
+        body.nav-open nav#primaryNav .nav-list { display: flex; position: fixed; top: 72px; right: 0; left: 0; padding: 12px 8px; border-radius: 14px; background: #fff; flex-direction: column; gap: 8px; align-items: flex-start; text-align: left; box-shadow: var(--shadow); z-index: 60; }
+        body.nav-open nav#primaryNav .nav-list li { width: 100%; }
+        body.nav-open nav#primaryNav .nav-list a { display: block; width: 100%; padding: 10px 14px; border-radius: 10px; }
+        body.nav-open nav#primaryNav .nav-list a:hover { background: var(--teal-100); color: var(--teal-700); }
+        .nav-services .mega-menu { position: static; transform: none; width: 100%; box-shadow: none; border: 1px solid rgba(0,0,0,.06); border-radius: 12px; margin-top: 6px; }
+        .nav-services .mega-content { grid-template-columns: 1fr 1fr; }
+        .nav-services .mega-quick { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 520px) {
+        .site-header .brand .brand-name { font-size: 14px; }
+        .site-header .brand .logo-subtitle { font-size: 11px; }
+        .nav-services .mega-content { grid-template-columns: 1fr; }
+    }
+        /* Shared container width (match mainBlog) */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px;  }
+
+        /* Hero (match mainBlog) */
+        .hero { background: linear-gradient(180deg, #f6fbfb, #ffffff); padding: 32px 0 56px; }
+        .site-header + .hero { padding-top: 10px; }
+        .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 32px; }
+        .eyebrow { color: var(--teal-600); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 8px 0; }
+        h1.hero-title { font-size: clamp(28px, 4.2vw, 60px); line-height: 1.05; margin: 0 0 18px 0; color: #0a2b2b; }
+        .post-meta { display: flex; flex-wrap: wrap; gap: 10px 14px; margin-bottom: 20px; }
+        .pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; background: var(--teal-100); color: var(--ink-500); font-weight: 600; }
+        .hero-media { border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); background: #dff4f1; }
+        .hero-media img { display: block; width: 100%; height: auto; }
+                @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } .site-header + .hero { padding-top: 0 !important; } .hero { padding-top: 0 !important; } }
+                @media (max-width: 520px) { .site-header + .hero { padding-top: 0 !important; } .hero { padding-top: 0 !important; } }
+
+                /* ===== Blog content section (share rail + article + sidebar) ===== */
+                .blog-section { padding: 28px 0 48px; background: #ffffff; }
+                .blog-grid { display: grid; grid-template-columns: 64px 1fr 380px; gap: 24px; align-items: start; }
+                /* Share rail */
+                .share-rail { position: sticky; top: 90px; display: grid; gap: 12px; justify-items: center; }
+                .share-title { writing-mode:horizontal-tb; transform: rotate(0deg); color: var(--ink-500); font-weight: 700; letter-spacing: .06em; }
+                .share-list { list-style: none; padding: 0; margin: 6px 0 0; display: grid; gap: 10px; }
+                .share-link { display: grid; place-items: center; height: 44px; width: 44px; border-radius: 50%; background: #ffffff; color: var(--teal-700); box-shadow: 0 8px 24px rgba(0,0,0,.08); border: 1px solid rgba(15,118,110,.15); }
+                .share-link:hover { background: var(--teal-100); color: var(--teal-700); }
+                .share-link i { font-size: 16px; }
+                /* Article body */
+                .blog-body { color: #0a1f1f; }
+                .blog-body h2, .blog-body h3 { color: #0a2b2b; font-weight: 800; line-height: 1.2; margin: 24px 0 12px; }
+                .blog-body h2 { font-size: clamp(26px, 2.6vw, 40px); }
+                .blog-body h3 { font-size: clamp(20px, 2vw, 28px); }
+                .blog-body p { color: #1a2f2f; line-height: 1.8; margin: 0 0 12px; }
+                .blog-body ul, .blog-body ol { padding-left: 18px; }
+                .blog-body li { margin: 6px 0; }
+                /* Sidebar */
+                .sidebar { display: grid; gap: 18px; }
+                .consult-card { background: var(--teal-600); color: #ffffff; border-radius: 18px; padding: 20px; box-shadow: var(--shadow); }
+                .consult-title { font-size: 24px; font-weight: 800; margin: 0 0 12px; text-align: center; }
+                .consult-form { display: grid; gap: 10px; }
+                .consult-form label { display: grid; gap: 6px; color: #e9f9f8; font-size: 13px; }
+                .consult-form input { height: 44px; border-radius: 12px; border: none; padding: 0 12px; }
+                .consult-btn { background: #02877893; color: #fff; border: none; padding: 14px 16px; border-radius: 14px; font-weight: 800; box-shadow: 0 10px 24px rgba(0,0,0,.18); cursor: pointer; }
+                .consult-btn:hover { filter: brightness(.95); }
+                .latest { background: #f6fbfb; border-radius: 18px; padding: 16px; box-shadow: 0 8px 24px rgba(0,0,0,.06); }
+                .latest h4 { margin: 0 0 10px; color: var(--teal-700); font-weight: 800; }
+                .latest-item { display: grid; grid-template-columns: 100px 1fr; gap: 12px; align-items: center; padding: 10px; border-radius: 12px; }
+                .latest-item:hover { background: rgba(15,118,110,.06); }
+                .latest-thumb { border-radius: 12px; overflow: hidden; }
+                .latest-thumb img { width: 100%; height: 72px; object-fit: cover; display: block; }
+                .latest-meta { font-size: 12px; color: var(--ink-500); margin-top: 4px; }
+
+                /* Responsive */
+                @media (max-width: 1100px) { .blog-grid { grid-template-columns: 48px 1fr 320px; } }
+                @media (max-width: 900px) {
+                    .blog-grid { grid-template-columns: 1fr; }
+                    .share-rail { order: 1; position: static; display: flex; align-items: center; gap: 10px; }
+                    .share-title { writing-mode: initial; transform: none; }
+                    .share-list { display: flex; gap: 10px; margin: 0 0 0 6px; }
+                    .sidebar { order: 3; }
+                    .blog-body { order: 2; }
+                }
+
+                /* ===== Blog bottom navigation (Previous + Back to Blog) ===== */
+                .blog-post-nav { padding: 24px 0 48px; background: #ffffff; }
+                .blog-post-nav .nav-row { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+                .blog-post-nav .prev-link { display: inline-flex; align-items: center; gap: 10px; color: #008256; font-weight: 800; text-decoration: none; }
+                .blog-post-nav .prev-badge { display: inline-grid; place-items: center; height: 36px; width: 36px; border-radius: 50%; background: #07835a; color: #fff; box-shadow: 0 8px 22px rgba(18, 250, 161, 0.25); }
+                .btn-back-blog { display: inline-block; background: #008256; color: #fff; border: none; padding: 14px 22px; border-radius: 14px; font-weight: 800; box-shadow: 0 12px 28px rgba(18, 250, 161, 0.25); text-decoration: none; }
+                .btn-back-blog:hover { filter: brightness(.96); color: #fff; }
+                @media (max-width: 520px) { .blog-post-nav .nav-row { gap: 14px; } .btn-back-blog { width: 100%; text-align: center; } }
+</style>
+</html>
