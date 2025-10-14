@@ -548,7 +548,7 @@ body {
 
 /* Ads and SEO Badge - Top Right */
 .ads-seo-badge {
-    top: 0.1%;
+    top: 4%;
     right: -5%;
     animation: fadeInScale 1s ease 1.6s forwards;
 }
@@ -609,7 +609,7 @@ body {
 
 /* Testimonial Card - Above Image */
 .testimonial-card {
-    bottom: 10%;
+    bottom: 4%;
     left: -45%;
     width: 250px;
     z-index: 5;
