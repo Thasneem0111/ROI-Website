@@ -859,10 +859,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 name: getVal(['contactName', 'name']),
                 businessName: getVal(['businessName']),
                 email: getVal(['contactEmail', 'email']),
-                phone: getVal(['phoneNumber', 'phone']),
-                privacyAccepted: getVal(['privacyCheck', 'privacyPolicy'])
+                phone: getVal(['phoneNumber', 'phone'])
             };
-            if (!formData.privacyAccepted) {
+            const privacyAccepted = getVal(['privacyCheck', 'privacyPolicy']);
+            if (!privacyAccepted) {
                 alert('Please accept the privacy policy to continue.');
                 return;
             }
@@ -871,14 +871,33 @@ document.addEventListener('DOMContentLoaded', function() {
             const originalText = submitBtn.textContent;
             submitBtn.textContent = 'Sending...';
             submitBtn.disabled = true;
-            setTimeout(() => {
-                submitBtn.textContent = 'Message Sent!';
+            fetch('/api/consultation', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+            .then(res => res.json())
+            .then(result => {
+                if(result.ok){
+                    submitBtn.textContent = 'Message Sent!';
+                    contactForm.reset();
+                } else {
+                    submitBtn.textContent = 'Error!';
+                    alert('Error: ' + (result.message || 'Could not send request.'));
+                }
                 setTimeout(() => {
                     submitBtn.textContent = originalText;
                     submitBtn.disabled = false;
-                    contactForm.reset();
                 }, 2000);
-            }, 1000);
+            })
+            .catch(() => {
+                submitBtn.textContent = 'Error!';
+                alert('Network error. Please try again later.');
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }, 2000);
+            });
         });
     }
 });
@@ -1106,9 +1125,9 @@ function handleSubscribe(e) {
             if(el.dataset.consultBound) return;
             el.dataset.consultBound='true';
             el.addEventListener('click', function(e){
-                // Skip if inside another form that isn't the consult modal form
-                if(el.closest('#consultForm')) return; // already inside modal
-                if(el.closest('#contactForm')){ e.preventDefault(); } // override contact form button
+                // If inside contact form, let the form submit normally (no modal)
+                if(el.closest('#contactForm')){ return; }
+                // Otherwise, show modal for other pages
                 if(el.tagName==='A'){ e.preventDefault(); }
                 const modal = document.getElementById('consultModal');
                 if(modal && modal.__openConsultModal){ modal.__openConsultModal(); }
