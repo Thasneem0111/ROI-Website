@@ -5377,8 +5377,8 @@ body {
 }
 
 .footer-cta-btn {
-    background: #000000;
-    color: var(--white);
+    background: #fff;
+    color: #00a89d;
     border: none;
     padding: 0.875rem 2rem;
     border-radius: 8px;
@@ -5391,8 +5391,9 @@ body {
 }
 
 .footer-cta-btn:hover {
-    background: #007961;
-    transform: translateY(-2px);
+    background: #003c38;
+    color: #fff;
+    border: 2px solid #fff;
     box-shadow: 0 6px 20px rgba(0, 116, 95, 0.4);
 }
 
