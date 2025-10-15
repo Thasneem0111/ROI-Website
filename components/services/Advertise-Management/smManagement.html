@@ -193,6 +193,66 @@
         </div>
     </section>
 
+    <!-- Why choose our agency (teal theme with animated counters) -->
+    <section class="choose-agency" id="why-us">
+        <div class="container-fluid px-3 px-lg-5">
+            <div class="choose-inner">
+                <h2 class="choose-title text-center">Why choose our agency for your projects?</h2>
+                <p class="choose-sub text-center">Our Pay-Per-Click (PPC) campaigns are engineered to bring you measurable results fast.
+        We target your ideal audience using data-driven keyword strategies across Google and Meta platforms.
+        Each campaign is carefully optimized to reduce costs, increase ROI, and ensure every click counts.</p>
+                <div class="choose-stats">
+                    <div class="ca-stat">
+                        <div class="ca-number" data-target="43" data-suffix="+">0</div>
+                        <p class="ca-label">Completed projects to the end by our specialists.</p>
+                    </div>
+                    <div class="ca-stat">
+                        <div class="ca-number" data-target="18">0</div>
+                        <p class="ca-label">A large team of the best specialists.</p>
+                    </div>
+                    <div class="ca-stat">
+                        <div class="ca-number" data-target="43" data-suffix="+">0</div>
+                        <p class="ca-label">Customers who were satisfied with our work.</p>
+                    </div>
+                    <div class="ca-stat">
+                        <div class="ca-number" data-target="100" data-suffix="%">0</div>
+                        <p class="ca-label">Our values are good organization and result orientation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <script>
+        // Animated counters for Choose Agency section (from team.html)
+        (function() {
+            const nums = document.querySelectorAll('.choose-agency .ca-number');
+            if (!nums.length) return;
+            function animate(el) {
+                const target = parseInt(el.getAttribute('data-target') || '0', 10);
+                const suffix = el.getAttribute('data-suffix') || '';
+                const duration = 1400;
+                const start = performance.now();
+                function step(now) {
+                    const p = Math.min(1, (now - start) / duration);
+                    const val = Math.floor(target * (0.2 + 0.8 * p));
+                    el.textContent = val + suffix;
+                    if (p < 1) requestAnimationFrame(step);
+                }
+                requestAnimationFrame(step);
+            }
+            const io = new IntersectionObserver((entries, obs) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        const el = e.target.querySelector('.ca-number') || e.target;
+                        if (el && !el.dataset.animated) { el.dataset.animated = '1'; animate(el); }
+                        obs.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+            document.querySelectorAll('.choose-agency .ca-stat').forEach(s => io.observe(s));
+        })();
+    </script>
 
 		<footer class="footer-section">
 			<div class="container-fluid px-3 px-lg-5">
@@ -264,4 +324,17 @@
 			(function () { try { const burgers = document.querySelectorAll('.hamburger'); if (!burgers.length) return; const markMissing = () => burgers.forEach(b => b.classList.add('fa-missing')); const unmark = () => burgers.forEach(b => b.classList.remove('fa-missing')); if (document.fonts && typeof document.fonts.check === 'function') { const hasFA = document.fonts.check('1em "Font Awesome 6 Free"'); hasFA ? unmark() : setTimeout(() => { const stillMissing = !document.fonts.check('1em "Font Awesome 6 Free"'); stillMissing ? markMissing() : unmark(); }, 450); } else { markMissing(); } } catch (_) { } })();
 		</script>
 	</body>
+    <style>
+    .choose-agency { background: linear-gradient(0deg, #0b5f59, #0f766e); color: #fff; padding: 38px 0 44px; }
+        .choose-inner { max-width: 1140px; margin: 0 auto; }
+        .choose-title { font-size: clamp(24px, 3.8vw, 48px); margin: 4px 0 10px; font-weight: 800; letter-spacing: -0.015em; }
+        .choose-sub { max-width: 820px; margin: 0 auto 22px; color: rgba(255,255,255,.92); text-align: center; }
+        .choose-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; align-items: start; }
+        .ca-stat { text-align: center; position: relative; }
+        .ca-stat:not(:last-child)::after { content: ""; position: absolute; right: -9px; top: 8px; bottom: 8px; width: 1px; background: rgba(255,255,255,.25); }
+        .ca-number { font-size: clamp(28px, 4.4vw, 44px); font-weight: 900; text-shadow: 0 1px 0 rgba(0,0,0,.2); }
+        .ca-label { margin: 6px auto 0; max-width: 260px; color: rgba(255,255,255,.92); }
+        @media (max-width: 992px) { .choose-stats { grid-template-columns: 1fr 1fr; } .ca-stat:not(:last-child)::after { display: none; } }
+        @media (max-width: 560px) { .choose-stats { grid-template-columns: 1fr; } }
+</style>
 	</html>
