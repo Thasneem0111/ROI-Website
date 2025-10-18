@@ -1115,26 +1115,29 @@ function handleSubscribe(e) {
     }
 
     function bindTriggers(){
-        const triggers = Array.from(document.querySelectorAll('a,button,[role="button"]')).filter(el=>{
-            if(el.dataset.consultTrigger) return true;
-            const txt = (el.textContent||'').trim();
-            if(!txt) return false;
-            return /book\s+a\s+free\s+consultation/i.test(txt);
+    const triggers = Array.from(document.querySelectorAll('a,button,[role="button"]')).filter(el=>{
+        if(el.dataset.consultTrigger) return true;
+        const txt = (el.textContent||'').trim();
+        if(!txt) return false;
+        
+        // EXCLUDE the hero button by ID - allow it to redirect normally
+        if(el.id === 'heroConsultBtn') return false;
+        
+        return /book\s+a\s+free\s+consultation/i.test(txt);
+    });
+    triggers.forEach(el=>{
+        if(el.dataset.consultBound) return;
+        el.dataset.consultBound='true';
+        el.addEventListener('click', function(e){
+            // If inside contact form, let the form submit normally (no modal)
+            if(el.closest('#contactForm')){ return; }
+            // Otherwise, show modal for other pages
+            if(el.tagName==='A'){ e.preventDefault(); }
+            const modal = document.getElementById('consultModal');
+            if(modal && modal.__openConsultModal){ modal.__openConsultModal(); }
         });
-        triggers.forEach(el=>{
-            if(el.dataset.consultBound) return;
-            el.dataset.consultBound='true';
-            el.addEventListener('click', function(e){
-                // If inside contact form, let the form submit normally (no modal)
-                if(el.closest('#contactForm')){ return; }
-                // Otherwise, show modal for other pages
-                if(el.tagName==='A'){ e.preventDefault(); }
-                const modal = document.getElementById('consultModal');
-                if(modal && modal.__openConsultModal){ modal.__openConsultModal(); }
-            });
-        });
-    }
-
+    });
+}
     document.addEventListener('DOMContentLoaded', function(){
         ensureModalPresent();
         bindModalLogic();

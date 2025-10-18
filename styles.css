@@ -357,6 +357,7 @@ body {
     box-shadow: var(--shadow);
 }
 
+
 .hero-cta-btn:hover {
     transform: translateY(-3px);
     box-shadow: var(--shadow-hover);
@@ -4223,7 +4224,7 @@ body {
 @media (max-width: 575.98px) {
     .trust-hero-section { padding: 36px 0; }
     .trust-copy .trust-title { font-size: 1.8rem; }
-    .trust-copy .trust-text { font-size: 0.98rem; }
+    .trust-copy .trust-text { font-size: 0.8rem; text-align: justify; }
     .trust-badges .badge-item img { height: 20px; }
     .tile-cloud { min-height: 260px; max-width: 480px; }
     .trust-tile { width: 74px; height: 74px; }
@@ -5367,7 +5368,7 @@ body {
 }
 
 .footer-logo-subtitle {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: rgba(255, 255, 255, 0.8);
     font-weight: 400;
 }
@@ -5567,7 +5568,9 @@ body {
     }
     
     .footer-links {
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
+        gap: 0.2rem;
+
     }
 }
 
@@ -5582,7 +5585,8 @@ body {
     }
     
     .footer-description {
-        text-align: center;
+        text-align: justify;
+        font-size: 0.8rem;
     }
     
     .footer-title {
@@ -5592,6 +5596,7 @@ body {
     
     .footer-nav {
         text-align: left;
+        gap: 0.1rem;
     }
     
     .footer-contact {
@@ -5644,7 +5649,7 @@ body {
     }
     
     .footer-nav a {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
     
     .contact-item {
