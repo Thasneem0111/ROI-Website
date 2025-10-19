@@ -1,3 +1,4 @@
+
     .comparison-column.traditional-column {
         display: none !important;
     }
@@ -359,6 +360,7 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: var(--shadow);
+    text-decoration: none;
 }
 
 
@@ -1787,12 +1789,12 @@ body {
     
     .client-logo {
         width: 180px;
-        height: 80px;
+        height: 150px;
     }
     
     .clients-track {
         animation-duration: 20s;
-        gap: 4rem;
+        gap: 1rem;
     }
 }
 
@@ -1850,7 +1852,7 @@ body {
     
     .clients-track {
         animation-duration: 18s;
-        gap: 3rem;
+        gap: 1rem;
     }
 }
 
@@ -4797,7 +4799,7 @@ body {
     
     .contact-submit-btn {
         padding: 0.875rem 1.5rem;
-        font-size: 0.95rem;
+        font-size: 0.8rem;
     }
 }
 
