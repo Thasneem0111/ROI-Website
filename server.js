@@ -56,7 +56,7 @@ app.post('/api/consultation', async (req,res) => {
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
   if(!allowSubmission(ip)) return res.status(429).json({ ok:false, message:'Too many submissions, please wait a few minutes.' });
   try {
-    const { name, email, phone } = req.body || {};
+    const { name, email, phone, businessName } = req.body || {};
     if(!name || !email || !phone) {
       return res.status(400).json({ ok:false, message:'Missing required fields.' });
     }
@@ -94,7 +94,7 @@ app.post('/api/consultation', async (req,res) => {
     }
 
     const target = 'royalorbitinnovations@gmail.com';
-    const plain = `Name: ${name}\nEmail: ${email}\nContact: ${phone}\n\nThis client request to contact you.`;
+    const plain = `Name: ${name}\nBusiness Name: ${businessName || '-'}\nEmail: ${email}\nContact: ${phone}\n\nThis client requests to contact you.`;
 
     await transporter.sendMail({
       from: `ROI Website <${process.env.MAIL_USER}>`,
