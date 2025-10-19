@@ -4,6 +4,9 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 		<title>GMB Support Service - Royal Orbit Innovations</title>
+        <link rel="icon" type="image/png" href="/images/logo.png">
+        <link rel="shortcut icon" href="/images/logo.png" type="image/png">
+    
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
@@ -368,7 +371,7 @@
             </div>
         </div>
     </footer>
-    
+
 		<script src="/script.js"></script>
 		<script>
 			(function () { const toggle = document.getElementById('navToggle'); const links = document.querySelectorAll('#primaryNav .nav-list a'); const body = document.body; function closeNav(){ body.classList.remove('nav-open'); toggle?.setAttribute('aria-expanded','false'); } function openNav(){ body.classList.add('nav-open'); toggle?.setAttribute('aria-expanded','true'); } toggle?.addEventListener('click', ()=> body.classList.contains('nav-open') ? closeNav() : openNav()); links.forEach(a=> a.addEventListener('click', closeNav)); document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeNav(); }); })();

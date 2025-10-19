@@ -1,3 +1,7 @@
+    .comparison-column.traditional-column {
+        display: none !important;
+    }
+
 /* Reset default margins to avoid unexpected gaps */
 html, body {
     margin: 0;
@@ -424,12 +428,18 @@ body {
     .hero.hero--wide-image .hero-image-container { width: 420px; height: 520px; }
     .hero.hero--wide-image .hero-main-image { width: 420px; height: 500px; }
 }
-@media (max-width: 768px) {
-    /* Keep mobile pleasant and not oversized */
-    .hero.hero--wide-image .hero-right { height: 440px; }
-    .hero.hero--wide-image .hero-image-container { max-width: 340px; width: 100%; height: 420px; }
-    .hero.hero--wide-image .hero-main-image { width: 360px; height: 300px; }
+@media (max-width: 767px) {
+    .comparison-column.traditional-column {
+        display: none !important;
+    }
 }
+
+@media (min-width: 768px) {
+    .comparison-column.traditional-column {
+        display: block !important;
+    }
+}
+
 
 /* Floating Cards */
 .floating-card {
@@ -1021,7 +1031,31 @@ body {
     
     /* Testimonial Card - Better Mobile Position */
     .testimonial-card {
-        display: none;
+        bottom: 5%;
+        left: 2px;
+        width: 120px;
+        transform: scale(0.75);
+        z-index: 3;
+    }
+    .testimonial-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .testimonial-card .client-name {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: #0b5f59;
+    }
+    .testimonial-card .rating-stars {
+        font-size: 0.5rem;
+        margin-bottom: 0px;
+    }
+    .testimonial-card .testimonial-text {
+        font-size: 0.5rem;
+        color: #335c5c;
+        margin-top: 6px;
+        line-height: 1.5;
+        text-align: left;
     }
     
     .client-name {
@@ -2294,12 +2328,20 @@ body {
     margin-bottom: 2.5rem;
 }
 
-.consultation-benefit {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
+
+
+
+    .consultation-benefits .row.g-3 {
+        display: grid !important;
+        margin-left: 40px;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 12px !important;
+    }
+    .consultation-benefit {
+        width: 100%;
+        margin-bottom: 0 !important;
+    }
+
 
 .benefit-icon-circle {
     background: rgba(255, 255, 255, 0.2);
@@ -2327,10 +2369,9 @@ body {
 
 .benefit-text {
     color: var(--white);
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 500;
 }
-
 .consultation-btn {
     background: linear-gradient(135deg, #03876b 0%, #19b684 100%);
     color: var(--white);
