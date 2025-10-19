@@ -94,7 +94,7 @@ body {
     body.nav-open .site-header .nav-list a { display: block; width: 100%; padding: 10px 14px; border-radius: 10px; }
     body.nav-open .site-header .nav-list a:hover { background: var(--teal-100); color: var(--teal-700); }
     .site-header .nav-services { width: 100%; }
-    .site-header .nav-services .mega-menu { position: static; transform: none; width: 100%; box-shadow: none; border: 1px solid rgba(0,0,0,.06); border-radius: 12px; margin-top: 6px; }
+    .site-header .nav-services .mega-menu { position: static; transform: none; width: 100%; box-shadow: none; border: 1px solid rgba(0,0,0,.06); border-radius: 12px; margin-top: 6px; max-height: 60vh; overflow-y: auto; }
     .site-header .nav-services .mega-content { grid-template-columns: 1fr 1fr; }
     .site-header .nav-services .mega-quick { grid-template-columns: 1fr; }
 }
