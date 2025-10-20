@@ -453,8 +453,8 @@ body {
 }
 @media (max-width: 992px) {
     .hero.hero--wide-image .hero-right { height: 560px; }
-    .hero.hero--wide-image .hero-image-container { width: 420px; height: 520px; }
-    .hero.hero--wide-image .hero-main-image { width: 420px; height: 500px; }
+    .hero.hero--wide-image .hero-image-container { width: 400px; height: 320px; }
+    .hero.hero--wide-image .hero-main-image { width: 400px; height: 320px; }
 }
 @media (max-width: 767px) {
     .comparison-column.traditional-column {
