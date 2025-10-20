@@ -23,6 +23,40 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname)));
 
+// Extensionless route handling for main pages
+const extensionlessRoutes = [
+  { route: '/about', file: 'components/about.html' },
+  { route: '/blog', file: 'Blog/mainBlog.html' },
+  { route: '/industries', file: 'components/industries.html' },
+  { route: '/contact', file: 'components/contact.html' },
+  // Services
+  { route: '/services/ppc', file: 'components/services/Digital-Marketing/PPCservices.html' },
+  { route: '/services/seo', file: 'components/services/Digital-Marketing/SEOservices.html' },
+  { route: '/services/email-marketing', file: 'components/services/Digital-Marketing/emailMarketing.html' },
+  { route: '/services/website-design', file: 'components/services/Development-Design/websiteDesign-Development.html' },
+  { route: '/services/social-media-design', file: 'components/services/Development-Design/socialMediaDesign.html' },
+  { route: '/services/landing-page', file: 'components/services/Development-Design/landingPageDsign.html' },
+  { route: '/services/social-media-advertising', file: 'components/services/Advertise-Management/smAdvertising.html' },
+  { route: '/services/social-media-management', file: 'components/services/Advertise-Management/smManagement.html' },
+  { route: '/services/listing-management', file: 'components/services/Advertise-Management/lisitngManagementservice.html' },
+  { route: '/services/gmb', file: 'components/services/Google-My-Business/GMBservices.html' },
+  { route: '/services/gmb-management', file: 'components/services/Google-My-Business/GMBmanagement.html' },
+  { route: '/services/gmb-setup', file: 'components/services/Google-My-Business/GMBsetupService.html' },
+  { route: '/services/gmb-support', file: 'components/services/Google-My-Business/GMBsupportService.html' },
+  { route: '/services/gmb-optimization', file: 'components/services/Google-My-Business/GMBoptimizationServies.html' },
+  { route: '/services/gmb-reinstatement', file: 'components/services/Google-My-Business/GMBreinstatementService.html' },
+  { route: '/services/call-tracking', file: 'components/services/websiteCallTracking.html' },
+  { route: '/services/video-production', file: 'components/services/videoProduction.html' },
+  { route: '/services/conversion-rate', file: 'components/services/conversationRate.html' },
+  { route: '/services/api-development', file: 'components/services/apiDevelopment.html' },
+];
+
+extensionlessRoutes.forEach(({ route, file }) => {
+  app.get(route, (req, res) => {
+    res.sendFile(path.join(__dirname, file));
+  });
+});
+
 // Simple health endpoint to confirm server + mail config status
 app.get('/health', (req,res)=>{
   console.log('[Health Check] /health endpoint hit from', req.headers['origin'], '| IP:', req.ip);
@@ -150,11 +184,14 @@ function startServer(startPort, maxAttempts = 15){
   let attempt = 0;
   const tryListen = (port) => {
     const server = app.listen(port, '0.0.0.0', () => {
+      const localUrl = `http://localhost:${port}`;
+      const anyUrl = `http://0.0.0.0:${port}`;
       if(port !== startPort){
         console.log(`[Startup] Desired port ${startPort} was busy; server started on fallback port ${port}.`);
-      } else {
-        console.log(`Server running on http://0.0.0.0:${port}`);
       }
+      console.log(`Server running and accessible at:`);
+      console.log(`  Local:   ${localUrl}`);
+      console.log(`  Network: ${anyUrl}`);
       process.env.ACTUAL_PORT = String(port);
     });
 

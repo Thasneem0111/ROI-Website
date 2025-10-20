@@ -1,0 +1,42 @@
+# Enable mod_rewrite
+RewriteEngine On
+
+# Map extensionless URLs to their HTML files
+# About
+RewriteRule ^about$ components/about.html [L]
+# Blog
+RewriteRule ^blog$ Blog/mainBlog.html [L]
+# Industries
+RewriteRule ^industries$ components/industries.html [L]
+# Contact
+RewriteRule ^contact$ components/contact.html [L]
+
+# Services
+RewriteRule ^services/ppc$ components/services/Digital-Marketing/PPCservices.html [L]
+RewriteRule ^services/seo$ components/services/Digital-Marketing/SEOservices.html [L]
+RewriteRule ^services/email-marketing$ components/services/Digital-Marketing/emailMarketing.html [L]
+RewriteRule ^services/website-design$ components/services/Development-Design/websiteDesign-Development.html [L]
+RewriteRule ^services/social-media-design$ components/services/Development-Design/socialMediaDesign.html [L]
+RewriteRule ^services/landing-page$ components/services/Development-Design/landingPageDsign.html [L]
+RewriteRule ^services/social-media-advertising$ components/services/Advertise-Management/smAdvertising.html [L]
+RewriteRule ^services/social-media-management$ components/services/Advertise-Management/smManagement.html [L]
+RewriteRule ^services/listing-management$ components/services/Advertise-Management/lisitngManagementservice.html [L]
+RewriteRule ^services/gmb$ components/services/Google-My-Business/GMBservices.html [L]
+RewriteRule ^services/gmb-management$ components/services/Google-My-Business/GMBmanagement.html [L]
+RewriteRule ^services/gmb-setup$ components/services/Google-My-Business/GMBsetupService.html [L]
+RewriteRule ^services/gmb-support$ components/services/Google-My-Business/GMBsupportService.html [L]
+RewriteRule ^services/gmb-optimization$ components/services/Google-My-Business/GMBoptimizationServies.html [L]
+RewriteRule ^services/gmb-reinstatement$ components/services/Google-My-Business/GMBreinstatementService.html [L]
+RewriteRule ^services/call-tracking$ components/services/websiteCallTracking.html [L]
+RewriteRule ^services/video-production$ components/services/videoProduction.html [L]
+RewriteRule ^services/conversion-rate$ components/services/conversationRate.html [L]
+RewriteRule ^services/api-development$ components/services/apiDevelopment.html [L]
+
+# Home (optional, if you want / to go to index.html)
+RewriteRule ^$ index.html [L]
+
+# Fallback: if file or directory does not exist, try to serve .html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !\.[a-zA-Z0-9]{2,4}$
+RewriteRule ^(.+)$ $1.html [L]
