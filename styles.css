@@ -1,3 +1,29 @@
+/* Mobile: slide client logos from left to right and reduce size */
+@media (max-width: 767.98px) {
+    .clients-slider-mobile .clients-track {
+        animation-name: slideRightContinuous !important;
+        animation-duration: 12s !important;
+        gap: 1.2rem !important;
+    }
+    .clients-slider-mobile .client-logo {
+        width: 110px !important;
+        height: 70px !important;
+        padding: 0.5rem !important;
+    }
+    .clients-slider-mobile .client-logo img {
+        max-width: 60px !important;
+        max-height: 60px !important;
+    }
+}
+
+@keyframes slideRightContinuous {
+    0% {
+        transform: translateX(calc(-50% - 1.5rem));
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
 
     .comparison-column.traditional-column {
         display: none !important;
@@ -1583,6 +1609,12 @@ body {
     animation: slideLeftContinuous 25s linear infinite;
     width: fit-content;
     will-change: transform;
+}
+
+@media (max-width: 767.98px) {
+    .clients-slider-mobile .clients-track {
+        animation-duration: 12s !important;
+    }
 }
 
 .client-logo {
