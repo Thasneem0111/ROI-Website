@@ -17,6 +17,7 @@ if(!hasDotEnvFile){
   console.warn('[Startup] .env file NOT found. Create one at the path above with MAIL_USER and MAIL_PASS.');
 }
 
+// TEMP: Allow all origins for debugging network/CORS issues
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname)));
 
 // Simple health endpoint to confirm server + mail config status
 app.get('/health', (req,res)=>{
+  console.log('[Health Check] /health endpoint hit from', req.headers['origin'], '| IP:', req.ip);
   res.json({ ok:true, mailConfigured: !!(process.env.MAIL_USER && process.env.MAIL_PASS), mailConfiguredAtBoot });
 });
 
@@ -54,6 +56,7 @@ function allowSubmission(ip){
 
 app.post('/api/consultation', async (req,res) => {
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+  console.log('[Consultation] POST /api/consultation from', req.headers['origin'], '| IP:', ip, '| Body:', req.body);
   if(!allowSubmission(ip)) return res.status(429).json({ ok:false, message:'Too many submissions, please wait a few minutes.' });
   try {
     const { name, email, phone, businessName } = req.body || {};
@@ -146,11 +149,11 @@ app.get('/debug/send-test', async (req,res)=>{
 function startServer(startPort, maxAttempts = 15){
   let attempt = 0;
   const tryListen = (port) => {
-    const server = app.listen(port, () => {
+    const server = app.listen(port, '0.0.0.0', () => {
       if(port !== startPort){
         console.log(`[Startup] Desired port ${startPort} was busy; server started on fallback port ${port}.`);
       } else {
-        console.log(`Server running on http://localhost:${port}`);
+        console.log(`Server running on http://0.0.0.0:${port}`);
       }
       process.env.ACTUAL_PORT = String(port);
     });

@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-PFL6JRZ9');</script>
+<script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PFL6JRZ9');
+</script>
 <!-- End Google Tag Manager -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -211,6 +213,87 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
         </div>
       </div>
+      <!-- WhatsApp Floating Button -->
+<a id="whatsappBtn" class="whatsapp-btn" href="https://wa.me/+97450755597" target="_blank" aria-label="Chat on WhatsApp" style="display:none">
+    <span class="icon">
+        <svg viewBox="0 0 24 24" width="32" height="32">
+            <circle cx="12" cy="12" r="12" fill="#25D366"/>
+            <path fill="white" d="M20.52 3.48A11.89 11.89 0 0012 .1 11.92 11.92 0 00.1 12c0 2.11.55 4.08 1.6 5.86L0 24l6.34-1.64A11.92 11.92 0 0012 24c6.62 0 12-5.38 12-12 0-3.2-1.24-6.03-3.48-8.52zM12 21.5c-1.34 0-2.65-.34-3.8-.98l-.27-.16-3.77.97.8-3.53-.18-.29A9.42 9.42 0 012.5 12 9.5 9.5 0 1112 21.5zM17.3 14.87c-.31-.15-1.82-.9-2.1-1-.28-.11-.48-.15-.68.15-.2.31-.78 1-.95 1.2-.17.2-.34.22-.65.07-.31-.15-1.32-.49-2.51-1.55-.93-.83-1.56-1.85-1.74-2.16-.18-.31-.02-.48.14-.63.14-.14.31-.34.47-.51.16-.16.2-.27.3-.45.1-.18.04-.34-.02-.48-.06-.13-.68-1.63-.93-2.25-.24-.6-.49-.52-.68-.53l-.58-.01c-.2 0-.52.07-.79.34-.27.27-1.02 1-1.02 2.45s1.05 2.85 1.2 3.05c.14.2 2.07 3.18 5.03 4.47 3.27 1.41 3.27 0.94 3.86.88.59-.06 1.82-.74 2.07-1.45.25-.7.25-1.3.18-1.45-.06-.15-.29-.23-.6-.38z"/>
+        </svg>
+    </span>
+    <span class="tooltip">Chat on WhatsApp</span>
+</a>
+<style>
+    .whatsapp-btn {
+        position: fixed;
+        right: 28px;
+        bottom: 28px;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        background: #25D366;
+        border-radius: 50%;
+        box-shadow: 0 4px 16px rgba(37,211,102,0.18);
+        text-decoration: none;
+        transition: box-shadow 0.2s, transform 0.2s;
+        cursor: pointer;
+    }
+    .whatsapp-btn:hover {
+        transform: scale(1.08);
+        background-color: #014b4b;
+    }
+    .whatsapp-btn .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+    }
+    .whatsapp-btn .tooltip {
+        position: absolute;
+        right: 70px;
+        bottom: 0;
+        background: #222;
+        color: #fff;
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-size: 13px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s;
+        white-space: nowrap;
+    }
+    .whatsapp-btn:hover .tooltip {
+        opacity: 1;
+    }
+    @media (max-width: 600px) {
+        .whatsapp-btn {
+            right: 16px;
+            bottom: 16px;
+            width: 48px;
+            height: 48px;
+        }
+        .whatsapp-btn .icon {
+            width: 24px;
+            height: 24px;
+        }
+        .whatsapp-btn .tooltip {
+            right: 54px;
+            font-size: 12px;
+        }
+    }
+</style>
+<script>
+    // Show WhatsApp button only after landing page fades out
+    window.addEventListener("load", () => {
+        setTimeout(() => {
+            document.getElementById('whatsappBtn').style.display = 'flex';
+        }, 3000); // match landing fade duration
+    });
+</script>
     </section>
 
   </div>
@@ -1766,6 +1849,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         .success-icon { background:#10b981; color:#fff; width:22px; height:22px; display:grid; place-items:center; border-radius:50%; font-size:14px; }
         @media (max-width:520px){ .consult-modal-dialog { padding:26px 22px 30px; border-radius:16px; } .consult-modal-title { font-size:21px; } }
     </style>
+    
+    <script>
+        // Show WhatsApp button only after landing page fades out
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                document.querySelector('.whatsapp-float').style.display = 'flex';
+            }, 3000); // match landing fade duration
+        });
+    </script>
 </body>
 
 <!-- Scoped header behavior (same as blog) -->
@@ -2033,6 +2125,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     .main-content.visible {
       opacity: 1;
     }
-    </style>
+
+</style>
     
 </html>
