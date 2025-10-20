@@ -543,7 +543,7 @@
 
 <!-- Header styles from mainBlog (scoped to header classes only) -->
     <style>
-        /* Header container */
+    /* Header container */
     .site-header { position: sticky; top: 0; z-index: 50; background: #fff; box-shadow: none; }
         .site-header .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 72px; }
 
@@ -617,6 +617,35 @@
         }
         /* Tighten space below header */
         .site-header + .contact-section { padding-top: 8px; }
+
+        /* Partner logos row layout for all screens */
+        .partner-logos {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 18px;
+            margin-top: 18px;
+            margin-bottom: 18px;
+        }
+        .partner-logo {
+            flex: 0 0 auto;
+        }
+        .partner-image {
+            height: 38px;
+            width: auto;
+            display: block;
+        }
+        @media (max-width: 600px) {
+            .partner-logos {
+                flex-direction: row;
+                justify-content: center;
+                gap: 14px;
+            }
+            .partner-image {
+                height: 32px;
+            }
+        }
 
         /* Contact form sizing overrides */
         .contact-form-container { width: 100%; max-width: 550px; margin-left: auto; }

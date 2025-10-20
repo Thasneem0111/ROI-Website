@@ -607,32 +607,36 @@
 		/* small top margin helper in case page lacks hero */
 		main.page-content { margin-top: 90px; }
 
-		/* Partners logos row inside hero */
-		.partners-logos {
-			display: flex;
-			align-items: center;
-			gap: 24px;
-			flex-wrap: wrap;
-			margin-top: 2rem;
-		}
-		.partners-logos img {
-			height: 46px;
-			object-fit: contain;
-			filter: grayscale(0%);
-		}
-		@media (max-width: 576px) {
-			.partners-logos {
-				gap: 14px;
-				flex-direction: column; /* stack one per row */
-				align-items: center;   /* center horizontally */
-				justify-content: center; /* center vertically within area */
-				width: 100%;
-			}
-			.partners-logos img {
-				height: 50px;
-				width: auto;
-				display: block;
-			}
+		   /* Partners logos row inside hero */
+		   .partners-logos {
+			   display: flex;
+			   align-items: center;
+			   gap: 24px;
+			   flex-wrap: nowrap;
+			   margin-top: 2rem;
+			   justify-content: flex-start;
+		   }
+		   .partners-logos img {
+			   height: 46px;
+			   object-fit: contain;
+			   filter: grayscale(0%);
+			   width: auto;
+			   display: block;
+		   }
+		   @media (max-width: 576px) {
+			   .partners-logos {
+				   flex-wrap: wrap;
+				   flex-direction: row;
+				   gap: 14px 18px;
+				   align-items: center;
+				   justify-content: center;
+				   width: 100%;
+			   }
+			   .partners-logos img {
+				   height: 38px;
+				   flex: 0 1 40%;
+				   max-width: 44vw;
+			   }
 
 			/* Mobile: add teal triangular background behind the hero image */
 			.hero.hero-industries .hero-image-container { position: relative; z-index: 0; }

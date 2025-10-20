@@ -5754,6 +5754,7 @@ body {
 .phone-section {
     position: relative;
     margin-bottom: 3rem;
+    padding-left: 1.2rem;
 }
 
 .phone-card {
@@ -5788,6 +5789,7 @@ body {
 
 .phone-content {
     flex: 1;
+    
 }
 
 .phone-label {
@@ -5813,7 +5815,7 @@ body {
     border-radius: 20px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     margin-left: 3rem;
-    max-width: 230px;
+    max-width: 270px;
 }
 
 .speech-bubble p {
@@ -6002,7 +6004,7 @@ body {
     .speech-bubble {
         margin-left: 0;
         margin-top: 1rem;
-        max-width: 100%;
+        max-width: 86%;
     }
 
     .bubble-arrow {
