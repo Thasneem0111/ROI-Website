@@ -49,6 +49,13 @@ const extensionlessRoutes = [
   { route: '/services/video-production', file: 'components/services/videoProduction.html' },
   { route: '/services/conversion-rate', file: 'components/services/conversationRate.html' },
   { route: '/services/api-development', file: 'components/services/apiDevelopment.html' },
+  { route: '/Blog/main-blog', file: '/Blog/mainBlog.html' },
+  { route: '/Blog/seo', file: '/Blog/seo.html' },
+  { route: '/Blog/brandingBlog', file: '/Blog/brandingBlog.html' },
+  { route: '/Blog/googleadsBlog', file: '/Blog/googleadsBlog.html' },
+  { route: '/Blog/linkedInBlog', file: '/Blog/linkedInBlog.html' },
+  { route: '/Blog/socialMediaBlog', file: '/Blog/socialMediaBlog.html' },
+  { route: '/Blog/uxMarketing', file: '/Blog/uxMarketing.html' }
 ];
 
 extensionlessRoutes.forEach(({ route, file }) => {
