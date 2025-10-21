@@ -871,7 +871,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const originalText = submitBtn.textContent;
             submitBtn.textContent = 'Sending...';
             submitBtn.disabled = true;
-            fetch('/api/consultation', {
+            // Use absolute URL in production, fallback to relative in development
+            const apiUrl = window.location.hostname === 'roi.com.qa'
+                ? 'https://www.roi.com.qa/api/consultation'
+                : '/api/consultation';
+            fetch(apiUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -1091,8 +1095,27 @@ function handleSubscribe(e) {
                 const originalBtnTxt = submitBtn.textContent;
                 submitBtn.innerHTML = spinnerHTML + originalBtnTxt;
                 try {
-                    const apiBase = (location.port === '3000') ? '' : 'http://localhost:3000';
-                    const resp = await fetch(apiBase + '/api/consultation', {
+                    // Use absolute URL in production, fallback to relative in development
+                    const apiUrl = window.location.hostname === 'roi.com.qa'
+                    ? 'https://www.roi.com.qa/api/consultation.php'
+                    : '/api/consultation.php';
+                        
+                    // const apiUrl = 'api/consultation.php';
+                    fetch(apiUrl, {
+    method: 'POST',
+    headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+        name: name.value.trim(),
+        email: email.value.trim(),
+        phone: phone.value.trim(),
+        businessName: businessName.value.trim()
+    })
+})
+
+                    const resp = await fetch(apiUrl, {
                         method:'POST',
                         headers:{ 'Content-Type':'application/json' },
                         body: JSON.stringify({ name: name.value.trim(), email: emailVal, phone: phoneVal })
@@ -1107,8 +1130,8 @@ function handleSubscribe(e) {
                     alert('Error: '+ err.message);
                 } finally {
                     form.classList.remove('submitting');
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = originalBtnTxt;
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalBtnTxt;
                 }
             });
         }
