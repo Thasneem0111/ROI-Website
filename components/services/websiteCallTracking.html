@@ -96,7 +96,7 @@
 						<p class="hero-subtitle">Services</p>
 						<h1 class="hero-title">Website Call Tracking</h1>
                         <p class="hero-description">Unlock the true value of every phone call pinpoint which campaigns and keywords drive real conversations and sales. Our advanced call tracking links every call to its source, empowering you to optimize ad spend, boost ROI, and make smarter marketing decisions that fuel business growth.</p>
-						<button type="button" class="hero-cta-btn" data-consult-trigger onclick="location.href='/components/contact.html'">Book A Free Consultation</button>
+						<button class="hero-cta-btn" id="heroConsultBtn" data-consult-trigger onclick="location.href='/contact'">Book A Free Consultation</button>
 					</div>
 					<div class="hero-right">
 						<div class="hero-image-container">
@@ -415,7 +415,7 @@
   <div class="container">
     <h2>Start Tracking Your Calls Like a Pro</h2>
   <p>Gain complete clarity on every lead track, analyze, and convert with confidence. Make data-driven marketing decisions that accelerate growth and maximize your return on investment.</p>
-    <a href="/components/contact.html" class="btn-primary">Request a Free Consultation</a>
+    <a href="/contact" id="heroConsultBtn" class="btn-primary">Request a Free Consultation</a>
   </div>
 </section>
 
@@ -452,7 +452,7 @@
                         <p class="footer-description"><i class="fas fa-location"></i> <span>Location: </span>Barwa Tower 2, C ring road. Doha - Qatar</p>
                         
                         <!-- CTA Button -->
-                        <button class="footer-cta-btn" onclick="location.href='/contact'">Book A Free Consultation</button>
+                        <button class="footer-cta-btn" id="heroConsultBtn" onclick="location.href='/contact'">Book A Free Consultation</button>
                     </div>
                 </div>
 
@@ -735,7 +735,7 @@
   color: #00a89d;
 }
 
-/* 📞 CTA (reuse existing .cta-section style) */
+
 .cta-section {
   background: linear-gradient(135deg, #00a89d, #007b70);
   color: #fff;
@@ -759,7 +759,7 @@
   border: 2px solid #fff;
 }
 
-/* 📱 Responsive Fix */
+
 @media (max-width: 768px) {
   h2 { font-size: 24px; }
   .benefit, .step { padding: 25px; }

@@ -184,7 +184,7 @@ function initializeFloatingElements() {
     const floatingCards = document.querySelectorAll('.floating-card');
     const floatingBadges = document.querySelectorAll('.floating-badge');
     
-    // Add subtle floating animation after initial load
+    // Add subtle floating animation after initial load (reduced delay)
     setTimeout(() => {
         floatingCards.forEach((card, index) => {
             setInterval(() => {
@@ -209,7 +209,7 @@ function initializeFloatingElements() {
                 }, randomDelay);
             }, 3500 + (index * 400));
         });
-    }, 3000);
+    }, 500);
 }
 
 // Subtle parallax effect for floating elements
@@ -319,16 +319,16 @@ function typewriterEffect() {
 
 // Initialize animations on page load
 document.addEventListener('DOMContentLoaded', function() {
-    // Delay initial animations
+    // Reduce animation delays for faster load
     setTimeout(() => {
         animateCounter();
         animateChartBars();
-    }, 1000);
-    
+    }, 100);
+
     // Start typewriter effect after hero animation
     setTimeout(() => {
         typewriterEffect();
-    }, 800);
+    }, 100);
 });
 
 // Add loading animation

@@ -55,7 +55,10 @@ const extensionlessRoutes = [
   { route: '/Blog/googleadsBlog', file: '/Blog/googleadsBlog.html' },
   { route: '/Blog/linkedInBlog', file: '/Blog/linkedInBlog.html' },
   { route: '/Blog/socialMediaBlog', file: '/Blog/socialMediaBlog.html' },
-  { route: '/Blog/uxMarketing', file: '/Blog/uxMarketing.html' }
+  { route: '/Blog/uxMarketing', file: '/Blog/uxMarketing.html' },
+  { route: '/Blog/logoGenerate', file: '/Blog/logoGenerate.html' },
+
+
 ];
 
 extensionlessRoutes.forEach(({ route, file }) => {

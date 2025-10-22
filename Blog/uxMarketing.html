@@ -173,7 +173,7 @@
                         <!-- Right: Sidebar -->
                         <aside class="sidebar" aria-label="Sidebar">
                             <!-- Consultation card -->
-                            <div class="consult-card">
+                            <!-- <div class="consult-card">
                                 <h3 class="consult-title">Book a Free Consultation</h3>
                                 <form class="consult-form" onsubmit="event.preventDefault(); alert('Thanks! We will contact you soon.');">
                                     <label>
@@ -190,12 +190,12 @@
                                     </label>
                                     <button type="submit" class="consult-btn" onclick="location.href='/components/contact.html'">Book A Free Consultation</button>
                                 </form>
-                            </div>
+                            </div> -->
 
                             <!-- Latest news -->
                             <div class="latest">
                                 <h4>The Latest</h4>                                
-                                <a class="latest-item" href="/Blog/socialMediaBlo">
+                                <a class="latest-item" href="/Blog/socialMediaBlog">
                                     <div class="latest-thumb"><img src="../images/socialBlog.jpg" alt="Social Media Marketing" /></div>
                                     <div>
                                         <div class="latest-title">The Role of Social Media in Modern Marketing</div>
@@ -230,6 +230,13 @@
                                         <div class="latest-meta">October 14, 2025</div>
                                     </div>
                                 </a>
+                                <a class="latest-item" href="/Blog/logoGenerate">
+                                    <div class="latest-thumb"><img src="../images/logoGenerate.jpg" alt="Logo Design Strategies" /></div>
+                                    <div>
+                                        <div class="latest-title">Why Free Logo Generators Can Hurt Your Business Identity</div>
+                                        <div class="latest-meta">October 22, 2025</div>
+                                    </div>
+                                </a>
                             </div>
                         </aside>
                     </div>
@@ -245,7 +252,7 @@
         </section>
 
         <!-- Footer Section -->
-    <footer class="footer-section">
+     <footer class="footer-section">
         <div class="container-fluid px-3 px-lg-5">
             <div class="row">
                 <!-- Left Column - Company Info -->
@@ -276,35 +283,7 @@
                         <p class="footer-description"><i class="fas fa-location"></i> <span>Location: </span>Barwa Tower 2, C ring road. Doha - Qatar</p>
                         
                         <!-- CTA Button -->
-                        <button class="footer-cta-btn" onclick="location.href='/components/contact.html'">Book A Free Consultation</button>
-                    </div>
-                </div>
-
-                <!-- Middle Left Column - Company Links -->
-                <div class="col-lg-2 col-md-6 col-6 mb-4">
-                    <div class="footer-links">
-                        <h4 class="footer-title">Company</h4>
-                        <ul class="footer-nav">
-                            <li><a href="/components/about.html">About</a></li>
-                            <li><a href="/components/industries.html">Industries</a></li>
-                            <li><a href="/Blog/mainBlog.html">Blog</a></li>
-                            <li><a href="/components/contact.html">Contacts</a></li>
-                        </ul>
-                        <h4 class="footer-title">Services</h4>
-                        <ul class="footer-nav">
-                            <li><a href="/components/services/websiteCallTracking.html">Website Call Tracking</a></li>
-                            <li><a href="/components/services/Development-Design/socialMediaDesign.html">Social Media Design</a></li>
-                            <li><a href="/components/services/Development-Design/landingPageDesign.html">Landing Page Design</a></li>
-                            <li><a href="/components/services/Digital-Marketing/PPCservices.html">PPC Services</a></li>
-                            <li><a href="/components/services/Digital-Marketing/SEOservices.html">SEO Services</a></li>
-                            <li><a href="/components/services/Digital-Marketing/emailMarketing.html">Email Marketing</a></li>
-                            <li><a href="/components/services/videoProduction.html">Video Production</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Middle Right Column - Services -->
-                <div class="col-lg-3 co<button class="footer-cta-btn" onclick="location.href='/contact'">Book A Free Consultation</button>
+                        <button class="footer-cta-btn" id="heroConsultBtn" onclick="location.href='/contact'">Book A Free Consultation</button>
                     </div>
                 </div>
 
