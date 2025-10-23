@@ -1,0 +1,35 @@
+# ----------------------------------------------------------
+# robots.txt for ROI - Marketing & Technology Agency
+# Site: https://roi.com.qa/
+# Created: 2025-10-23
+# ----------------------------------------------------------
+
+# Allow all search engines to crawl public pages
+User-agent: *
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /login/
+Disallow: /register/
+Disallow: /private/
+Disallow: /temp/
+Allow: /
+
+# Prevent indexing of unnecessary files and folders
+Disallow: /cgi-bin/
+Disallow: /node_modules/
+Disallow: /assets/temp/
+Disallow: /*.log$
+Disallow: /*.txt$
+
+# Allow CSS, JS, and image files (important for SEO)
+Allow: /*.css$
+Allow: /*.js$
+Allow: /images/
+Allow: /components/
+
+# Sitemap location
+Sitemap: https://roi.com.qa/sitemap.xml
+
+# ----------------------------------------------------------
+# End of file
+# ----------------------------------------------------------
