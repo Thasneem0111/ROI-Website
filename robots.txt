@@ -27,6 +27,10 @@ Allow: /*.js$
 Allow: /images/
 Allow: /components/
 
+User-agent: *
+Allow: /
+
+Sitemap: https://roi.com.qa/sitemap.xml
 # Sitemap location
 Sitemap: https://roi.com.qa/sitemap.xml
 

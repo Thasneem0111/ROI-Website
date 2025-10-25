@@ -49,14 +49,14 @@ const extensionlessRoutes = [
   { route: '/services/video-production', file: 'components/services/videoProduction.html' },
   { route: '/services/conversion-rate', file: 'components/services/conversationRate.html' },
   { route: '/services/api-development', file: 'components/services/apiDevelopment.html' },
-  { route: '/Blog/main-blog', file: '/Blog/mainBlog.html' },
-  { route: '/Blog/seo', file: '/Blog/seo.html' },
-  { route: '/Blog/brandingBlog', file: '/Blog/brandingBlog.html' },
-  { route: '/Blog/googleadsBlog', file: '/Blog/googleadsBlog.html' },
-  { route: '/Blog/linkedInBlog', file: '/Blog/linkedInBlog.html' },
-  { route: '/Blog/socialMediaBlog', file: '/Blog/socialMediaBlog.html' },
-  { route: '/Blog/uxMarketing', file: '/Blog/uxMarketing.html' },
-  { route: '/Blog/logoGenerate', file: '/Blog/logoGenerate.html' },
+  { route: '/blog/main-blog', file: '/blog/mainBlog.html' },
+  { route: '/blog/seo', file: '/blog/seo.html' },
+  { route: '/blog/brandingBlog', file: '/blog/brandingBlog.html' },
+  { route: '/blog/googleadsBlog', file: '/blog/googleadsBlog.html' },
+  { route: '/blog/linkedInBlog', file: '/blog/linkedInBlog.html' },
+  { route: '/blog/socialMediaBlog', file: '/blog/socialMediaBlog.html' },
+  { route: '/blog/uxMarketing', file: '/blog/uxMarketing.html' },
+  { route: '/blog/logoGenerate', file: '/blog/logoGenerate.html' },
 
 
 ];
