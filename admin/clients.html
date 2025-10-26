@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<!-- Bootstrap CSS -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+		<style>
+			.modal-backdrop.show { z-index: 2050 !important; }
+			.modal { z-index: 2100 !important; }
+		</style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>ROI - Marketing & Technology Agency</title>
+    <link rel="icon" type="image/png" href="../images/logo.png">
+	<link rel="stylesheet" href="./dashboard.css">
+	<link rel="stylesheet" href="../styles.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+		<!-- Logout Confirmation Modal -->
+		<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header border-0" style="justify-content:center;">
+						<h5 class="modal-title w-100 text-center" id="logoutModalLabel" style="font-weight:700;">Logout Confirmation</h5>
+						<button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body text-center" style="font-size:1.15rem; color:#222; padding:24px 12px 12px 12px;">
+						<i class="fa fa-sign-out-alt" style="font-size:2.2rem; color:#2ca6a4; margin-bottom:12px;"></i><br>
+						Are you sure you want to logout?
+					</div>
+					<div class="modal-footer border-0" style="justify-content:center; gap:18px; padding-bottom:24px;">
+						<button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal" style="border-radius:8px;">Cancel</button>
+						<button type="button" class="btn btn-primary px-4" id="confirmLogout" style="border-radius:8px; background:#218a8a; border:none;">Yes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Delete Confirmation Modal -->
+		<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header border-0" style="justify-content:center;">
+						<h5 class="modal-title w-100 text-center" id="deleteModalLabel" style="font-weight:700;">Delete Client</h5>
+						<button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body text-center" style="font-size:1.15rem; color:#222; padding:24px 12px 12px 12px;">
+						<i class="fa fa-trash" style="font-size:2.2rem; color:#d9534f; margin-bottom:12px;"></i><br>
+						Do you want to delete this client?
+					</div>
+					<div class="modal-footer border-0" style="justify-content:center; gap:18px; padding-bottom:24px;">
+						<button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal" style="border-radius:8px;">No</button>
+						<button type="button" class="btn btn-danger px-4" id="confirmDelete" style="border-radius:8px; background:#d9534f; border:none;">Yes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="dashboard-container">
+		<!-- Sidebar -->
+		<aside class="sidebar">
+			<div class="sidebar-content">
+				<div class="sidebar-header">
+					<img src="../images/logo.png" alt="Company Logo" class="company-logo">
+					<h2>ROYAL ORBIT<br>INNOVATIONS</h2>
+				</div>
+				<nav class="sidebar-nav">
+					<ul>
+						<li><a href="/admin/dashboard" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-th-large"></i> Dashboard</a></li>
+						<li><a href="/admin/email" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-envelope"></i> Emails</a></li>
+						<li><a href="/admin/blog" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-blog"></i> Blogs</a></li>
+						<li class="active"><a href="/admin/clients" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-users"></i> Clients</a></li>
+						<li><a href="/admin/services" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-cogs"></i> Services</a></li>
+						<li><a href="/admin/client-projects" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-project-diagram"></i> Client Projects</a></li>
+						<li><a href="/admin/industries" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-industry"></i> Industries</a></li>
+					</ul>
+				</nav>
+			</div>
+			<div class="sidebar-bottom">
+				<ul>
+					<li><a href="/admin/setting" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-user-cog"></i> Setting</a></li>
+					<li id="logoutBtn" style="cursor:pointer;"><i class="fa fa-sign-out-alt"></i> Logout</li>
+				</ul>
+			</div>
+		</aside>
+
+		<!-- Main Content -->
+		<main class="main-panel" style="display:flex; flex-direction:column; height:100vh;">
+			<!-- Top Bar (fixed) -->
+			<div class="top-bar" style="position:sticky; top:0; z-index:2; background:#fff;">
+				<h1>Clients</h1>
+				<div class="top-bar-right">
+					<div class="search-bar">
+						<input type="text" placeholder="Search">
+						<button><i class="fa fa-search"></i></button>
+					</div>
+					<div class="admin-profile">
+						<img src="../images/man.png" alt="Admin" class="profile-pic">
+						<span>Mr. Kaleel</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- Clients View Panel -->
+			<div class="clients-panel" style="background:#fff; border-radius:16px; margin-top:32px; width:100%; max-width:none; box-shadow:0 2px 12px rgba(44,166,164,0.06); padding:32px 0 0 0; flex:1;">
+				<div style="display:flex; gap:32px; padding:0 32px 24px 32px;">
+					<div style="display:flex; align-items:center; background:#f7f8fa; border-radius:8px; padding:6px 18px; font-size:1rem; font-weight:500;">
+						Total Clients <span style="margin-left:16px; font-size:1rem; font-weight:normal;">17</span>
+					</div>
+					<div style="flex:1; display:flex; align-items:center; background:#f7f8fa; border-radius:8px; padding:6px 18px;">
+						<input type="text" id="clientSearch" placeholder="Search" style="border:none; background:transparent; font-size:1rem; width:100%; outline:none;">
+						<button style="background:none; border:none; color:#222; font-size:1.3rem; cursor:pointer;" onclick="filterClients()"><i class="fa fa-search"></i></button>
+					</div>
+				</div>
+				<div style="padding:0 32px;">
+					<table style="width:100%; border-collapse:collapse;">
+						<tbody id="clientsTableBody">
+							<tr style="border-bottom:1px solid #eee;">
+								<td><input type="checkbox"></td>
+								<td>LIVORA</td>
+								<td>October 13, 2025</td>
+							</tr>
+							<tr style="border-bottom:1px solid #eee;">
+								<td><input type="checkbox"></td>
+								<td>AOU</td>
+								<td>October 13, 2025</td>
+							</tr>
+							<tr style="border-bottom:1px solid #eee;">
+								<td><input type="checkbox"></td>
+								<td>CAIAL</td>
+								<td>October 13, 2025</td>
+							</tr>
+							<tr style="border-bottom:1px solid #eee;">
+								<td><input type="checkbox"></td>
+								<td>ABRAJ SUITE</td>
+								<td>October 13, 2025</td>
+							</tr>
+							<tr style="border-bottom:1px solid #eee;">
+								<td><input type="checkbox"></td>
+								<td>SPAN SHADES</td>
+								<td>October 13, 2025</td>
+							</tr>
+							<tr style="border-bottom:1px solid #eee;">
+								<td><input type="checkbox"></td>
+								<td>THE SPECIALIST</td>
+								<td>October 13, 2025</td>
+							</tr>
+							<tr style="border-bottom:1px solid #eee;">
+								<td><input type="checkbox"></td>
+								<td>TIME LESS</td>
+								<td>October 13, 2025</td>
+							</tr>
+						</tbody>
+					</table>
+</div>
+<script>
+let deleteIndex = null;
+const clients = [
+	{ name: "LIVORA", date: "October 13, 2025" },
+	{ name: "AOU", date: "October 13, 2025" },
+	{ name: "CAIAL", date: "October 13, 2025" },
+	{ name: "ABRAJ SUITE", date: "October 13, 2025" },
+	{ name: "SPAN SHADES", date: "October 13, 2025" },
+	{ name: "THE SPECIALIST", date: "October 13, 2025" },
+	{ name: "TIME LESS", date: "October 13, 2025" }
+];
+
+function renderClients(list) {
+	const tbody = document.getElementById('clientsTableBody');
+	tbody.innerHTML = '';
+	list.forEach((c, i) => {
+		tbody.innerHTML += `<tr>
+			<td style='padding:12px 0;'><input type='checkbox'></td>
+			<td style='font-weight:normal;'>${c.name}</td>
+			<td style='color:#888; text-align:right;'>${c.date}</td>
+			<td style='text-align:right;'><i class='fa fa-trash' style='color:#222; cursor:pointer;' data-index='${i}'></i></td>
+		</tr>`;
+	});
+	// Add event listeners for trash icons
+	Array.from(document.querySelectorAll('.fa-trash[data-index]')).forEach(icon => {
+		icon.addEventListener('click', function() {
+			deleteIndex = parseInt(this.getAttribute('data-index'));
+			var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+			deleteModal.show();
+		});
+	});
+}
+
+function filterClients() {
+	const search = document.getElementById('clientSearch').value.toLowerCase();
+	renderClients(clients.filter(c => c.name.toLowerCase().includes(search)));
+}
+
+document.getElementById('clientSearch').addEventListener('input', filterClients);
+window.onload = function() { renderClients(clients); };
+
+// Delete modal logic
+document.addEventListener('DOMContentLoaded', function() {
+	var confirmDelete = document.getElementById('confirmDelete');
+	confirmDelete.addEventListener('click', function() {
+		if (deleteIndex !== null && clients[deleteIndex]) {
+			clients.splice(deleteIndex, 1);
+			renderClients(clients);
+			deleteIndex = null;
+			// Always hide the modal using the static method
+			var deleteModalEl = document.getElementById('deleteModal');
+			var modalInstance = bootstrap.Modal.getInstance(deleteModalEl);
+			if (modalInstance) {
+				modalInstance.hide();
+			} else {
+				// fallback: manually remove 'show' class and backdrop
+				deleteModalEl.classList.remove('show');
+				deleteModalEl.setAttribute('aria-hidden', 'true');
+				document.body.classList.remove('modal-open');
+				let backdrop = document.querySelector('.modal-backdrop');
+				if (backdrop) backdrop.remove();
+			}
+		}
+	});
+});
+</script>
+				</div>
+				<div style="display:flex; justify-content:flex-end; align-items:center; gap:24px; padding:32px 32px;">
+					<button class="action-btn update-btn">
+						Update Client
+					</button>
+					<button class="action-btn add-btn">
+						<span class="add-icon-circle"><i class="fa fa-user-plus"></i></span>
+						Add New Client
+					</button>
+				</div>
+				<style>
+				.action-btn {
+					background: #2ca6a4;
+					color: #fff;
+					border: none;
+					border-radius: 20px;
+					padding: 8px 24px;
+					font-size: 1rem;
+					min-width: 170px;
+					min-height: 44px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					gap: 8px;
+					cursor: pointer;
+					transition: background 0.2s, color 0.2s;
+				}
+				.action-btn:hover {
+					background: #00796b;
+					color: #fff;
+				}
+				.add-icon-circle {
+					color: #ffffff;
+					border-radius: 50%;
+					width: 28px;
+					height: 28px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 1.2rem;
+					transition: background 0.2s, color 0.2s;
+				}
+				.add-btn:hover .add-icon-circle {
+					background: #00796b;
+					color: #fff;
+				}
+				#clientsTableBody tr {
+					border-bottom: 1px solid #eee;
+					height: 56px;
+				}
+				</style>
+		</main>
+	</div>
+</body>
+	<!-- Chart.js for graph -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<!-- Bootstrap JS (must be last) -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			// Logout modal logic
+			var logoutBtn = document.getElementById('logoutBtn');
+			var logoutModalEl = document.getElementById('logoutModal');
+			var confirmLogout = document.getElementById('confirmLogout');
+			var logoutModal = new bootstrap.Modal(logoutModalEl);
+			logoutBtn.addEventListener('click', function() {
+				logoutModal.show();
+			});
+			confirmLogout.addEventListener('click', function() {
+				window.location.href = '../';
+			});
+		});
+	</script>
+</html>

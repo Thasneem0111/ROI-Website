@@ -58,6 +58,15 @@ const extensionlessRoutes = [
   { route: '/blog/uxMarketing', file: '/blog/uxMarketing.html' },
   { route: '/blog/logoGenerate', file: '/blog/logoGenerate.html' },
 
+  // Admin extensionless routes
+  { route: '/admin/dashboard', file: 'admin/dashboard.html' },
+  { route: '/admin/email', file: 'admin/email.html' },
+  { route: '/admin/blog', file: 'admin/blog.html' },
+  { route: '/admin/clients', file: 'admin/clients.html' },
+  { route: '/admin/services', file: 'admin/services.html' },
+  { route: '/admin/industries', file: 'admin/industries.html' },
+  { route: '/admin/setting', file: 'admin/setting.html' },
+
 
 ];
 
