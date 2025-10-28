@@ -71,7 +71,6 @@
 						<li><a href="/admin/blog" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-blog"></i> Blogs</a></li>
 						<li><a href="/admin/clients" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-users"></i> Clients</a></li>
 						<li><a href="/admin/services" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-cogs"></i> Services</a></li>
-						<li><a href="/admin/client-projects" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-project-diagram"></i> Client Projects</a></li>
 						<li class="active"><a href="/admin/industries" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-industry"></i> Industries</a></li>
 					</ul>
 				</nav>
@@ -105,7 +104,7 @@
 			<div class="industries-panel" style="background:#fff; border-radius:16px; margin-top:32px; width:100%; max-width:none; box-shadow:0 2px 12px rgba(44,166,164,0.06); padding:32px 0 0 0; flex:1;">
 				<div style="display:flex; gap:32px; padding:0 32px 24px 32px;">
 					<div style="display:flex; align-items:center; background:#f7f8fa; border-radius:8px; padding:6px 18px; font-size:1rem; font-weight:500;">
-						Total Services <span style="margin-left:16px; font-size:1rem; font-weight:normal;">21</span>
+						Total Industries <span id="totalIndustriesCount" style="margin-left:16px; font-size:1rem; font-weight:normal;">0</span>
 					</div>
 					<div style="flex:1; display:flex; align-items:center; background:#f7f8fa; border-radius:8px; padding:6px 18px;">
 						<input type="text" id="industrySearch" placeholder="Search" style="border:none; background:transparent; font-size:1rem; width:100%; outline:none;">
@@ -120,10 +119,130 @@
 				</div>
 				<div style="display:flex; justify-content:flex-end; align-items:center; gap:24px; padding:32px 32px;">
 					<button class="action-btn update-btn">Update Industries</button>
-					<button class="action-btn add-btn">
-						<span class="add-icon-circle"><i class="fa fa-plus"></i></span>
-						Add new industry
-					</button>
+					<button class="action-btn" id="seedStaticBtn" style="background:#eef7f6;color:#0b5f59;">Seed preset industries</button>
+					   <button class="action-btn add-btn" id="addIndustryBtn" data-bs-toggle="modal" data-bs-target="#addIndustryModal">
+						   <span class="add-icon-circle"><i class="fa fa-plus"></i></span>
+						   Add new industry
+					   </button>
+	   <!-- Add New Industry Modal -->
+	   <div class="modal fade" id="addIndustryModal" tabindex="-1" aria-labelledby="addIndustryModalLabel" aria-hidden="true">
+		   <div class="modal-dialog modal-lg modal-dialog-centered">
+			   <div class="modal-content">
+				   <div class="modal-header">
+					   <h5 class="modal-title" id="addIndustryModalLabel">New Industry</h5>
+					   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				   </div>
+				   <div class="modal-body">
+					   <form id="industryForm">
+						   <div class="row mb-3">
+							   <div class="col-md-4">
+								   <label class="form-label" style="font-size:0.95rem;">Total Industries</label>
+								   <input type="text" id="industryTotalField" class="form-control" value="0" readonly style="height:48px;">
+							   </div>
+						   </div>
+						   <div class="mb-3">
+							   <label class="form-label">Industry Name <span class="text-danger">*</span></label>
+							   <input type="text" class="form-control required-field" id="industryName" placeholder="Type your industry name here...." required>
+						   </div>
+						   <div class="mb-3">
+							   <label class="form-label">Upload Image <span class="text-danger">*</span></label>
+							   <div class="input-group">
+								   <input type="file" class="form-control" id="industryUploadImage" accept="image/*">
+								   <button class="btn btn-outline-secondary" type="button" id="industryUploadBtn"><i class="fa fa-upload"></i></button>
+							   </div>
+							   <img id="industryPreviewImg" src="#" alt="Preview" style="max-width:120px; margin-top:10px; display:none;" />
+						   </div>
+						   <div class="mb-3">
+							   <label class="form-label">Industry Description <span class="text-danger">*</span></label>
+							   <textarea class="form-control required-field" id="industryDesc" rows="3" placeholder="Write About Industry...." required></textarea>
+						   </div>
+					   </form>
+				   </div>
+				   <div class="modal-footer">
+					   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					   <button type="button" class="btn btn-success" id="updateIndustryBtn">Update Industries</button>
+					   <button type="button" class="btn btn-primary" id="addNewIndustryBtn">Add new industry</button>
+				   </div>
+			   </div>
+		   </div>
+	   </div>
+
+	   <!-- Confirmation Modal -->
+	   <div class="modal fade" id="confirmAddIndustryModal" tabindex="-1" aria-labelledby="confirmAddIndustryModalLabel" aria-hidden="true">
+		   <div class="modal-dialog modal-dialog-centered">
+			   <div class="modal-content">
+				   <div class="modal-header">
+					   <h5 class="modal-title w-100 text-center" id="confirmAddIndustryModalLabel">Confirm Add Industry</h5>
+					   <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+				   </div>
+				   <div class="modal-body text-center" style="border-bottom:1px solid #eee;">
+					   <i class="fa fa-check-circle" style="font-size:2.2rem; color:#2ca6a4; margin-bottom:12px;"></i><br>
+					   <span style="font-size:1.15rem; color:#222;">Please confirm:<br>Do you want to add this industry to the system?</span>
+				   </div>
+				   <div class="modal-footer justify-content-center" style="gap:16px;">
+					   <button type="button" class="btn btn-secondary px-4" id="noAddIndustryBtn">No</button>
+					   <button type="button" class="btn btn-success px-4" id="yesAddIndustryBtn">Yes</button>
+				   </div>
+			   </div>
+		   </div>
+	   </div>
+
+	   <!-- Success Modal -->
+	   <div class="modal fade" id="successIndustryModal" tabindex="-1" aria-labelledby="successIndustryModalLabel" aria-hidden="true">
+		   <div class="modal-dialog modal-dialog-centered">
+			   <div class="modal-content">
+				   <div class="modal-header">
+					   <h5 class="modal-title" id="successIndustryModalLabel">Industry Successfully Added</h5>
+					   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				   </div>
+				   <div class="modal-body text-center">
+					   <i class="fa fa-check-circle" style="font-size:2.2rem; color:#2ca6a4; margin-bottom:12px;"></i><br>
+					   <span style="font-size:1.15rem; color:#222;">Thank you! The new industry has been added to the system.<br>Would you like to add another industry or return to the dashboard?</span>
+				   </div>
+				   <div class="modal-footer justify-content-center" style="gap:16px;">
+					   <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Return to Dashboard</button>
+					   <button type="button" class="btn btn-primary px-4" id="addAnotherIndustryBtn">Add Another Industry</button>
+				   </div>
+			   </div>
+		   </div>
+	   </div>
+
+	   <!-- Edit Industry Modal (Update/Cancel only) -->
+	   <div class="modal fade" id="editIndustryModal" tabindex="-1" aria-labelledby="editIndustryModalLabel" aria-hidden="true">
+		   <div class="modal-dialog modal-lg modal-dialog-centered">
+			   <div class="modal-content">
+				   <div class="modal-header">
+					   <h5 class="modal-title" id="editIndustryModalLabel">Update Industry</h5>
+					   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				   </div>
+				   <div class="modal-body">
+					   <form id="editIndustryForm">
+						   <input type="hidden" id="editIndustryId" />
+						   <div class="mb-3">
+							   <label class="form-label">Industry Name <span class="text-danger">*</span></label>
+							   <input type="text" class="form-control" id="editIndustryName" required>
+						   </div>
+						   <div class="mb-3">
+							   <label class="form-label">Change Image (optional)</label>
+							   <div class="input-group">
+								   <input type="file" class="form-control" id="editIndustryImage" accept="image/*">
+								   <button class="btn btn-outline-secondary" type="button" id="editIndustryUploadBtn"><i class="fa fa-upload"></i></button>
+							   </div>
+							   <img id="editIndustryPreviewImg" src="#" alt="Preview" style="max-width:120px; margin-top:10px; display:none;" />
+						   </div>
+						   <div class="mb-3">
+							   <label class="form-label">Industry Description <span class="text-danger">*</span></label>
+							   <textarea class="form-control" id="editIndustryDesc" rows="3" required></textarea>
+						   </div>
+					   </form>
+				   </div>
+				   <div class="modal-footer justify-content-end">
+					   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+					   <button type="button" class="btn btn-primary" id="saveIndustryUpdatesBtn">Update</button>
+				   </div>
+			   </div>
+		   </div>
+	   </div>
 				</div>
 				<style>
 				.action-btn {
@@ -167,70 +286,357 @@
 				}
 				</style>
 			</div>
-			<script>
-			const industries = [
-				{ name: "Automotive", date: "October 13, 2025" },
-				{ name: "Business & Finance", date: "October 13, 2025" },
-				{ name: "Food & Beverage", date: "October 13, 2025" },
-				{ name: "Construction", date: "October 13, 2025" },
-				{ name: "Hospitality", date: "October 13, 2025" },
-				{ name: "E-Commerce", date: "October 13, 2025" },
-				{ name: "General Retail", date: "October 13, 2025" }
-			];
+			<script type="module">
+			// Firebase + Firestore + Storage
+			import { app, db, storage, auth, serverTimestamp } from './firebase-config.js';
+			import { collection, addDoc, onSnapshot, query, orderBy, doc, updateDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+			import { ref, uploadBytes, getDownloadURL, deleteObject } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js';
+			import { signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
 
-			let deleteIndex = null;
-			function renderIndustries(list) {
-				const tbody = document.getElementById('industriesTableBody');
-				tbody.innerHTML = '';
-				list.forEach((i, idx) => {
-					tbody.innerHTML += `<tr>
-						<td style='padding:12px 0;'><input type='checkbox'></td>
-						<td style='font-weight:normal;'>${i.name}</td>
-						<td style='color:#888; text-align:right;'>${i.date}</td>
-						<td style='text-align:right;'><i class='fa fa-trash' style='color:#222; cursor:pointer;' data-index='${idx}'></i></td>
-					</tr>`;
-				});
-				// Add event listeners for trash icons
-				Array.from(document.querySelectorAll('.fa-trash[data-index]')).forEach(icon => {
-					icon.addEventListener('click', function() {
-						deleteIndex = parseInt(this.getAttribute('data-index'));
-						var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
-						deleteModal.show();
-					});
-				});
-			}
+			// Ensure Bootstrap is loaded and DOM is ready (fix for modal usage order)
+			window.addEventListener('load', async () => {
+				// Ensure we are authenticated (Anonymous) to satisfy rules for Storage/Firestore writes
+				try {
+					await signInAnonymously(auth);
+				} catch (e) {
+					console.error('[Auth] Anonymous sign-in failed:', e);
+					// We can still proceed for reads if rules allow; writes will fail and show detailed alerts
+				}
 
-			function filterIndustries() {
-				const search = document.getElementById('industrySearch').value.toLowerCase();
-				renderIndustries(industries.filter(i => i.name.toLowerCase().includes(search)));
-			}
-
-			document.getElementById('industrySearch').addEventListener('input', filterIndustries);
-			window.onload = function() { renderIndustries(industries); };
-
-			// Delete modal logic
-			document.addEventListener('DOMContentLoaded', function() {
-				var confirmDelete = document.getElementById('confirmDelete');
-				confirmDelete.addEventListener('click', function() {
-					if (deleteIndex !== null && industries[deleteIndex]) {
-						industries.splice(deleteIndex, 1);
-						renderIndustries(industries);
-						deleteIndex = null;
-						// Always hide the modal using the static method
-						var deleteModalEl = document.getElementById('deleteModal');
-						var modalInstance = bootstrap.Modal.getInstance(deleteModalEl);
-						if (modalInstance) {
-							modalInstance.hide();
-						} else {
-							// fallback: manually remove 'show' class and backdrop
-							deleteModalEl.classList.remove('show');
-							deleteModalEl.setAttribute('aria-hidden', 'true');
-							document.body.classList.remove('modal-open');
-							let backdrop = document.querySelector('.modal-backdrop');
-							if (backdrop) backdrop.remove();
-						}
+				onAuthStateChanged(auth, async (user) => {
+					if (user) {
+						console.log('[Auth] Signed in (anonymous):', user.uid);
+						try { const t = await user.getIdToken(/*forceRefresh*/ false); console.log('[Auth] Token (truncated):', (t||'').slice(0,18)+'...'); } catch(_){}
+					} else {
+						console.warn('[Auth] No user signed in. Writes will fail if rules require auth.');
 					}
 				});
+				// Local state
+				let dynamicIndustries = []; // Firestore-backed
+				const STATIC_INDUSTRIES = [
+					'Automotive','Business & Finance','Food & Beverage','Construction','Hospitality','E-Commerce','General Retail','Coffee Shops','Real Estate','Entertainment & Events','Beauty & Personal Care','Health & Fitness','Recruitment & Staffing','Professional Services'
+				].map(n => ({ id:`static-${n}`, name:n, createdAt:null, isStatic:true }));
+
+				let pendingDeleteId = null;
+				let pendingEdit = null; // {id, ...}
+
+				const tbody = document.getElementById('industriesTableBody');
+				const countEl = document.getElementById('totalIndustriesCount');
+
+				// Helper: format timestamp
+				function formatDate(ts) {
+					try {
+						if (!ts) return '—';
+						const d = ts.toDate ? ts.toDate() : new Date(ts);
+						return d.toLocaleString(undefined, { year:'numeric', month:'long', day:'2-digit', hour:'2-digit', minute:'2-digit' });
+					} catch (_) { return '—'; }
+				}
+
+				function renderRows(list) {
+					tbody.innerHTML = '';
+					list.forEach((item) => {
+						const tr = document.createElement('tr');
+						const isStatic = !!item.isStatic;
+						tr.innerHTML = `
+							<td style='padding:12px 0;'><input type='checkbox' ${isStatic ? 'disabled' : ''} data-id='${item.id}'></td>
+							<td style='font-weight:normal;'>${item.name || ''}</td>
+							<td style='color:#888; text-align:right;'>${formatDate(item.createdAt)}</td>
+							<td style='text-align:right; display:flex; gap:14px; justify-content:flex-end;'>
+								${isStatic ? '' : `<i class='fa fa-pen-to-square' style='color:#0f766e; cursor:pointer;' data-action='edit' data-id='${item.id}' title='Edit'></i>`}
+								${isStatic ? '' : `<i class='fa fa-trash' style='color:#d9534f; cursor:pointer;' data-action='delete' data-id='${item.id}' title='Delete'></i>`}
+							</td>
+						`;
+						tbody.appendChild(tr);
+					});
+				}
+
+				function combinedList() {
+					const dynNames = new Set(dynamicIndustries.map(d => (d.name||'').toLowerCase()));
+					const filteredStatic = STATIC_INDUSTRIES.filter(s => !dynNames.has((s.name||'').toLowerCase()));
+					return [...filteredStatic, ...dynamicIndustries];
+				}
+
+				function updateCount() {
+					const dynNames = new Set(dynamicIndustries.map(d => (d.name||'').toLowerCase()));
+					const filteredStatic = STATIC_INDUSTRIES.filter(s => !dynNames.has((s.name||'').toLowerCase()));
+					const total = filteredStatic.length + dynamicIndustries.length;
+					if (countEl) countEl.textContent = String(total);
+					const totalField = document.getElementById('industryTotalField');
+					if (totalField) totalField.value = String(total);
+				}
+
+				function applyFilter() {
+					const q = (document.getElementById('industrySearch').value || '').toLowerCase();
+					const base = combinedList();
+					if (!q) return renderRows(base);
+					renderRows(base.filter(i => (i.name||'').toLowerCase().includes(q)));
+				}
+
+				// Live subscription (latest on top) from the correct collection name: 'industry'
+				const qIndustries = query(collection(db, 'industry'), orderBy('createdAt', 'desc'));
+				onSnapshot(qIndustries,
+					(snap) => {
+						dynamicIndustries = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+						updateCount();
+						applyFilter();
+					},
+					(err) => {
+						console.error('[Firestore] Subscription error:', err);
+						alert('Cannot read industries from Firestore. Please check your Firebase rules and internet connection.\n' + (err?.message || ''));
+					}
+				);
+
+				// Search
+				document.getElementById('industrySearch').addEventListener('input', applyFilter);
+				renderRows(combinedList());
+				updateCount();
+
+				// Delegated actions for Edit/Delete
+				tbody.addEventListener('click', (e) => {
+					const target = e.target;
+					if (!(target instanceof HTMLElement)) return;
+					const action = target.getAttribute('data-action');
+					const id = target.getAttribute('data-id');
+					if (!action || !id) return;
+					const item = dynamicIndustries.find(x => x.id === id);
+					if (!item) return; // ignore clicks on static rows
+
+					if (action === 'delete') {
+						pendingDeleteId = id;
+						const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+						modal.show();
+					}
+					if (action === 'edit') {
+						pendingEdit = { ...item };
+						// Prefill edit form
+						document.getElementById('editIndustryId').value = pendingEdit.id;
+						document.getElementById('editIndustryName').value = pendingEdit.name || '';
+						document.getElementById('editIndustryDesc').value = pendingEdit.description || '';
+						const prev = document.getElementById('editIndustryPreviewImg');
+						if (pendingEdit.imageUrl) { prev.src = pendingEdit.imageUrl; prev.style.display = 'block'; }
+						else { prev.style.display = 'none'; }
+						const modal = new bootstrap.Modal(document.getElementById('editIndustryModal'));
+						modal.show();
+					}
+				});
+
+				// Confirm Delete
+				document.getElementById('confirmDelete').addEventListener('click', async () => {
+					if (!pendingDeleteId) return;
+					const item = dynamicIndustries.find(x => x.id === pendingDeleteId);
+					try {
+						if (item?.imagePath) {
+							try { await deleteObject(ref(storage, item.imagePath)); } catch (_) {}
+						}
+						await deleteDoc(doc(db, 'industry', pendingDeleteId));
+					} catch (err) {
+						console.error('Delete failed', err);
+						alert('Failed to delete industry.');
+					} finally {
+						pendingDeleteId = null;
+						const deleteModalEl = document.getElementById('deleteModal');
+						const modalInstance = bootstrap.Modal.getInstance(deleteModalEl);
+						modalInstance?.hide();
+					}
+				});
+
+				// Add: image choose helpers
+				const addUploadBtn = document.getElementById('industryUploadBtn');
+				const addFileInput = document.getElementById('industryUploadImage');
+				const addPrev = document.getElementById('industryPreviewImg');
+				addUploadBtn.addEventListener('click', () => addFileInput.click());
+				addFileInput.addEventListener('change', (e) => {
+					const file = e.target.files?.[0];
+					if (file) { const r = new FileReader(); r.onload = ev => { addPrev.src = ev.target.result; addPrev.style.display='block'; }; r.readAsDataURL(file); }
+					else { addPrev.style.display = 'none'; }
+				});
+
+				// Edit: image choose helpers
+				document.getElementById('editIndustryUploadBtn').addEventListener('click', () => document.getElementById('editIndustryImage').click());
+				document.getElementById('editIndustryImage').addEventListener('change', (e) => {
+					const file = e.target.files?.[0];
+					const prev = document.getElementById('editIndustryPreviewImg');
+					if (file) { const r = new FileReader(); r.onload = ev => { prev.src = ev.target.result; prev.style.display='block'; }; r.readAsDataURL(file); }
+				});
+
+				// Validation helper
+				function validateAddForm() {
+					let ok = true;
+					const nameEl = document.getElementById('industryName');
+					const descEl = document.getElementById('industryDesc');
+					const imgEl = document.getElementById('industryUploadImage');
+					[nameEl, descEl].forEach(el => { if (!el.value?.trim()) { el.classList.add('is-invalid'); ok = false; } else { el.classList.remove('is-invalid'); } });
+					if (!imgEl.files || imgEl.files.length===0) { imgEl.classList.add('is-invalid'); ok = false; } else { imgEl.classList.remove('is-invalid'); }
+					return ok;
+				}
+
+				// Add click -> open confirm
+				document.getElementById('addNewIndustryBtn').addEventListener('click', () => {
+					if (!validateAddForm()) {
+						const firstInvalid = document.querySelector('.is-invalid');
+						firstInvalid?.scrollIntoView({ behavior:'smooth', block:'center' });
+						return;
+					}
+					const confirmModal = new bootstrap.Modal(document.getElementById('confirmAddIndustryModal'));
+					confirmModal.show();
+				});
+
+				// Confirm add -> upload + addDoc
+				document.getElementById('yesAddIndustryBtn').addEventListener('click', async (ev) => {
+					const yesBtn = ev.currentTarget;
+					yesBtn.disabled = true;
+					const name = document.getElementById('industryName').value.trim();
+					const description = document.getElementById('industryDesc').value.trim();
+					const file = addFileInput.files?.[0];
+					const confirmEl = document.getElementById('confirmAddIndustryModal');
+					const addModalEl = document.getElementById('addIndustryModal');
+					try {
+						// Ensure auth before attempting Storage/Firestore writes
+						if (!auth.currentUser) {
+							try { await signInAnonymously(auth); } catch(_){ }
+						}
+						if (!auth.currentUser) {
+							alert('Not authenticated. Please enable Anonymous Sign-in in Firebase Auth and refresh the page.');
+							yesBtn.disabled = false; return;
+						}
+						let imageUrl = '';
+						let imagePath = '';
+						if (file) {
+							const path = `industries/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g,'_')}`;
+							const sRef = ref(storage, path);
+							try {
+								await uploadBytes(sRef, file, { contentType: file.type || 'application/octet-stream' });
+								imageUrl = await getDownloadURL(sRef);
+							} catch (uploadErr) {
+								console.error('[Storage] Upload failed:', uploadErr);
+								alert('Image upload failed. Please check Storage rules and enable Anonymous Sign-in.\n' + (uploadErr?.code || '') + ' ' + (uploadErr?.message || ''));
+								yesBtn.disabled = false;
+								return;
+							}
+							imagePath = path;
+						}
+						await addDoc(collection(db, 'industry'), {
+							name,
+							description,
+							imageUrl,
+							imagePath,
+							createdAt: serverTimestamp(),
+							updatedAt: serverTimestamp()
+						});
+						// Close modals using hidden events to avoid aria-hidden focus issues
+						const confirmInstance = bootstrap.Modal.getInstance(confirmEl);
+						confirmInstance?.hide();
+						confirmEl.addEventListener('hidden.bs.modal', () => {
+							const addInstance = bootstrap.Modal.getInstance(addModalEl);
+							addInstance?.hide();
+							addModalEl.addEventListener('hidden.bs.modal', () => {
+								// Reset form state
+								document.getElementById('industryForm').reset();
+								addPrev.style.display = 'none';
+								document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+								document.getElementById('industryUploadImage').classList.remove('is-invalid');
+								// Show success
+								new bootstrap.Modal(document.getElementById('successIndustryModal')).show();
+							}, { once: true });
+						}, { once: true });
+					} catch (err) {
+						console.error('[Firestore] Add industry failed:', err);
+						alert('Failed to add industry. Please check Firestore rules and collection name ("industry").\n' + (err?.code || '') + ' ' + (err?.message || ''));
+						bootstrap.Modal.getInstance(confirmEl)?.hide();
+					}
+					finally {
+						yesBtn.disabled = false;
+					}
+				});
+
+				// No on confirm
+				document.getElementById('noAddIndustryBtn').addEventListener('click', () => {
+					const confirmModal = bootstrap.Modal.getInstance(document.getElementById('confirmAddIndustryModal'));
+					confirmModal?.hide();
+				});
+				document.getElementById('addAnotherIndustryBtn').addEventListener('click', () => {
+					const successModal = bootstrap.Modal.getInstance(document.getElementById('successIndustryModal'));
+					successModal?.hide();
+					new bootstrap.Modal(document.getElementById('addIndustryModal')).show();
+				});
+
+				// Save updates
+				document.getElementById('saveIndustryUpdatesBtn').addEventListener('click', async () => {
+					const id = document.getElementById('editIndustryId').value;
+					const name = document.getElementById('editIndustryName').value.trim();
+					const description = document.getElementById('editIndustryDesc').value.trim();
+					const file = document.getElementById('editIndustryImage').files?.[0];
+					if (!id) return;
+					try {
+						const update = { name, description, updatedAt: serverTimestamp() };
+						if (file) {
+							const existing = dynamicIndustries.find(x => x.id === id);
+							if (existing?.imagePath) {
+								try { await deleteObject(ref(storage, existing.imagePath)); } catch (_) {}
+							}
+							const path = `industries/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g,'_')}`;
+							const sRef = ref(storage, path);
+							await uploadBytes(sRef, file);
+							update.imageUrl = await getDownloadURL(sRef);
+							update.imagePath = path;
+						}
+						await updateDoc(doc(db, 'industry', id), update);
+						bootstrap.Modal.getInstance(document.getElementById('editIndustryModal'))?.hide();
+					} catch (err) {
+						console.error('Update failed', err);
+						alert('Failed to update industry.');
+					}
+				});
+
+				// Seed preset industries into Firestore (skips any that already exist by name)
+				document.getElementById('seedStaticBtn')?.addEventListener('click', async (e) => {
+					const btn = e.currentTarget;
+					btn.disabled = true;
+					try {
+						const dynNames = new Set(dynamicIndustries.map(d => (d.name||'').toLowerCase()));
+						const staticSeed = [
+							{ name:'Automotive', imageUrl:'/images/automotive.jpeg', description:'Drive more leads and sales for car dealerships, auto repair, and automotive services with targeted digital marketing.' },
+							{ name:'Business & Finance', imageUrl:'/images/b&f.jpg', description:'Grow your financial services, consulting, or B2B business with strategies that build trust and attract high-value clients.' },
+							{ name:'Food & Beverage', imageUrl:'/images/food&beverage.jpg', description:'Attract more diners and customers to your restaurant, cafe, or food brand with mouth-watering digital campaigns.' },
+							{ name:'Construction', imageUrl:'/images/constructionReal.webp', description:'Build your reputation and win more projects with marketing tailored for construction and real estate businesses.' },
+							{ name:'Hospitality', imageUrl:'/images/hospitality.jpg', description:'Fill more rooms and tables with digital strategies for hotels, resorts, and hospitality brands.' },
+							{ name:'E-Commerce', imageUrl:'/images/Ecommerce.jpg', description:'Boost your online store’s sales and reach new customers with proven e-commerce marketing solutions.' },
+							{ name:'General Retail', imageUrl:'/images/general retail.jpg', description:'Drive foot traffic and online sales for retail shops with creative, results-driven marketing.' },
+							{ name:'Coffee Shops', imageUrl:'/images/coffee.jpg', description:'Brew up more business for your coffee shop or cafe with engaging local marketing campaigns.' },
+							{ name:'Real Estate', imageUrl:'/images/realestate.jpg', description:'Showcase properties and connect with buyers and sellers through powerful real estate marketing.' },
+							{ name:'Entertainment & Events', imageUrl:'/images/entertainment.jpg', description:'Promote your events, venues, or entertainment business and sell more tickets with digital marketing.' },
+							{ name:'Beauty & Personal Care', imageUrl:'/images/beauty.webp', description:'Grow your salon, spa, or beauty brand with marketing that highlights your unique services and style.' },
+							{ name:'Health & Fitness', imageUrl:'/images/health.avif', description:'Inspire more signups and appointments for gyms, clinics, and wellness brands with health-focused marketing.' },
+							{ name:'Recruitment & Staffing', imageUrl:'/images/recruitment.jpg', description:'Attract top talent and connect with employers through digital marketing for recruitment agencies.' },
+							{ name:'Professional Services', imageUrl:'/images/profressional service.jfif', description:'Grow your law firm, agency, or consulting business with marketing that builds authority and trust.' }
+						];
+						let added = 0;
+						for (const item of staticSeed) {
+							if (dynNames.has(item.name.toLowerCase())) continue;
+							await addDoc(collection(db, 'industry'), {
+								name: item.name,
+								description: item.description,
+								imageUrl: item.imageUrl,
+								// imagePath omitted because it points to site assets, not Firebase Storage
+								createdAt: serverTimestamp(),
+								updatedAt: serverTimestamp()
+							});
+							added++;
+						}
+						if (added === 0) alert('All preset industries already exist.');
+						else alert(`Seeded ${added} industries.`);
+					} catch (err) {
+						console.error('Seed failed', err);
+						alert('Failed to seed preset industries.');
+					} finally {
+						btn.disabled = false;
+					}
+				});
+
+				// Add small CSS for invalid fields
+				const style = document.createElement('style');
+				style.innerHTML = `.is-invalid { border-color: #dc3545 !important; box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25) !important; }`;
+				document.head.appendChild(style);
 			});
 			</script>
 		</main>

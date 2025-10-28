@@ -735,6 +735,37 @@
 		menu.addEventListener('mouseenter', ()=> clearTimeout(hideTimer));
 	})();
 	</script>
+
+	<!-- Dynamic industries from Firebase (appended after static cards) -->
+	<script type="module">
+	import { db } from '../admin/firebase-config.js';
+	import { collection, onSnapshot, orderBy, query } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+
+	const row = document.querySelector('.industries-section .row');
+	if (row) {
+	  const qIndustries = query(collection(db, 'industry'), orderBy('createdAt', 'asc'));
+	  onSnapshot(qIndustries, (snap) => {
+	    // Remove previously rendered dynamic cards
+	    row.querySelectorAll('[data-dynamic="1"]').forEach(n => n.remove());
+	    const fr = document.createDocumentFragment();
+	    snap.forEach(docu => {
+	      const d = docu.data();
+	      const col = document.createElement('div');
+	      col.className = 'col-12 col-md-6 col-lg-4';
+	      col.setAttribute('data-dynamic', '1');
+	      col.setAttribute('data-id', docu.id);
+	      col.innerHTML = `
+	        <div class="industry-card h-100">
+	          <h3>${(d.name||'').toString()}</h3>
+	          ${d.imageUrl ? `<img class="industry-image" src="${d.imageUrl}" alt="${(d.name||'').toString()}" />` : ''}
+	          <p class="industry-desc">${(d.description||'').toString()}</p>
+	        </div>`;
+	      fr.appendChild(col);
+	    });
+	    row.appendChild(fr);
+	  });
+	}
+	</script>
 	<script>
 	// Local scroll-reveal and counters for this page
 	(function(){

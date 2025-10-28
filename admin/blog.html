@@ -71,7 +71,6 @@
 						<li class="active"><a href="/admin/blog" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-blog"></i> Blogs</a></li>
 						<li><a href="/admin/clients" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-users"></i> Clients</a></li>
 						<li><a href="/admin/services" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-cogs"></i> Services</a></li>
-						<li><a href="/admin/client-projects" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-project-diagram"></i> Client Projects</a></li>
 						<li><a href="/admin/industries" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-industry"></i> Industries</a></li>
 					</ul>
 				</nav>
@@ -120,10 +119,449 @@
 				</div>
 				<div style="display:flex; justify-content:flex-end; align-items:center; gap:24px; padding:32px 32px;">
 					<button class="action-btn update-btn">Update Blog</button>
-					<button class="action-btn add-btn">
+					<button class="action-btn add-btn" id="addBlogModalBtn" data-bs-toggle="modal" data-bs-target="#addBlogModal">
 						<span class="add-icon-circle"><i class="fa fa-plus"></i></span>
 						Add new Blog
 					</button>
+		<!-- Add New Blog Modal -->
+		<div class="modal fade" id="addBlogModal" tabindex="-1" aria-labelledby="addBlogModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="addBlogModalLabel">Total Blogs 7</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form id="blogEditorForm">
+							<div class="mb-3">
+								<label class="form-label">Blog Topic</label>
+								<input type="text" class="form-control" id="blogTopic" placeholder="Type your service name here....">
+							</div>
+							<div class="mb-3">
+								<label class="form-label">Blog Description</label>
+								<textarea class="form-control" id="blogDesc" rows="3" placeholder="Write About Blog main description"></textarea>
+							</div>
+							<div class="mb-3">
+								<label class="form-label">Upload Image</label>
+								<div class="input-group">
+									<input type="file" class="form-control" id="blogUploadImage" accept="image/*">
+									<button class="btn btn-outline-secondary" type="button" id="blogUploadBtn"><i class="fa fa-upload"></i></button>
+								</div>
+								<img id="blogPreviewImg" src="#" alt="Preview" style="max-width:120px; margin-top:10px; display:none;" />
+							</div>
+							<div class="mb-3">
+								<label class="form-label">Add</label>
+								<div id="blogModalBlocks"></div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-success" id="updateBlogModalBtn">Update Blog</button>
+						<button type="button" class="btn btn-primary" id="addNewBlogModalBtn">Add new Blog</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Success Modal -->
+		<div class="modal fade" id="successBlogModal" tabindex="-1" aria-labelledby="successBlogModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="successBlogModalLabel">Blog Successfully Added</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body text-center">
+						<i class="fa fa-check-circle" style="font-size:2.2rem; color:#2ca6a4; margin-bottom:12px;"></i><br>
+						<span style="font-size:1.15rem; color:#222;">Thank you! The new blog has been added to the system.<br>Would you like to add another blog or return to the dashboard?</span>
+					</div>
+					<div class="modal-footer justify-content-center" style="gap:16px;">
+						<button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Return to Dashboard</button>
+						<button type="button" class="btn btn-primary px-4" id="addAnotherBlogBtn">Add Another Blog</button>
+					</div>
+				</div>
+			</div>
+		</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<script>
+// Blog block types
+const blockTypes = [
+	{ value: 'h1', label: 'Main Heading (h1)' },
+	{ value: 'h2', label: 'Sub Heading (h2)' },
+	{ value: 'h3', label: 'Normal Heading (h3)' },
+	{ value: 'p', label: 'Paragraph' },
+	{ value: 'list', label: 'List' }
+];
+
+function createModalBlock(type = 'h1', value = '') {
+	const block = document.createElement('div');
+	block.className = 'blog-block';
+	block.style.marginBottom = '24px';
+	block.style.display = 'flex';
+	block.style.flexDirection = 'column';
+	block.style.gap = '8px';
+	// Select
+	const select = document.createElement('select');
+	select.className = 'form-select';
+	select.style.maxWidth = '220px';
+	select.style.marginBottom = '8px';
+	blockTypes.forEach(opt => {
+		const o = document.createElement('option');
+		o.value = opt.value;
+		o.textContent = opt.label;
+		select.appendChild(o);
+	});
+	select.value = type;
+	block.appendChild(select);
+
+	// Content area
+	const contentDiv = document.createElement('div');
+	contentDiv.className = 'blog-block-content';
+	contentDiv.style.display = 'flex';
+	contentDiv.style.flexDirection = 'column';
+	contentDiv.style.gap = '8px';
+	block.appendChild(contentDiv);
+
+	// Button row for actions
+	const buttonRow = document.createElement('div');
+	buttonRow.style.display = 'flex';
+	buttonRow.style.flexDirection = 'row';
+	buttonRow.style.gap = '8px';
+	buttonRow.style.marginTop = '8px';
+	buttonRow.style.justifyContent = 'flex-end';
+
+	// Add more button
+	const addMoreBtn = document.createElement('button');
+	addMoreBtn.type = 'button';
+	addMoreBtn.className = 'btn btn-link';
+	addMoreBtn.style.fontWeight = '500';
+	addMoreBtn.style.color = '#888';
+	addMoreBtn.textContent = type === 'list' ? 'Add More List +' : 'Add More +';
+	addMoreBtn.style.marginLeft = '0';
+	addMoreBtn.style.alignSelf = 'flex-end';
+
+	// Add another block button (for after list)
+	const addAnotherBlockBtn = document.createElement('button');
+	addAnotherBlockBtn.type = 'button';
+	addAnotherBlockBtn.className = 'btn btn-link';
+	addAnotherBlockBtn.style.fontWeight = '500';
+	addAnotherBlockBtn.style.color = '#2ca6a4';
+	addAnotherBlockBtn.textContent = 'Add Another Option';
+	addAnotherBlockBtn.style.alignSelf = 'flex-end';
+	addAnotherBlockBtn.style.marginLeft = '0';
+
+	// Remove block button
+	const removeBtn = document.createElement('button');
+	removeBtn.type = 'button';
+	removeBtn.className = 'btn btn-link';
+	removeBtn.style.color = '#d9534f';
+	removeBtn.textContent = 'Remove';
+	removeBtn.style.alignSelf = 'flex-end';
+
+	// Block content logic
+	function renderContent() {
+		contentDiv.innerHTML = '';
+		buttonRow.innerHTML = '';
+		if (select.value === 'list') {
+			// List block: multiple textareas
+			if (!block.listItems) block.listItems = [''];
+			block.listItems.forEach((item, idx) => {
+				const ta = document.createElement('textarea');
+				ta.className = 'form-control';
+				ta.style.minHeight = '38px';
+				ta.style.marginBottom = '8px';
+				ta.placeholder = 'List item...';
+				ta.value = item;
+				ta.oninput = () => { block.listItems[idx] = ta.value; };
+				contentDiv.appendChild(ta);
+			});
+			// Add more list button
+			addMoreBtn.textContent = 'Add More List +';
+			addMoreBtn.onclick = () => {
+				block.listItems.push('');
+				renderContent();
+			};
+			// Add another block button
+			addAnotherBlockBtn.onclick = () => {
+				addModalBlock();
+			};
+			buttonRow.appendChild(addMoreBtn);
+			buttonRow.appendChild(addAnotherBlockBtn);
+			buttonRow.appendChild(removeBtn);
+		} else {
+			// Heading/paragraph block: single textarea
+			const ta = document.createElement('textarea');
+			ta.className = 'form-control';
+			ta.style.minHeight = '38px';
+			ta.placeholder = select.options[select.selectedIndex].text + '...';
+			ta.value = block.value || '';
+			ta.oninput = () => { block.value = ta.value; };
+			contentDiv.appendChild(ta);
+			addMoreBtn.textContent = 'Add More +';
+			addMoreBtn.onclick = () => {
+				addModalBlock(select.value);
+			};
+			buttonRow.appendChild(addMoreBtn);
+			buttonRow.appendChild(removeBtn);
+		}
+		contentDiv.appendChild(buttonRow);
+	}
+
+	select.onchange = () => {
+		if (select.value === 'list') {
+			block.listItems = [''];
+			block.value = undefined;
+		} else {
+			block.value = '';
+			block.listItems = undefined;
+		}
+		renderContent();
+	};
+	removeBtn.onclick = () => {
+		block.remove();
+	};
+	renderContent();
+	return block;
+}
+
+function addModalBlock(type = 'h1') {
+	const blocksDiv = document.getElementById('blogModalBlocks');
+	blocksDiv.appendChild(createModalBlock(type));
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+	document.getElementById('addBlogModalBtn').onclick = () => {
+		// Reset modal fields
+		document.getElementById('blogTopic').value = '';
+		document.getElementById('blogDesc').value = '';
+		document.getElementById('blogUploadImage').value = '';
+		document.getElementById('blogPreviewImg').style.display = 'none';
+		const blocksDiv = document.getElementById('blogModalBlocks');
+		blocksDiv.innerHTML = '';
+		addModalBlock();
+	};
+	document.getElementById('blogUploadBtn').onclick = function() {
+		document.getElementById('blogUploadImage').click();
+	};
+	document.getElementById('blogUploadImage').addEventListener('change', function(e) {
+		var file = e.target.files[0];
+		var preview = document.getElementById('blogPreviewImg');
+		if (file) {
+			var reader = new FileReader();
+			reader.onload = function(ev) {
+				preview.src = ev.target.result;
+				preview.style.display = 'block';
+			};
+			reader.readAsDataURL(file);
+		} else {
+			preview.style.display = 'none';
+		}
+	});
+
+	// Add new blog button logic
+	document.getElementById('addNewBlogModalBtn').addEventListener('click', function() {
+		// Validate required fields
+		var valid = true;
+		var topic = document.getElementById('blogTopic');
+		var desc = document.getElementById('blogDesc');
+		var imageInput = document.getElementById('blogUploadImage');
+		// Add style for invalid fields if not present
+		if (!document.getElementById('blog-invalid-style')) {
+			var style = document.createElement('style');
+			style.id = 'blog-invalid-style';
+			style.innerHTML = `.is-invalid { border-color: #dc3545 !important; box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25) !important; }`;
+			document.head.appendChild(style);
+		}
+		// Validate topic
+		if (!topic.value || topic.value.trim() === '') {
+			topic.classList.add('is-invalid');
+			valid = false;
+		} else {
+			topic.classList.remove('is-invalid');
+		}
+		// Validate description
+		if (!desc.value || desc.value.trim() === '') {
+			desc.classList.add('is-invalid');
+			valid = false;
+		} else {
+			desc.classList.remove('is-invalid');
+		}
+		// Validate image
+		if (!imageInput.files || imageInput.files.length === 0) {
+			imageInput.classList.add('is-invalid');
+			valid = false;
+		} else {
+			imageInput.classList.remove('is-invalid');
+		}
+		// Validate at least one block exists and has content
+		var blocksDiv = document.getElementById('blogModalBlocks');
+		var blocks = blocksDiv.querySelectorAll('.blog-block');
+		if (blocks.length === 0) valid = false;
+		blocks.forEach(function(block) {
+			var textarea = block.querySelector('textarea');
+			if (!textarea || !textarea.value.trim()) {
+				textarea.classList.add('is-invalid');
+				valid = false;
+			} else {
+				textarea.classList.remove('is-invalid');
+			}
+		});
+		if (!valid) {
+			// Scroll to first invalid field
+			var firstInvalid = document.querySelector('.is-invalid');
+			if (firstInvalid) firstInvalid.scrollIntoView({behavior:'smooth', block:'center'});
+			return;
+		}
+		var addBlogModalEl = document.getElementById('addBlogModal');
+		var addBlogModal = bootstrap.Modal.getInstance(addBlogModalEl);
+		addBlogModal.hide();
+		// Clear form and image preview
+		document.getElementById('blogEditorForm').reset();
+		document.getElementById('blogPreviewImg').style.display = 'none';
+		// Remove invalid state
+		document.querySelectorAll('.is-invalid').forEach(function(f){f.classList.remove('is-invalid');});
+		document.getElementById('blogUploadImage').classList.remove('is-invalid');
+		// Show success modal
+		var successBlogModal = new bootstrap.Modal(document.getElementById('successBlogModal'));
+		successBlogModal.show();
+	});
+
+	// Success modal: Add Another button logic
+	document.getElementById('addAnotherBlogBtn').addEventListener('click', function() {
+		var successBlogModalEl = document.getElementById('successBlogModal');
+		var successBlogModal = bootstrap.Modal.getInstance(successBlogModalEl);
+		successBlogModal.hide();
+		// Reopen the add blog modal, form is already cleared
+		var addBlogModalEl = document.getElementById('addBlogModal');
+		var addBlogModal = new bootstrap.Modal(addBlogModalEl);
+		addBlogModal.show();
+	});
+});
+</script>
+<script>
+// Blog block types
+<!-- const blockTypes = [
+	{ value: 'h1', label: 'Main Heading (h1)' },
+	{ value: 'h2', label: 'Sub Heading (h2)' },
+	{ value: 'h3', label: 'Normal Heading (h3)' },
+	{ value: 'p', label: 'Paragraph' },
+	{ value: 'list', label: 'List' }
+]; -->
+
+function createBlock(type = 'h1', value = '') {
+	const block = document.createElement('div');
+	block.className = 'blog-block';
+	block.style.marginBottom = '24px';
+	// Select
+	const select = document.createElement('select');
+	select.className = 'form-select';
+	select.style.maxWidth = '220px';
+	blockTypes.forEach(opt => {
+		const o = document.createElement('option');
+		o.value = opt.value;
+		o.textContent = opt.label;
+		select.appendChild(o);
+	});
+	select.value = type;
+	block.appendChild(select);
+
+	// Content area
+	const contentDiv = document.createElement('div');
+	contentDiv.className = 'blog-block-content';
+	contentDiv.style.display = 'flex';
+	contentDiv.style.alignItems = 'center';
+	contentDiv.style.gap = '16px';
+	block.appendChild(contentDiv);
+
+	// Add more button
+	const addMoreBtn = document.createElement('button');
+	addMoreBtn.type = 'button';
+	addMoreBtn.className = 'btn btn-link';
+	addMoreBtn.style.fontWeight = '600';
+	addMoreBtn.style.color = '#888';
+	addMoreBtn.textContent = type === 'list' ? 'Add More List +' : 'Add More +';
+	addMoreBtn.style.marginLeft = '8px';
+
+	// Remove block button
+	const removeBtn = document.createElement('button');
+	removeBtn.type = 'button';
+	removeBtn.className = 'btn btn-link';
+	removeBtn.style.color = '#d9534f';
+	removeBtn.textContent = 'Remove';
+	removeBtn.style.marginLeft = '8px';
+
+	// Block content logic
+	function renderContent() {
+		contentDiv.innerHTML = '';
+		if (select.value === 'list') {
+			// List block: multiple textareas
+			if (!block.listItems) block.listItems = [''];
+			block.listItems.forEach((item, idx) => {
+				const ta = document.createElement('textarea');
+				ta.className = 'form-control';
+				ta.style.minHeight = '38px';
+				ta.style.marginBottom = '8px';
+				ta.placeholder = 'List item...';
+				ta.value = item;
+				ta.oninput = () => { block.listItems[idx] = ta.value; };
+				contentDiv.appendChild(ta);
+			});
+			// Add more list button
+			addMoreBtn.textContent = 'Add More List +';
+			addMoreBtn.onclick = () => {
+				block.listItems.push('');
+				renderContent();
+			};
+			contentDiv.appendChild(addMoreBtn);
+		} else {
+			// Heading/paragraph block: single textarea
+			const ta = document.createElement('textarea');
+			ta.className = 'form-control';
+			ta.style.minHeight = '38px';
+			ta.placeholder = select.options[select.selectedIndex].text + '...';
+			ta.value = block.value || '';
+			ta.oninput = () => { block.value = ta.value; };
+			contentDiv.appendChild(ta);
+			addMoreBtn.textContent = 'Add More +';
+			addMoreBtn.onclick = () => {
+				addBlogBlock(select.value);
+			};
+			contentDiv.appendChild(addMoreBtn);
+		}
+		contentDiv.appendChild(removeBtn);
+	}
+
+	select.onchange = () => {
+		if (select.value === 'list') {
+			block.listItems = [''];
+			block.value = undefined;
+		} else {
+			block.value = '';
+			block.listItems = undefined;
+		}
+		renderContent();
+	};
+	removeBtn.onclick = () => {
+		block.remove();
+	};
+	renderContent();
+	return block;
+}
+
+function addBlogBlock(type = 'h1') {
+	const blocksDiv = document.getElementById('blogBlocks');
+	blocksDiv.appendChild(createBlock(type));
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+	addBlogBlock(); // Add initial block
+	document.getElementById('addBlogBlockBtn').onclick = () => addBlogBlock();
+});
+</script>
 				</div>
 				<style>
 				.action-btn {

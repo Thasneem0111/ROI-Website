@@ -71,7 +71,6 @@
 						<li><a href="/admin/blog" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-blog"></i> Blogs</a></li>
 						<li class="active"><a href="/admin/clients" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-users"></i> Clients</a></li>
 						<li><a href="/admin/services" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-cogs"></i> Services</a></li>
-						<li><a href="/admin/client-projects" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-project-diagram"></i> Client Projects</a></li>
 						<li><a href="/admin/industries" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-industry"></i> Industries</a></li>
 					</ul>
 				</nav>
@@ -195,7 +194,11 @@ document.getElementById('clientSearch').addEventListener('input', filterClients)
 window.onload = function() { renderClients(clients); };
 
 // Delete modal logic
-document.addEventListener('DOMContentLoaded', function() {
+	// Add style for invalid fields
+	var style = document.createElement('style');
+	style.innerHTML = `.is-invalid { border-color: #dc3545 !important; box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25) !important; }`;
+	document.head.appendChild(style);
+	document.addEventListener('DOMContentLoaded', function() {
 	var confirmDelete = document.getElementById('confirmDelete');
 	confirmDelete.addEventListener('click', function() {
 		if (deleteIndex !== null && clients[deleteIndex]) {
@@ -221,13 +224,13 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 				</div>
 				<div style="display:flex; justify-content:flex-end; align-items:center; gap:24px; padding:32px 32px;">
-					<button class="action-btn update-btn">
-						Update Client
-					</button>
-					<button class="action-btn add-btn">
-						<span class="add-icon-circle"><i class="fa fa-user-plus"></i></span>
-						Add New Client
-					</button>
+					   <button class="action-btn update-btn">
+						   Update Client
+					   </button>
+					   <button class="action-btn add-btn" id="addClientBtn" data-bs-toggle="modal" data-bs-target="#addClientModal">
+						   <span class="add-icon-circle"><i class="fa fa-user-plus"></i></span>
+						   Add New Client
+					   </button>
 				</div>
 				<style>
 				.action-btn {
@@ -270,26 +273,284 @@ document.addEventListener('DOMContentLoaded', function() {
 					height: 56px;
 				}
 				</style>
-		</main>
-	</div>
-</body>
-	<!-- Chart.js for graph -->
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<!-- Bootstrap JS (must be last) -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-	<script>
-		document.addEventListener('DOMContentLoaded', function() {
-			// Logout modal logic
-			var logoutBtn = document.getElementById('logoutBtn');
-			var logoutModalEl = document.getElementById('logoutModal');
-			var confirmLogout = document.getElementById('confirmLogout');
-			var logoutModal = new bootstrap.Modal(logoutModalEl);
-			logoutBtn.addEventListener('click', function() {
-				logoutModal.show();
-			});
-			confirmLogout.addEventListener('click', function() {
-				window.location.href = '../';
-			});
+		   <!-- Add New Client Modal -->
+		   <div class="modal fade" id="addClientModal" tabindex="-1" aria-labelledby="addClientModalLabel" aria-hidden="true">
+			   <div class="modal-dialog modal-lg modal-dialog-centered">
+				   <div class="modal-content">
+					   <div class="modal-header">
+						   <h5 class="modal-title" id="addClientModalLabel">New Clients</h5>
+						   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					   </div>
+					   <div class="modal-body">
+						   <form id="clientForm">
+							   <div class="row mb-3">
+								   <div class="col-md-4">
+									   <label class="form-label">Total Clients</label>
+									   <input type="text" class="form-control" value="17" readonly>
+								   </div>
+								   <div class="col-md-8">
+									   <label class="form-label">Category <span class="text-danger">*</span></label>
+									   <select class="form-select" id="categorySelect" required>
+										   <option value="">Select Category</option>
+									   </select>
+								   </div>
+							   </div>
+							   <div class="mb-3">
+								   <label class="form-label">Company Name <span class="text-danger">*</span></label>
+								   <input type="text" class="form-control" id="companyName" placeholder="Type your service name here...." required>
+							   </div>
+							   <div class="mb-3">
+								   <label class="form-label">Category of Work <span class="text-danger">*</span></label>
+								   <input type="text" class="form-control" id="categoryWork" placeholder="Type your category of work here...." required>
+							   </div>
+							   <div class="mb-3">
+								   <label class="form-label">Upload Image <span class="text-danger">*</span></label>
+								   <div class="input-group">
+									   <input type="file" class="form-control" id="uploadImage" accept="image/*">
+									   <button class="btn btn-outline-secondary" type="button" id="uploadBtn"><i class="fa fa-upload"></i></button>
+								   </div>
+								   <img id="previewImg" src="#" alt="Preview" style="max-width:120px; margin-top:10px; display:none;" />
+							   </div>
+							   <div class="mb-3">
+								   <label class="form-label">Company Description <span class="text-danger">*</span></label>
+								   <textarea class="form-control" id="companyDesc" rows="3" placeholder="Write About Company's Service...." required></textarea>
+							   </div>
+							   <div class="row mb-3">
+								   <div class="col-md-4">
+									   <label class="form-label">New Clients</label>
+									   <div class="input-group">
+										   <button class="btn btn-outline-secondary" type="button" id="decreaseClients">-</button>
+										   <input type="number" class="form-control" id="newClientsCount" value="0" min="0">
+										   <button class="btn btn-outline-secondary" type="button" id="increaseClients">+</button>
+									   </div>
+								   </div>
+								   <div class="col-md-4">
+									   <label class="form-label">Conversation Rate</label>
+									   <input type="text" class="form-control" id="conversationRate" placeholder="Type the rate">
+								   </div>
+								   <div class="col-md-4">
+									   <label class="form-label">SEO Ranking</label>
+									   <div class="input-group">
+										   <button class="btn btn-outline-secondary" type="button" id="decreaseSEO">-</button>
+										   <input type="number" class="form-control" id="seoRanking" value="0" min="0">
+										   <button class="btn btn-outline-secondary" type="button" id="increaseSEO">+</button>
+									   </div>
+								   </div>
+							   </div>
+						   </form>
+					   </div>
+					   <div class="modal-footer">
+						   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						   <button type="button" class="btn btn-success" id="updateClientBtn">Update Client</button>
+						   <button type="button" class="btn btn-primary" id="addNewClientBtn">Add new Client</button>
+					   </div>
+				   </div>
+			   </div>
+		   </div>
+
+		   <!-- Confirmation Modal -->
+		   <div class="modal fade" id="confirmAddModal" tabindex="-1" aria-labelledby="confirmAddModalLabel" aria-hidden="true">
+			   <div class="modal-dialog modal-dialog-centered">
+				   <div class="modal-content">
+					   <div class="modal-header">
+						   <h5 class="modal-title w-100 text-center" id="confirmAddModalLabel">Confirm Add Client</h5>
+						   <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+					   </div>
+					   <div class="modal-body text-center" style="border-bottom:1px solid #eee;">
+						   <i class="fa fa-check-circle" style="font-size:2.2rem; color:#2ca6a4; margin-bottom:12px;"></i><br>
+						   <span style="font-size:1.15rem; color:#222;">Please confirm:<br>Do you want to add this client to the system?</span>
+					   </div>
+					   <div class="modal-footer justify-content-center" style="gap:16px;">
+						   <button type="button" class="btn btn-secondary px-4" id="noAddBtn">No</button>
+						   <button type="button" class="btn btn-success px-4" id="yesAddBtn">Yes</button>
+					   </div>
+				   </div>
+			   </div>
+		   </div>
+
+		   <!-- Success Modal -->
+		   <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+			   <div class="modal-dialog modal-dialog-centered">
+				   <div class="modal-content">
+					   <div class="modal-header">
+						   <h5 class="modal-title" id="successModalLabel">Client Successfully Added</h5>
+						   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					   </div>
+					   <div class="modal-body text-center">
+						   <i class="fa fa-check-circle" style="font-size:2.2rem; color:#2ca6a4; margin-bottom:12px;"></i><br>
+						   <span style="font-size:1.15rem; color:#222;">Thank you! The new client has been added to the system.<br>Would you like to add another client or return to the dashboard?</span>
+					   </div>
+					   <div class="modal-footer justify-content-center" style="gap:16px;">
+						   <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Return to Dashboard</button>
+						   <button type="button" class="btn btn-primary px-4" id="addAnotherClientBtn">Add Another Client</button>
+					   </div>
+				   </div>
+			   </div>
+		   </div>
+	   </main>
+	   </div>
+	</body>
+	   <!-- Chart.js for graph -->
+	   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	   <!-- Bootstrap JS (must be last) -->
+	   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	   <script>
+	   document.addEventListener('DOMContentLoaded', function() {
+		   // Logout modal logic
+		   var logoutBtn = document.getElementById('logoutBtn');
+		   var logoutModalEl = document.getElementById('logoutModal');
+		   var confirmLogout = document.getElementById('confirmLogout');
+		   var logoutModal = new bootstrap.Modal(logoutModalEl);
+		   logoutBtn.addEventListener('click', function() {
+			   logoutModal.show();
+		   });
+		   confirmLogout.addEventListener('click', function() {
+			   window.location.href = '../';
+		   });
+
+		   // Service categories
+		   var categories = [
+			   'API Development',
+			   'Conversation Rate',
+			   'Video Production',
+			   'Website Call Tracking',
+			   'Advertise Management: Listing Management Service',
+			   'Advertise Management: SM Advertising',
+			   'Advertise Management: SM Management',
+			   'Development Design: Landing Page Design',
+			   'Development Design: Social Media Design',
+			   'Development Design: Website Design & Development',
+			   'Digital Marketing: Email Marketing',
+			   'Digital Marketing: PPC Services',
+			   'Digital Marketing: SEO Services',
+			   'Google My Business: GMB Management',
+			   'Google My Business: GMB Optimization Services',
+			   'Google My Business: GMB Reinstatement Service',
+			   'Google My Business: GMB Services',
+			   'Google My Business: GMB Setup Service',
+			   'Google My Business: GMB Support Service'
+		   ];
+		   var categorySelect = document.getElementById('categorySelect');
+		   categories.forEach(function(cat) {
+			   var opt = document.createElement('option');
+			   opt.value = cat;
+			   opt.textContent = cat;
+			   categorySelect.appendChild(opt);
+		   });
+
+		   // Upload image logic
+		   document.getElementById('uploadBtn').addEventListener('click', function() {
+			   document.getElementById('uploadImage').click();
+		   });
+		   document.getElementById('uploadImage').addEventListener('change', function(e) {
+			   var file = e.target.files[0];
+			   var preview = document.getElementById('previewImg');
+			   if (file) {
+				   var reader = new FileReader();
+				   reader.onload = function(ev) {
+					   preview.src = ev.target.result;
+					   preview.style.display = 'block';
+				   };
+				   reader.readAsDataURL(file);
+			   } else {
+				   preview.style.display = 'none';
+			   }
+		   });
+
+		   // Plus/minus logic for New Clients
+		   document.getElementById('increaseClients').addEventListener('click', function() {
+			   var input = document.getElementById('newClientsCount');
+			   input.value = parseInt(input.value) + 1;
+		   });
+		   document.getElementById('decreaseClients').addEventListener('click', function() {
+			   var input = document.getElementById('newClientsCount');
+			   if (parseInt(input.value) > 0) input.value = parseInt(input.value) - 1;
+		   });
+		   // Plus/minus logic for SEO Ranking
+		   document.getElementById('increaseSEO').addEventListener('click', function() {
+			   var input = document.getElementById('seoRanking');
+			   input.value = parseInt(input.value) + 1;
+		   });
+		   document.getElementById('decreaseSEO').addEventListener('click', function() {
+			   var input = document.getElementById('seoRanking');
+			   if (parseInt(input.value) > 0) input.value = parseInt(input.value) - 1;
+		   });
+
+		   // Add new client button logic
+		   document.getElementById('addNewClientBtn').addEventListener('click', function() {
+			   // Validate required fields
+			   var valid = true;
+			   var requiredFields = document.querySelectorAll('#companyName, #categoryWork, #companyDesc, #categorySelect');
+			   requiredFields.forEach(function(field) {
+				   if (!field.value || field.value.trim() === '') {
+					   field.classList.add('is-invalid');
+					   valid = false;
+				   } else {
+					   field.classList.remove('is-invalid');
+				   }
+			   });
+			   // Image required
+			   var imageInput = document.getElementById('uploadImage');
+			   if (!imageInput.files || imageInput.files.length === 0) {
+				   imageInput.classList.add('is-invalid');
+				   valid = false;
+			   } else {
+				   imageInput.classList.remove('is-invalid');
+			   }
+			   if (!valid) {
+				   // Scroll to first invalid field
+				   var firstInvalid = document.querySelector('.is-invalid');
+				   if (firstInvalid) firstInvalid.scrollIntoView({behavior:'smooth', block:'center'});
+				   return;
+			   }
+			   var confirmModal = new bootstrap.Modal(document.getElementById('confirmAddModal'));
+			   confirmModal.show();
+		   });
+
+		   // Confirmation modal logic
+		   document.getElementById('yesAddBtn').addEventListener('click', function() {
+			   var confirmModalEl = document.getElementById('confirmAddModal');
+			   var confirmModal = bootstrap.Modal.getInstance(confirmModalEl);
+			   confirmModal.hide();
+			   var addClientModalEl = document.getElementById('addClientModal');
+			   var addClientModal = bootstrap.Modal.getInstance(addClientModalEl);
+			   addClientModal.hide();
+			   // Clear form and image preview
+			   document.getElementById('clientForm').reset();
+			   document.getElementById('previewImg').style.display = 'none';
+			   // Remove invalid state
+			   document.querySelectorAll('.is-invalid').forEach(function(f){f.classList.remove('is-invalid');});
+			   document.getElementById('uploadImage').classList.remove('is-invalid');
+			   var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+			   successModal.show();
+		   });
+
+		   // Success modal: Add Another button logic
+		   document.getElementById('addAnotherClientBtn').addEventListener('click', function() {
+			   var successModalEl = document.getElementById('successModal');
+			   var successModal = bootstrap.Modal.getInstance(successModalEl);
+			   successModal.hide();
+			   // Reopen the add client modal, form is already cleared
+			   var addClientModalEl = document.getElementById('addClientModal');
+			   var addClientModal = new bootstrap.Modal(addClientModalEl);
+			   addClientModal.show();
+		   });
+	// Add style for invalid fields
+	var style = document.createElement('style');
+	style.innerHTML = `.is-invalid { border-color: #dc3545 !important; box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25) !important; }`;
+	document.head.appendChild(style);
+		   document.getElementById('noAddBtn').addEventListener('click', function() {
+			   var confirmModalEl = document.getElementById('confirmAddModal');
+			   var confirmModal = bootstrap.Modal.getInstance(confirmModalEl);
+			   confirmModal.hide();
+			   if (confirm('Do you want to close the form and clear all provided details?')) {
+				   document.getElementById('clientForm').reset();
+				   document.getElementById('previewImg').style.display = 'none';
+				   var addClientModalEl = document.getElementById('addClientModal');
+				   var addClientModal = bootstrap.Modal.getInstance(addClientModalEl);
+				   addClientModal.hide();
+			   }
+		   });
 		});
-	</script>
+	   </script>
 </html>

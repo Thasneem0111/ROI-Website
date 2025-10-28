@@ -71,7 +71,6 @@
 						<li><a href="/admin/blog" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-blog"></i> Blogs</a></li>
 						<li><a href="/admin/clients" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-users"></i> Clients</a></li>
 						<li class="active"><a href="/admin/services" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-cogs"></i> Services</a></li>
-						<li><a href="/admin/client-projects" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-project-diagram"></i> Client Projects</a></li>
 						<li><a href="/admin/industries" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-industry"></i> Industries</a></li>
 					</ul>
 				</nav>
@@ -119,11 +118,203 @@
 					</table>
 				</div>
 				<div style="display:flex; justify-content:flex-end; align-items:center; gap:24px; padding:32px 32px;">
-					<button class="action-btn update-btn">Update Services</button>
-					<button class="action-btn add-btn">
-						<span class="add-icon-circle"><i class="fa fa-plus"></i></span>
-						Add new service
-					</button>
+					   <button class="action-btn update-btn">Update Services</button>
+					   <button class="action-btn add-btn" id="addServiceBtn" data-bs-toggle="modal" data-bs-target="#addServiceModal">
+						   <span class="add-icon-circle"><i class="fa fa-plus"></i></span>
+						   Add new service
+					   </button>
+	   <!-- Add New Service Modal -->
+	   <div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel" aria-hidden="true">
+		   <div class="modal-dialog modal-lg modal-dialog-centered">
+			   <div class="modal-content">
+				   <div class="modal-header">
+					   <h5 class="modal-title" id="addServiceModalLabel">New Services</h5>
+					   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				   </div>
+				   <div class="modal-body">
+					   <form id="serviceForm">
+						   <div class="row mb-3">
+							<div class="col-md-4">
+								<label class="form-label">Total Services</label>
+								<input type="text" class="form-control" value="21" readonly>
+							</div>
+						   </div>
+						   <div class="mb-3">
+							   <label class="form-label">Service Name <span class="text-danger">*</span></label>
+							   <input type="text" class="form-control required-field" id="serviceName" placeholder="Type your service name here...." required>
+						   </div>
+						   <div class="mb-3">
+							   <label class="form-label">Upload Image <span class="text-danger">*</span></label>
+							   <div class="input-group">
+								   <input type="file" class="form-control" id="serviceUploadImage" accept="image/*">
+								   <button class="btn btn-outline-secondary" type="button" id="serviceUploadBtn"><i class="fa fa-upload"></i></button>
+							   </div>
+							   <img id="servicePreviewImg" src="#" alt="Preview" style="max-width:120px; margin-top:10px; display:none;" />
+						   </div>
+						   <div class="mb-3">
+							   <label class="form-label">Service Description <span class="text-danger">*</span></label>
+							   <textarea class="form-control required-field" id="serviceDesc" rows="3" placeholder="Write About Service...." required></textarea>
+						   </div>
+					   </form>
+				   </div>
+				   <div class="modal-footer">
+					   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					   <button type="button" class="btn btn-success" id="updateServiceBtn">Update Services</button>
+					   <button type="button" class="btn btn-primary" id="addNewServiceBtn">Add new service</button>
+				   </div>
+			   </div>
+		   </div>
+	   </div>
+
+	   <!-- Confirmation Modal -->
+	   <div class="modal fade" id="confirmAddServiceModal" tabindex="-1" aria-labelledby="confirmAddServiceModalLabel" aria-hidden="true">
+		   <div class="modal-dialog modal-dialog-centered">
+			   <div class="modal-content">
+				   <div class="modal-header">
+					   <h5 class="modal-title w-100 text-center" id="confirmAddServiceModalLabel">Confirm Add Service</h5>
+					   <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+				   </div>
+				   <div class="modal-body text-center" style="border-bottom:1px solid #eee;">
+					   <i class="fa fa-check-circle" style="font-size:2.2rem; color:#2ca6a4; margin-bottom:12px;"></i><br>
+					   <span style="font-size:1.15rem; color:#222;">Please confirm:<br>Do you want to add this service to the system?</span>
+				   </div>
+				   <div class="modal-footer justify-content-center" style="gap:16px;">
+					   <button type="button" class="btn btn-secondary px-4" id="noAddServiceBtn">No</button>
+					   <button type="button" class="btn btn-success px-4" id="yesAddServiceBtn">Yes</button>
+				   </div>
+			   </div>
+		   </div>
+	   </div>
+
+	   <!-- Success Modal -->
+	   <div class="modal fade" id="successServiceModal" tabindex="-1" aria-labelledby="successServiceModalLabel" aria-hidden="true">
+		   <div class="modal-dialog modal-dialog-centered">
+			   <div class="modal-content">
+				   <div class="modal-header">
+					   <h5 class="modal-title" id="successServiceModalLabel">Service Successfully Added</h5>
+					   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				   </div>
+				   <div class="modal-body text-center">
+					   <i class="fa fa-check-circle" style="font-size:2.2rem; color:#2ca6a4; margin-bottom:12px;"></i><br>
+					   <span style="font-size:1.15rem; color:#222;">Thank you! The new service has been added to the system.<br>Would you like to add another service or return to the dashboard?</span>
+				   </div>
+				   <div class="modal-footer justify-content-center" style="gap:16px;">
+					   <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Return to Dashboard</button>
+					   <button type="button" class="btn btn-primary px-4" id="addAnotherServiceBtn">Add Another Service</button>
+				   </div>
+			   </div>
+		   </div>
+	   </div>
+<script>
+// Add style for invalid fields
+var style = document.createElement('style');
+style.innerHTML = `.is-invalid { border-color: #dc3545 !important; box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25) !important; }`;
+document.head.appendChild(style);
+document.addEventListener('DOMContentLoaded', function() {
+	// Service categories (example)
+	var serviceCategories = [
+		'Pay Per Click',
+		'SEO',
+		'Website Development',
+		'Social Media Management',
+		'Google My Business',
+		'Landing Page Design',
+		'API Development'
+	];
+
+	// Upload image logic
+	document.getElementById('serviceUploadBtn').addEventListener('click', function() {
+		document.getElementById('serviceUploadImage').click();
+	});
+	document.getElementById('serviceUploadImage').addEventListener('change', function(e) {
+		var file = e.target.files[0];
+		var preview = document.getElementById('servicePreviewImg');
+		if (file) {
+			var reader = new FileReader();
+			reader.onload = function(ev) {
+				preview.src = ev.target.result;
+				preview.style.display = 'block';
+			};
+			reader.readAsDataURL(file);
+		} else {
+			preview.style.display = 'none';
+		}
+	});
+
+	// Add new service button logic
+	document.getElementById('addNewServiceBtn').addEventListener('click', function() {
+		// Validate required fields
+		var valid = true;
+			var requiredFields = document.querySelectorAll('#serviceName, #serviceDesc');
+		requiredFields.forEach(function(field) {
+			if (!field.value || field.value.trim() === '') {
+				field.classList.add('is-invalid');
+				valid = false;
+			} else {
+				field.classList.remove('is-invalid');
+			}
+		});
+		// Image required
+		var imageInput = document.getElementById('serviceUploadImage');
+		if (!imageInput.files || imageInput.files.length === 0) {
+			imageInput.classList.add('is-invalid');
+			valid = false;
+		} else {
+			imageInput.classList.remove('is-invalid');
+		}
+		if (!valid) {
+			// Scroll to first invalid field
+			var firstInvalid = document.querySelector('.is-invalid');
+			if (firstInvalid) firstInvalid.scrollIntoView({behavior:'smooth', block:'center'});
+			return;
+		}
+		var confirmModal = new bootstrap.Modal(document.getElementById('confirmAddServiceModal'));
+		confirmModal.show();
+	});
+
+	// Confirmation modal logic
+	document.getElementById('yesAddServiceBtn').addEventListener('click', function() {
+		var confirmModalEl = document.getElementById('confirmAddServiceModal');
+		var confirmModal = bootstrap.Modal.getInstance(confirmModalEl);
+		confirmModal.hide();
+		var addServiceModalEl = document.getElementById('addServiceModal');
+		var addServiceModal = bootstrap.Modal.getInstance(addServiceModalEl);
+		addServiceModal.hide();
+		// Clear form and image preview
+		document.getElementById('serviceForm').reset();
+		document.getElementById('servicePreviewImg').style.display = 'none';
+		// Remove invalid state
+		document.querySelectorAll('.is-invalid').forEach(function(f){f.classList.remove('is-invalid');});
+		document.getElementById('serviceUploadImage').classList.remove('is-invalid');
+		var successModal = new bootstrap.Modal(document.getElementById('successServiceModal'));
+		successModal.show();
+	});
+
+	// Success modal: Add Another button logic
+	document.getElementById('addAnotherServiceBtn').addEventListener('click', function() {
+		var successModalEl = document.getElementById('successServiceModal');
+		var successModal = bootstrap.Modal.getInstance(successModalEl);
+		successModal.hide();
+		// Reopen the add service modal, form is already cleared
+		var addServiceModalEl = document.getElementById('addServiceModal');
+		var addServiceModal = new bootstrap.Modal(addServiceModalEl);
+		addServiceModal.show();
+	});
+
+	document.getElementById('noAddServiceBtn').addEventListener('click', function() {
+		var confirmModalEl = document.getElementById('confirmAddServiceModal');
+		var confirmModal = bootstrap.Modal.getInstance(confirmModalEl);
+		confirmModal.hide();
+		if (confirm('Do you want to close the form and clear all provided details?')) {
+			document.getElementById('serviceForm').reset();
+			document.getElementById('servicePreviewImg').style.display = 'none';
+			var addServiceModalEl = document.getElementById('addServiceModal');
+			var addServiceModal = bootstrap.Modal.getInstance(addServiceModalEl);
+			addServiceModal.hide();
+		}
+	});
+});
+</script>
 				</div>
 				<style>
 				.action-btn {
