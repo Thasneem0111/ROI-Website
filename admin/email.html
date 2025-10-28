@@ -128,21 +128,10 @@
 		</main>
 	</div>
 <script>
-const emails = [
-	{ name: "Julu Jalal", subject: "Our Bachelor of Commerce program is ACBSP-accredited.", time: "8:38 AM", star: "#ccc" },
-	{ name: "Minerva Barnett", subject: "Get Best Advertiser In Your Side Pocket", time: "8:13 AM", star: "#ccc" },
-	{ name: "Peter Lewis", subject: "Vacation Home Rental Success", time: "7:52 PM", star: "#ccc" },
-	{ name: "Anthony Briggs", subject: "Free Classifieds Using Them To Promote Your Stuff Online", time: "7:52 PM", star: "#FFD700" },
-	{ name: "Clifford Morgan", subject: "Enhance Your Brand Potential With Giant Advertising Blimps", time: "4:13 PM", star: "#ccc" },
-	{ name: "Cecilia Webster", subject: "Always Look On The Bright Side Of Life", time: "3:52 PM", star: "#ccc" },
-	{ name: "Harvey Manning", subject: "Curling Irons Are As Individual As The Women Who Use Them", time: "2:30 PM", star: "#FFD700" },
-	{ name: "Willie Blake", subject: "Our Bachelor of Commerce program is ACBSP-accredited.", time: "8:38 AM", star: "#ccc" },
-	{ name: "Minerva Barnett", subject: "Get Best Advertiser In Your Side Pocket", time: "8:13 AM", star: "#ccc" },
-	{ name: "Fanny Weaver", subject: "Free Classifieds Using Them To Promote Your Stuff Online", time: "7:52 PM", star: "#ccc" },
-	{ name: "Olga Hogan", subject: "Enhance Your Brand Potential With Giant Advertising Blimps", time: "4:13 PM", star: "#ccc" }
-];
-
-let deleteType = null; // 'selected' or 'all'
+// Loaded messages from the server (api/messages.json)
+let messages = [];
+let filtered = [];
+let deleteType = null; // 'selected' or 'all' (UI only)
 let selectedIndexes = [];
 function attachTrashListener() {
 	const trashBtn = document.getElementById('deleteAllBtn');
@@ -164,16 +153,38 @@ function attachTrashListener() {
 	}
 }
 
+function fmtTime(ts){
+	try{
+		const d = typeof ts === 'number' ? new Date(ts) : new Date(ts || Date.now());
+		const now = Date.now();
+		const diff = Math.max(0, now - d.getTime());
+		const mins = Math.floor(diff/60000);
+		if(mins < 60) return `${mins} min ago`;
+		const hrs = Math.floor(mins/60);
+		if(hrs < 24) return `${hrs} hr${hrs>1?'s':''} ago`;
+		return d.toLocaleString();
+	}catch(_){
+		return '';
+	}
+}
+
 function renderEmails(list) {
 	const tbody = document.getElementById('emailsTableBody');
 	tbody.innerHTML = '';
 	list.forEach((e, i) => {
+		const subject = e.businessName && e.businessName.trim() ? `Consultation from ${e.businessName}` : 'Consultation request';
+		const when = fmtTime(e.createdAt);
 		tbody.innerHTML += `<tr style='border-bottom:1px solid #eee;'>
 			<td style='padding:12px 32px;'><input type='checkbox' data-index='${i}'></td>
-			<td style='padding:12px 0;'><i class='fa fa-star' style='color:${e.star};'></i></td>
-			<td style='font-weight:600;'>${e.name}</td>
-			<td>${e.subject}</td>
-			<td style='text-align:right; padding-right:32px; color:#888;'>${e.time}</td>
+			<td style='padding:12px 0;'><i class='fa fa-star' style='color:#ccc;'></i></td>
+			<td style='font-weight:600;'>${e.name || '-'}</td>
+			<td>
+				<div style='display:flex;flex-direction:column;'>
+					<span style='color:#222'>${subject}</span>
+					<small style='color:#666'>${e.email || ''} ${e.phone? ' • ' + e.phone : ''}</small>
+				</div>
+			</td>
+			<td style='text-align:right; padding-right:32px; color:#888;'>${when}</td>
 		</tr>`;
 	});
 	attachTrashListener();
@@ -181,25 +192,46 @@ function renderEmails(list) {
 
 function filterEmails() {
 	const search = document.getElementById('emailSearch').value.toLowerCase();
-	renderEmails(emails.filter(e => e.name.toLowerCase().includes(search) || e.subject.toLowerCase().includes(search)));
+	filtered = messages.filter(e => {
+		const hay = [e.name, e.email, e.phone, e.businessName].filter(Boolean).join(' ').toLowerCase();
+		return hay.includes(search);
+	});
+	renderEmails(filtered);
 }
 
 document.getElementById('emailSearch').addEventListener('input', filterEmails);
-window.onload = function() {
-	renderEmails(emails);
-};
+async function loadMessages(){
+	try {
+		const resp = await fetch('/api/messages.json?ts=' + Date.now(), { cache:'no-store' });
+		if(!resp.ok) throw new Error('HTTP '+resp.status);
+		const data = await resp.json();
+		if(Array.isArray(data)){
+			// newest first
+			messages = data.sort((a,b)=> (b.createdAt||0) - (a.createdAt||0));
+		} else {
+			messages = [];
+		}
+	} catch(err){
+		console.warn('Failed to load messages.json:', err.message);
+		messages = [];
+	}
+	filtered = messages.slice();
+	renderEmails(filtered);
+}
+
+window.onload = function(){ loadMessages(); };
 
 // Delete modal logic
 document.addEventListener('DOMContentLoaded', function() {
 	var confirmDelete = document.getElementById('confirmDelete');
 	confirmDelete.addEventListener('click', function() {
 		if (deleteType === 'selected' && selectedIndexes.length > 0) {
-			// Remove selected emails
-			selectedIndexes.sort((a, b) => b - a).forEach(idx => emails.splice(idx, 1));
-			renderEmails(emails);
+			// UI-only removal (does not persist to server)
+			selectedIndexes.sort((a, b) => b - a).forEach(idx => filtered.splice(idx, 1));
+			renderEmails(filtered);
 		} else if (deleteType === 'all') {
-			emails.length = 0;
-			renderEmails(emails);
+			filtered = [];
+			renderEmails(filtered);
 		}
 		selectedIndexes = [];
 		deleteType = null;

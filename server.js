@@ -158,6 +158,35 @@ app.post('/api/consultation', async (req,res) => {
       subject: 'New Consultation Request',
       text: plain
     });
+    // Persist a copy of the message so it can be shown in the admin panel
+    try {
+      const storeDir = path.join(__dirname, 'api');
+      const storePath = path.join(storeDir, 'messages.json');
+      if(!fs.existsSync(storeDir)) fs.mkdirSync(storeDir, { recursive:true });
+      let current = [];
+      if(fs.existsSync(storePath)){
+        try {
+          const raw = fs.readFileSync(storePath, 'utf-8');
+          current = JSON.parse(raw || '[]');
+          if(!Array.isArray(current)) current = [];
+        } catch(parseErr){
+          console.warn('[Persist] messages.json parse failed, recreating. Error:', parseErr.message);
+          current = [];
+        }
+      }
+      const entry = {
+        name,
+        email,
+        phone,
+        businessName: businessName || '',
+        source: 'node',
+        createdAt: Date.now()
+      };
+      current.push(entry);
+      fs.writeFileSync(storePath, JSON.stringify(current, null, 2));
+    } catch(storeErr){
+      console.warn('[Persist] Failed to store message copy:', storeErr.message);
+    }
 
     res.json({ ok:true });
   } catch (err) {

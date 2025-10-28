@@ -86,6 +86,31 @@ $headers = [
 $sent = mail($to, $subject, $message, implode("\r\n", $headers));
 
 if ($sent) {
+    // Persist a copy to messages.json so the admin panel can show it
+    try {
+        $storePath = __DIR__ . DIRECTORY_SEPARATOR . 'messages.json';
+        $current = [];
+        if (file_exists($storePath)) {
+            $rawJson = file_get_contents($storePath);
+            $decoded = json_decode($rawJson, true);
+            if (is_array($decoded)) { $current = $decoded; }
+        }
+        $current[] = [
+            'name' => $name,
+            'email' => $email,
+            'phone' => $phone,
+            'businessName' => $businessName,
+            'source' => 'php',
+            'createdAt' => round(microtime(true) * 1000)
+        ];
+        // Write atomically
+        $tmpPath = $storePath . '.tmp';
+        file_put_contents($tmpPath, json_encode($current, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
+        rename($tmpPath, $storePath);
+    } catch (Exception $e) {
+        error_log('WARN: Failed to persist messages.json: ' . $e->getMessage());
+    }
+
     error_log("SUCCESS: Consultation form submitted - Name: $name, Email: $email");
     echo json_encode([
         'ok' => true, 
