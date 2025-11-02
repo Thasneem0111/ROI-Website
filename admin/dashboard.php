@@ -7,6 +7,74 @@ if (!isset($_SESSION['admin_logged_in'])) {
 require_once 'db_connect.php';
 // set active tab for sidebar
 $active = 'dashboard';
+// compute overview counts (wrap queries to avoid fatal errors if tables don't exist)
+$totalUsers = 0;
+$newUsersWeek = 0;
+$totalClients = 0;
+$totalBlogs = 0;
+try {
+    // total unique visitors
+    $res = $conn->query("SELECT COUNT(DISTINCT visitor_key) AS c FROM visitors");
+    if ($res) { $row = $res->fetch_assoc(); $totalUsers = intval($row['c']); if (method_exists($res,'free')) $res->free(); }
+} catch (Throwable $e) { /* table may not exist yet */ }
+try {
+    // new users this ISO week
+    $res = $conn->query("SELECT COUNT(DISTINCT visitor_key) AS c FROM visitors WHERE YEARWEEK(created_at,1)=YEARWEEK(CURDATE(),1)");
+    if ($res) { $row = $res->fetch_assoc(); $newUsersWeek = intval($row['c']); if (method_exists($res,'free')) $res->free(); }
+} catch (Throwable $e) { }
+try {
+    $res = $conn->query("SELECT COUNT(*) AS c FROM clients");
+    if ($res) { $row = $res->fetch_assoc(); $totalClients = intval($row['c']); if (method_exists($res,'free')) $res->free(); }
+} catch (Throwable $e) { }
+try {
+    $res = $conn->query("SELECT COUNT(*) AS c FROM blog");
+    if ($res) { $row = $res->fetch_assoc(); $totalBlogs = intval($row['c']); if (method_exists($res,'free')) $res->free(); }
+} catch (Throwable $e) { }
+
+// total services and industries
+$totalServices = 0;
+$totalIndustries = 0;
+try {
+    $res = $conn->query("SELECT COUNT(*) AS c FROM services");
+    if ($res) { $row = $res->fetch_assoc(); $totalServices = intval($row['c']); if (method_exists($res,'free')) $res->free(); }
+} catch (Throwable $e) { }
+try {
+    $res = $conn->query("SELECT COUNT(*) AS c FROM industry");
+    if ($res) { $row = $res->fetch_assoc(); $totalIndustries = intval($row['c']); if (method_exists($res,'free')) $res->free(); }
+} catch (Throwable $e) { }
+
+// Prepare month-wise visitor counts starting from November 2025 (12 months)
+$chart_start = new DateTime('2025-11-01');
+$months = [];
+$keys = [];
+for ($i = 0; $i < 12; $i++) {
+    $dt = (clone $chart_start)->modify("+{$i} months");
+    $months[] = $dt->format('M Y');
+    $keys[] = $dt->format('Y-m');
+}
+$counts = array_fill(0, 12, 0);
+try {
+    // Query visitor counts grouped by year/month for the 12-month window
+    $start_sql = $chart_start->format('Y-m-01 00:00:00');
+    $end_sql = (clone $chart_start)->modify('+12 months')->format('Y-m-01 00:00:00');
+    $stmt = $conn->prepare("SELECT YEAR(created_at) AS y, MONTH(created_at) AS m, COUNT(DISTINCT visitor_key) AS c FROM visitors WHERE created_at >= ? AND created_at < ? GROUP BY y,m");
+    if ($stmt) {
+        $stmt->bind_param('ss', $start_sql, $end_sql);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        while ($r = $res->fetch_assoc()) {
+            $k = sprintf('%04d-%02d', $r['y'], $r['m']);
+            $idx = array_search($k, $keys, true);
+            if ($idx !== false) { $counts[$idx] = intval($r['c']); }
+        }
+        $stmt->close();
+    }
+} catch (Throwable $e) {
+    // visitors table might not exist yet — keep zeros
+}
+
+$chart_labels_json = json_encode($months);
+$chart_data_json = json_encode($counts);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,27 +133,27 @@ $active = 'dashboard';
             <div class="overview-boxes">
                 <div class="overview-box">
                     <div class="box-title">Total Users</div>
-                    <div class="box-value">25.1k</div>
-                    <div class="box-change positive">+15%</div>
-                    <a href="#" class="box-link">View Report</a>
+                    <div class="box-value"><?php echo number_format($totalUsers); ?></div>
                 </div>
                 <div class="overview-box">
-                    <div class="box-title">New Users</div>
-                    <div class="box-value">89/Wk</div>
-                    <div class="box-change negative">-3.5%</div>
-                    <a href="#" class="box-link">View Report</a>
+                    <div class="box-title">Total Services</div>
+                    <div class="box-value"><?php echo number_format($totalServices); ?></div>
+                    <a href="services.php" class="box-link">View More</a>
                 </div>
                 <div class="overview-box">
                     <div class="box-title">Total Clients</div>
-                    <div class="box-value">100</div>
-                    <div class="box-change positive">+15%</div>
-                    <a href="#" class="box-link">View More</a>
+                    <div class="box-value"><?php echo number_format($totalClients); ?></div>
+                    <a href="clients.php" class="box-link">View More</a>
                 </div>
                 <div class="overview-box">
                     <div class="box-title">Total Blogs</div>
-                    <div class="box-value">7</div>
-                    <div class="box-change positive">+10%</div>
-                    <a href="#" class="box-link">View More</a>
+                    <div class="box-value"><?php echo number_format($totalBlogs); ?></div>
+                    <a href="blog.php" class="box-link">View More</a>
+                </div>
+                <div class="overview-box">
+                    <div class="box-title">Total Industries</div>
+                    <div class="box-value"><?php echo number_format($totalIndustries); ?></div>
+                    <a href="industries.php" class="box-link">View More</a>
                 </div>
             </div>
 
@@ -118,15 +186,33 @@ $active = 'dashboard';
             var logoutModal = new bootstrap.Modal(logoutModalEl);
             logoutBtn.addEventListener('click', function() { logoutModal.show(); });
 
-            // Chart
+            // Chart - monthly visitors starting Nov 2025 (12 months)
             const ctx = document.getElementById('userCountChart').getContext('2d');
+            const chartLabels = <?php echo $chart_labels_json ?? json_encode([]); ?>;
+            const chartData = <?php echo $chart_data_json ?? json_encode(array_fill(0,12,0)); ?>;
             new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['2015','2016','2017','2018','2019','2020'],
-                    datasets: [{ label: 'Client Counts', data: [35,20,15,35,20,40], borderColor:'#2ca6a4', backgroundColor:'rgba(44,166,164,0.1)', fill:true }]
+                    labels: chartLabels,
+                    datasets: [{
+                        label: 'Monthly Visitors',
+                        data: chartData,
+                        borderColor: '#2ca6a4',
+                        backgroundColor: 'rgba(44,166,164,0.12)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#2ca6a4'
+                    }]
                 },
-                options: { responsive:true }
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: true } },
+                    scales: {
+                        x: { display: true, title: { display: false } },
+                        y: { display: true, beginAtZero: true, title: { display: true, text: 'Visitors' } }
+                    }
+                }
             });
         });
     </script>

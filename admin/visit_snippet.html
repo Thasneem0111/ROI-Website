@@ -1,0 +1,14 @@
+<!-- visit_snippet.html
+  Place this snippet on your public pages (e.g., in the <head> or just before </body>).
+  It calls admin/track_visit.php to record a visit and will set a cookie to identify unique visitors.
+-->
+<script>
+  (function(){
+    try {
+      // Post the current path to the tracker. Use POST to avoid preflight in most browsers.
+      navigator.sendBeacon && navigator.sendBeacon('/admin/track_visit.php', new URLSearchParams({ path: location.pathname }));
+      // Fallback for older browsers
+      if (!navigator.sendBeacon) fetch('/admin/track_visit.php', { method: 'POST', body: new URLSearchParams({ path: location.pathname }) }).catch(()=>{});
+    } catch(e) { /* ignore */ }
+  })();
+</script>
