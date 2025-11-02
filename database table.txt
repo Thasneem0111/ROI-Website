@@ -1,0 +1,29 @@
+CREATE TABLE clients (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(255),
+  description TEXT,
+  image VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  category VARCHAR(255),
+  work_category VARCHAR(255),
+  new_clients INT,
+  conversation_rate FLOAT(10),
+  seo_rank INT
+
+);
+
+CREATE TABLE services (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(255),
+  description TEXT,
+  image VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE industry (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(255),
+  description TEXT,
+  image VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

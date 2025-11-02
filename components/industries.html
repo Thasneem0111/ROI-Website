@@ -736,35 +736,38 @@
 	})();
 	</script>
 
-	<!-- Dynamic industries from Firebase (appended after static cards) -->
-	<script type="module">
-	import { db } from '../admin/firebase-config.js';
-	import { collection, onSnapshot, orderBy, query } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
-
-	const row = document.querySelector('.industries-section .row');
-	if (row) {
-	  const qIndustries = query(collection(db, 'industry'), orderBy('createdAt', 'asc'));
-	  onSnapshot(qIndustries, (snap) => {
-	    // Remove previously rendered dynamic cards
+	<!-- Dynamic industries from server (appended after static cards) -->
+	<script>
+	(async function(){
+	  const row = document.querySelector('.industries-section .row');
+	  if (!row) return;
+	  try {
+	    const res = await fetch('../admin/get_industries.php');
+	    if (!res.ok) throw new Error('Network response not ok');
+	    const data = await res.json();
+	    // Remove any previously rendered dynamic cards
 	    row.querySelectorAll('[data-dynamic="1"]').forEach(n => n.remove());
 	    const fr = document.createDocumentFragment();
-	    snap.forEach(docu => {
-	      const d = docu.data();
+	    data.forEach(item => {
 	      const col = document.createElement('div');
 	      col.className = 'col-12 col-md-6 col-lg-4';
 	      col.setAttribute('data-dynamic', '1');
-	      col.setAttribute('data-id', docu.id);
-	      col.innerHTML = `
-	        <div class="industry-card h-100">
-	          <h3>${(d.name||'').toString()}</h3>
-	          ${d.imageUrl ? `<img class="industry-image" src="${d.imageUrl}" alt="${(d.name||'').toString()}" />` : ''}
-	          <p class="industry-desc">${(d.description||'').toString()}</p>
+	      col.setAttribute('data-id', item.id);
+	      col.innerHTML = `\
+	        <div class="industry-card h-100">\
+	          <h3>${item.name || ''}</h3>\
+	          ${item.image ? `<img class="industry-image" src="${item.image}" alt="${(item.name||'').replace(/"/g,'')}">` : ''} \
+	          <p class="industry-desc">${item.description || ''}</p>\
 	        </div>`;
 	      fr.appendChild(col);
 	    });
+	    // Append after static cards - server returns newest-first already
 	    row.appendChild(fr);
-	  });
-	}
+	  } catch (err) {
+	    // silent fail - keep static cards
+	    console.error('Failed to load dynamic industries:', err);
+	  }
+	})();
 	</script>
 	<script>
 	// Local scroll-reveal and counters for this page

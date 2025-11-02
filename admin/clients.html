@@ -153,73 +153,256 @@
 					</table>
 </div>
 <script>
-let deleteIndex = null;
-const clients = [
-	{ name: "LIVORA", date: "October 13, 2025" },
-	{ name: "AOU", date: "October 13, 2025" },
-	{ name: "CAIAL", date: "October 13, 2025" },
-	{ name: "ABRAJ SUITE", date: "October 13, 2025" },
-	{ name: "SPAN SHADES", date: "October 13, 2025" },
-	{ name: "THE SPECIALIST", date: "October 13, 2025" },
-	{ name: "TIME LESS", date: "October 13, 2025" }
-];
+// Client-side admin logic: fetch clients, render table, handle add/update/delete via AJAX
+document.addEventListener('DOMContentLoaded', function() {
+	const apiList = './get_clients.php';
+	const apiUpload = './api_upload_client.php';
+	const apiUpdate = './api_update_client.php';
+	const apiDelete = './api_delete_client.php';
 
-function renderClients(list) {
+	let clients = [];
+	let deleteId = null;
+
 	const tbody = document.getElementById('clientsTableBody');
-	tbody.innerHTML = '';
-	list.forEach((c, i) => {
-		tbody.innerHTML += `<tr>
-			<td style='padding:12px 0;'><input type='checkbox'></td>
-			<td style='font-weight:normal;'>${c.name}</td>
-			<td style='color:#888; text-align:right;'>${c.date}</td>
-			<td style='text-align:right;'><i class='fa fa-trash' style='color:#222; cursor:pointer;' data-index='${i}'></i></td>
-		</tr>`;
-	});
-	// Add event listeners for trash icons
-	Array.from(document.querySelectorAll('.fa-trash[data-index]')).forEach(icon => {
-		icon.addEventListener('click', function() {
-			deleteIndex = parseInt(this.getAttribute('data-index'));
-			var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
-			deleteModal.show();
+	const searchInput = document.getElementById('clientSearch');
+	const addClientModalEl = document.getElementById('addClientModal');
+	const addClientModal = new bootstrap.Modal(addClientModalEl);
+	const confirmAddModal = new bootstrap.Modal(document.getElementById('confirmAddModal'));
+	const successModalEl = document.getElementById('successModal');
+	const successModal = new bootstrap.Modal(successModalEl);
+	const deleteModalEl = document.getElementById('deleteModal');
+	const deleteModal = new bootstrap.Modal(deleteModalEl);
+
+	const addBtn = document.getElementById('addNewClientBtn');
+	const yesAddBtn = document.getElementById('yesAddBtn');
+	const noAddBtn = document.getElementById('noAddBtn');
+	const addAnotherBtn = document.getElementById('addAnotherClientBtn');
+	const updateClientBtn = document.getElementById('updateClientBtn');
+	const addNewClientBtn = document.getElementById('addNewClientBtn');
+	const confirmDeleteBtn = document.getElementById('confirmDelete');
+
+	const companyName = document.getElementById('companyName');
+	const companyDesc = document.getElementById('companyDesc');
+	const uploadImage = document.getElementById('uploadImage');
+	const previewImg = document.getElementById('previewImg');
+	const categoryWork = document.getElementById('categoryWork');
+	const categorySelectEl = document.getElementById('categorySelect');
+	const newClientsCountEl = document.getElementById('newClientsCount');
+	const conversationRateEl = document.getElementById('conversationRate');
+	const seoRankingEl = document.getElementById('seoRanking');
+
+	function normalize(item) {
+		return {
+			id: item.id || item.ID || 0,
+			title: item.title || item.name || '',
+			description: item.description || item.desc || '',
+			image: item.image || item.img || null,
+			createdAt: item.created_at || item.createdAt || item.created || '',
+			category: item.category || null,
+			work_category: item.work_category || null,
+			new_clients: (typeof item.new_clients !== 'undefined') ? item.new_clients : (item.newClients || 0),
+			conversation_rate: (typeof item.conversation_rate !== 'undefined') ? item.conversation_rate : (item.conversationRate || 0),
+			seo_rank: (typeof item.seo_rank !== 'undefined') ? item.seo_rank : (item.seoRank || 0)
+		};
+	}
+
+	function fetchClients() {
+		fetch(apiList)
+			.then(r => r.json())
+			.then(data => {
+				const list = Array.isArray(data) ? data : (data.items || data.data || []);
+				clients = list.map(normalize);
+				renderClients(clients);
+			})
+			.catch(err => { console.error('Failed to load clients', err); renderClients([]); });
+	}
+
+	function renderClients(list) {
+		tbody.innerHTML = '';
+		list.forEach((c) => {
+			const tr = document.createElement('tr');
+			tr.innerHTML = `
+				<td style='padding:12px 0;'><input type='checkbox' data-id='${c.id}'></td>
+				<td style='font-weight:normal;'>${escapeHtml(c.title)}</td>
+				<td style='color:#888; text-align:right;'>${escapeHtml(formatDate(c.createdAt))}</td>
+				<td style='text-align:right;'><i class='fa fa-trash' style='color:#222; cursor:pointer;' data-id='${c.id}'></i></td>
+			`;
+			tbody.appendChild(tr);
 		});
+
+		// checkbox behavior (single select)
+		Array.from(tbody.querySelectorAll('input[type="checkbox"][data-id]')).forEach(cb => {
+			cb.addEventListener('change', function() {
+				if (this.checked) {
+					// uncheck others
+					Array.from(tbody.querySelectorAll('input[type="checkbox"][data-id]')).forEach(other => {
+						if (other !== this) other.checked = false;
+					});
+				}
+				updateUpdateButtonState();
+			});
+		});
+
+		// trash icons
+		Array.from(tbody.querySelectorAll('.fa-trash[data-id]')).forEach(icon => {
+			icon.addEventListener('click', function() {
+				deleteId = parseInt(this.getAttribute('data-id'));
+				deleteModal.show();
+			});
+		});
+	}
+
+	function updateUpdateButtonState() {
+		const updateBtn = document.querySelector('.action-btn.update-btn');
+		const checked = tbody.querySelectorAll('input[type="checkbox"]:checked');
+		if (checked.length === 1) updateBtn.disabled = false; else updateBtn.disabled = true;
+	}
+
+	function getSelectedClient() {
+		const cb = tbody.querySelector('input[type="checkbox"]:checked');
+		if (!cb) return null;
+		const id = parseInt(cb.getAttribute('data-id'));
+		return clients.find(x => parseInt(x.id) === id) || null;
+	}
+
+	function escapeHtml(s) { return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+	function formatDate(d) { if (!d) return ''; try { const dt = new Date(d); if (isNaN(dt)) return d; return dt.toLocaleDateString(); } catch(e){return d;} }
+
+	// initial load
+	fetchClients();
+
+	// search
+	searchInput.addEventListener('input', function() {
+		const q = this.value.trim().toLowerCase();
+		renderClients(clients.filter(c => (c.title||'').toLowerCase().includes(q)));
 	});
-}
 
-function filterClients() {
-	const search = document.getElementById('clientSearch').value.toLowerCase();
-	renderClients(clients.filter(c => c.name.toLowerCase().includes(search)));
-}
+	// Prepare modal modes
+	addClientModalEl.addEventListener('show.bs.modal', function () {
+		// default to Add mode
+		addNewClientBtn.style.display = '';
+		updateClientBtn.style.display = 'none';
+		// clear form
+		document.getElementById('clientForm').reset();
+		previewImg.style.display = 'none';
+		uploadImage.value = '';
+	});
 
-document.getElementById('clientSearch').addEventListener('input', filterClients);
-window.onload = function() { renderClients(clients); };
+	// Update button (opens modal with selected client's data)
+	document.querySelector('.action-btn.update-btn').addEventListener('click', function() {
+		const sel = getSelectedClient();
+		if (!sel) return alert('Please select a single client to update.');
+		// populate form
+		companyName.value = sel.title || '';
+		companyDesc.value = sel.description || '';
+		if (categorySelectEl) categorySelectEl.value = sel.category || '';
+		categoryWork.value = sel.work_category || '';
+		if (newClientsCountEl) newClientsCountEl.value = sel.new_clients || 0;
+		if (conversationRateEl) conversationRateEl.value = sel.conversation_rate || 0;
+		if (seoRankingEl) seoRankingEl.value = sel.seo_rank || 0;
+		if (sel.image) { previewImg.src = sel.image; previewImg.style.display = 'block'; } else { previewImg.style.display = 'none'; }
+		// show modal in update mode
+		addNewClientBtn.style.display = 'none';
+		updateClientBtn.style.display = '';
+		// attach id to update button dataset
+		updateClientBtn.dataset.id = sel.id;
+		addClientModal.show();
+	});
 
-// Delete modal logic
-	// Add style for invalid fields
+	// Add new client -> show confirm
+	addNewClientBtn.addEventListener('click', function() {
+		// Validate required fields
+		var valid = true;
+		var requiredFields = [companyName, companyDesc, categoryWork, categorySelectEl];
+		requiredFields.forEach(function(field) {
+			if (!field || !field.value || field.value.toString().trim() === '') { if (field) field.classList.add('is-invalid'); valid = false; } else { if (field) field.classList.remove('is-invalid'); }
+		});
+		if (!uploadImage.files || uploadImage.files.length === 0) { uploadImage.classList.add('is-invalid'); valid = false; } else { uploadImage.classList.remove('is-invalid'); }
+		if (!valid) { var firstInvalid = document.querySelector('.is-invalid'); if (firstInvalid) firstInvalid.scrollIntoView({behavior:'smooth', block:'center'}); return; }
+		confirmAddModal.show();
+	});
+
+	// Confirm Add -> POST to server
+	yesAddBtn.addEventListener('click', function() {
+		confirmAddModal.hide();
+	const fd = new FormData();
+	fd.append('name', companyName.value.trim());
+	fd.append('description', companyDesc.value.trim());
+	fd.append('category', (categorySelectEl && categorySelectEl.value) ? categorySelectEl.value : '');
+	fd.append('work_category', categoryWork.value.trim());
+	fd.append('new_clients', newClientsCountEl ? newClientsCountEl.value : 0);
+	fd.append('conversation_rate', conversationRateEl ? conversationRateEl.value : 0);
+	fd.append('seo_rank', seoRankingEl ? seoRankingEl.value : 0);
+	if (uploadImage.files && uploadImage.files[0]) fd.append('image', uploadImage.files[0]);
+		fetch(apiUpload, { method: 'POST', body: fd }).then(r=>r.json()).then(resp=>{
+			if (resp && resp.success) {
+				addClientModal.hide();
+				showSuccess('Client Successfully Added', 'The new client has been added to the system.', true);
+				fetchClients();
+			} else {
+				alert((resp && resp.message) || 'Failed to add client');
+			}
+		}).catch(err=>{ console.error(err); alert('Request failed'); });
+	});
+
+	noAddBtn.addEventListener('click', function() { confirmAddModal.hide(); });
+
+	// Update submission
+	updateClientBtn.addEventListener('click', function() {
+		const id = this.dataset.id;
+		if (!id) return alert('Missing client id');
+		// validate
+		if (!companyName.value.trim() || !companyDesc.value.trim()) { alert('Please fill required fields'); return; }
+	const fd = new FormData();
+	fd.append('id', id);
+	fd.append('name', companyName.value.trim());
+	fd.append('description', companyDesc.value.trim());
+	fd.append('category', (categorySelectEl && categorySelectEl.value) ? categorySelectEl.value : '');
+	fd.append('work_category', categoryWork.value.trim());
+	fd.append('new_clients', newClientsCountEl ? newClientsCountEl.value : 0);
+	fd.append('conversation_rate', conversationRateEl ? conversationRateEl.value : 0);
+	fd.append('seo_rank', seoRankingEl ? seoRankingEl.value : 0);
+	if (uploadImage.files && uploadImage.files[0]) fd.append('image', uploadImage.files[0]);
+		fetch(apiUpdate, { method: 'POST', body: fd }).then(r=>r.json()).then(resp=>{
+			if (resp && resp.success) {
+				addClientModal.hide();
+				showSuccess('Client Updated', 'The client details have been updated.', false);
+				fetchClients();
+			} else { alert((resp && resp.message) || 'Failed to update client'); }
+		}).catch(err=>{ console.error(err); alert('Request failed'); });
+	});
+
+	// Delete confirmed
+	confirmDeleteBtn.addEventListener('click', function() {
+		if (!deleteId) return;
+		fetch(apiDelete, { method: 'POST', body: JSON.stringify({ id: deleteId }), headers: { 'Content-Type': 'application/json' } })
+			.then(r=>r.json()).then(resp=>{
+				if (resp && resp.success) {
+					deleteModal.hide();
+					showSuccess('Client Deleted', 'The client has been removed from the system.', false);
+					fetchClients();
+				} else { alert((resp && resp.message) || 'Failed to delete'); }
+			}).catch(err=>{ console.error(err); alert('Request failed'); });
+	});
+
+	addAnotherBtn.addEventListener('click', function() {
+		successModal.hide();
+		addClientModal.show();
+	});
+
+	function showSuccess(title, message, showAddAnother) {
+		const titleEl = document.getElementById('successModalLabel');
+		const bodySpan = document.querySelector('#successModal .modal-body span');
+		titleEl.textContent = title;
+		bodySpan.innerHTML = message;
+		document.getElementById('addAnotherClientBtn').style.display = showAddAnother ? '' : 'none';
+		successModal.show();
+	}
+
+	// small helpers
 	var style = document.createElement('style');
 	style.innerHTML = `.is-invalid { border-color: #dc3545 !important; box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25) !important; }`;
 	document.head.appendChild(style);
-	document.addEventListener('DOMContentLoaded', function() {
-	var confirmDelete = document.getElementById('confirmDelete');
-	confirmDelete.addEventListener('click', function() {
-		if (deleteIndex !== null && clients[deleteIndex]) {
-			clients.splice(deleteIndex, 1);
-			renderClients(clients);
-			deleteIndex = null;
-			// Always hide the modal using the static method
-			var deleteModalEl = document.getElementById('deleteModal');
-			var modalInstance = bootstrap.Modal.getInstance(deleteModalEl);
-			if (modalInstance) {
-				modalInstance.hide();
-			} else {
-				// fallback: manually remove 'show' class and backdrop
-				deleteModalEl.classList.remove('show');
-				deleteModalEl.setAttribute('aria-hidden', 'true');
-				document.body.classList.remove('modal-open');
-				let backdrop = document.querySelector('.modal-backdrop');
-				if (backdrop) backdrop.remove();
-			}
-		}
-	});
 });
 </script>
 				</div>
@@ -395,18 +578,15 @@ window.onload = function() { renderClients(clients); };
 	   <!-- Bootstrap JS (must be last) -->
 	   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 	   <script>
+	   // Lightweight UI init (logout, categories, image preview, counters)
 	   document.addEventListener('DOMContentLoaded', function() {
 		   // Logout modal logic
 		   var logoutBtn = document.getElementById('logoutBtn');
 		   var logoutModalEl = document.getElementById('logoutModal');
 		   var confirmLogout = document.getElementById('confirmLogout');
 		   var logoutModal = new bootstrap.Modal(logoutModalEl);
-		   logoutBtn.addEventListener('click', function() {
-			   logoutModal.show();
-		   });
-		   confirmLogout.addEventListener('click', function() {
-			   window.location.href = '../';
-		   });
+		   if (logoutBtn) logoutBtn.addEventListener('click', function() { logoutModal.show(); });
+		   if (confirmLogout) confirmLogout.addEventListener('click', function() { window.location.href = '../'; });
 
 		   // Service categories
 		   var categories = [
@@ -431,126 +611,41 @@ window.onload = function() { renderClients(clients); };
 			   'Google My Business: GMB Support Service'
 		   ];
 		   var categorySelect = document.getElementById('categorySelect');
-		   categories.forEach(function(cat) {
-			   var opt = document.createElement('option');
-			   opt.value = cat;
-			   opt.textContent = cat;
-			   categorySelect.appendChild(opt);
-		   });
+		   if (categorySelect) {
+			   categories.forEach(function(cat) { var opt = document.createElement('option'); opt.value = cat; opt.textContent = cat; categorySelect.appendChild(opt); });
+		   }
 
-		   // Upload image logic
-		   document.getElementById('uploadBtn').addEventListener('click', function() {
-			   document.getElementById('uploadImage').click();
-		   });
-		   document.getElementById('uploadImage').addEventListener('change', function(e) {
+		   // Upload image logic (preview)
+		   var uploadBtn = document.getElementById('uploadBtn');
+		   var uploadInput = document.getElementById('uploadImage');
+		   var preview = document.getElementById('previewImg');
+		   if (uploadBtn && uploadInput) uploadBtn.addEventListener('click', function() { uploadInput.click(); });
+		   if (uploadInput) uploadInput.addEventListener('change', function(e) {
 			   var file = e.target.files[0];
-			   var preview = document.getElementById('previewImg');
-			   if (file) {
+			   if (file && preview) {
 				   var reader = new FileReader();
-				   reader.onload = function(ev) {
-					   preview.src = ev.target.result;
-					   preview.style.display = 'block';
-				   };
+				   reader.onload = function(ev) { preview.src = ev.target.result; preview.style.display = 'block'; };
 				   reader.readAsDataURL(file);
-			   } else {
-				   preview.style.display = 'none';
-			   }
+			   } else if (preview) { preview.style.display = 'none'; }
 		   });
 
-		   // Plus/minus logic for New Clients
-		   document.getElementById('increaseClients').addEventListener('click', function() {
-			   var input = document.getElementById('newClientsCount');
-			   input.value = parseInt(input.value) + 1;
-		   });
-		   document.getElementById('decreaseClients').addEventListener('click', function() {
-			   var input = document.getElementById('newClientsCount');
-			   if (parseInt(input.value) > 0) input.value = parseInt(input.value) - 1;
-		   });
-		   // Plus/minus logic for SEO Ranking
-		   document.getElementById('increaseSEO').addEventListener('click', function() {
-			   var input = document.getElementById('seoRanking');
-			   input.value = parseInt(input.value) + 1;
-		   });
-		   document.getElementById('decreaseSEO').addEventListener('click', function() {
-			   var input = document.getElementById('seoRanking');
-			   if (parseInt(input.value) > 0) input.value = parseInt(input.value) - 1;
-		   });
+		   // Counters: new clients and seo
+		   var incClients = document.getElementById('increaseClients');
+		   var decClients = document.getElementById('decreaseClients');
+		   var newClientsInput = document.getElementById('newClientsCount');
+		   if (incClients && newClientsInput) incClients.addEventListener('click', function(){ newClientsInput.value = parseInt(newClientsInput.value||0)+1; });
+		   if (decClients && newClientsInput) decClients.addEventListener('click', function(){ if (parseInt(newClientsInput.value||0)>0) newClientsInput.value = parseInt(newClientsInput.value||0)-1; });
 
-		   // Add new client button logic
-		   document.getElementById('addNewClientBtn').addEventListener('click', function() {
-			   // Validate required fields
-			   var valid = true;
-			   var requiredFields = document.querySelectorAll('#companyName, #categoryWork, #companyDesc, #categorySelect');
-			   requiredFields.forEach(function(field) {
-				   if (!field.value || field.value.trim() === '') {
-					   field.classList.add('is-invalid');
-					   valid = false;
-				   } else {
-					   field.classList.remove('is-invalid');
-				   }
-			   });
-			   // Image required
-			   var imageInput = document.getElementById('uploadImage');
-			   if (!imageInput.files || imageInput.files.length === 0) {
-				   imageInput.classList.add('is-invalid');
-				   valid = false;
-			   } else {
-				   imageInput.classList.remove('is-invalid');
-			   }
-			   if (!valid) {
-				   // Scroll to first invalid field
-				   var firstInvalid = document.querySelector('.is-invalid');
-				   if (firstInvalid) firstInvalid.scrollIntoView({behavior:'smooth', block:'center'});
-				   return;
-			   }
-			   var confirmModal = new bootstrap.Modal(document.getElementById('confirmAddModal'));
-			   confirmModal.show();
-		   });
+		   var incSEO = document.getElementById('increaseSEO');
+		   var decSEO = document.getElementById('decreaseSEO');
+		   var seoInput = document.getElementById('seoRanking');
+		   if (incSEO && seoInput) incSEO.addEventListener('click', function(){ seoInput.value = parseInt(seoInput.value||0)+1; });
+		   if (decSEO && seoInput) decSEO.addEventListener('click', function(){ if (parseInt(seoInput.value||0)>0) seoInput.value = parseInt(seoInput.value||0)-1; });
 
-		   // Confirmation modal logic
-		   document.getElementById('yesAddBtn').addEventListener('click', function() {
-			   var confirmModalEl = document.getElementById('confirmAddModal');
-			   var confirmModal = bootstrap.Modal.getInstance(confirmModalEl);
-			   confirmModal.hide();
-			   var addClientModalEl = document.getElementById('addClientModal');
-			   var addClientModal = bootstrap.Modal.getInstance(addClientModalEl);
-			   addClientModal.hide();
-			   // Clear form and image preview
-			   document.getElementById('clientForm').reset();
-			   document.getElementById('previewImg').style.display = 'none';
-			   // Remove invalid state
-			   document.querySelectorAll('.is-invalid').forEach(function(f){f.classList.remove('is-invalid');});
-			   document.getElementById('uploadImage').classList.remove('is-invalid');
-			   var successModal = new bootstrap.Modal(document.getElementById('successModal'));
-			   successModal.show();
-		   });
-
-		   // Success modal: Add Another button logic
-		   document.getElementById('addAnotherClientBtn').addEventListener('click', function() {
-			   var successModalEl = document.getElementById('successModal');
-			   var successModal = bootstrap.Modal.getInstance(successModalEl);
-			   successModal.hide();
-			   // Reopen the add client modal, form is already cleared
-			   var addClientModalEl = document.getElementById('addClientModal');
-			   var addClientModal = new bootstrap.Modal(addClientModalEl);
-			   addClientModal.show();
-		   });
-	// Add style for invalid fields
-	var style = document.createElement('style');
-	style.innerHTML = `.is-invalid { border-color: #dc3545 !important; box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25) !important; }`;
-	document.head.appendChild(style);
-		   document.getElementById('noAddBtn').addEventListener('click', function() {
-			   var confirmModalEl = document.getElementById('confirmAddModal');
-			   var confirmModal = bootstrap.Modal.getInstance(confirmModalEl);
-			   confirmModal.hide();
-			   if (confirm('Do you want to close the form and clear all provided details?')) {
-				   document.getElementById('clientForm').reset();
-				   document.getElementById('previewImg').style.display = 'none';
-				   var addClientModalEl = document.getElementById('addClientModal');
-				   var addClientModal = bootstrap.Modal.getInstance(addClientModalEl);
-				   addClientModal.hide();
-			   }
-		   });
-		});
+		   // small helpers style for invalid fields
+		   var style = document.createElement('style');
+		   style.innerHTML = `.is-invalid { border-color: #dc3545 !important; box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25) !important; }`;
+		   document.head.appendChild(style);
+	   });
 	   </script>
 </html>

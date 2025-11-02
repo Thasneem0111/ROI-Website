@@ -1,0 +1,1639 @@
+<!DOCTYPE html><!DOCTYPE html>
+
+<html lang="en">
+
+<head><html lang="en">		
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" /><head>		// Admin industries script (PHP backend) — runs after DOM is ready to avoid null errors
+
+  <title>Industries - ROI Admin</title>
+
+  <link rel="icon" type="image/png" href="../images/logo.png" />	<meta charset="UTF-8">		document.addEventListener('DOMContentLoaded', () => {
+
+  <link rel="stylesheet" href="./dashboard.css" />
+
+  <link rel="stylesheet" href="../styles.css" />	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">			// Local state
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />    <title>Industries - ROI Admin</title>			let dynamicIndustries = [];
+
+  <style>
+
+    .is-invalid { border-color: #dc3545 !important; box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25) !important; }    <link rel="icon" type="image/png" href="../images/logo.png">			const STATIC_INDUSTRIES = [
+
+    .modal-backdrop.show { z-index: 2050 !important; }
+
+    .modal { z-index: 2100 !important; }	<link rel="stylesheet" href="./dashboard.css">				'Automotive','Business & Finance','Food & Beverage','Construction','Hospitality','E-Commerce','General Retail','Coffee Shops','Real Estate','Entertainment & Events','Beauty & Personal Care','Health & Fitness','Recruitment & Staffing','Professional Services'
+
+  </style>
+
+</head>	<link rel="stylesheet" href="../styles.css">			].map(n => ({ id:`static-${n}`, name:n, createdAt:null, isStatic:true }));
+
+<body>
+
+  <!-- Logout Modal -->	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">	<!-- Bootstrap CSS -->			let pendingDeleteId = null;
+
+      <div class="modal-content">
+
+        <div class="modal-header border-0 justify-content-center">	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+          <h5 class="modal-title fw-bold">Logout Confirmation</h5>
+
+          <button class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button></head>			const tbody = document.getElementById('industriesTableBody');
+
+        </div>
+
+        <div class="modal-body text-center"><body>			const countEl = document.getElementById('totalIndustriesCount');
+
+          <i class="fa fa-sign-out-alt" style="font-size:2rem;color:#2ca6a4"></i>
+
+          <p class="mt-3 mb-0">Are you sure you want to logout?</p>	<!-- Logout Confirmation Modal (must be outside dashboard-container for z-index) -->
+
+        </div>
+
+        <div class="modal-footer border-0 justify-content-center pb-4">	<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">			function formatDate(ts) {
+
+          <button class="btn btn-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+
+          <button id="confirmLogout" class="btn btn-primary px-4" style="background:#218a8a;border:none">Yes</button>		<div class="modal-dialog modal-dialog-centered">				if (!ts) return '—';
+
+        </div>
+
+      </div>			<div class="modal-content">				try { const d = new Date(ts); return d.toLocaleString(); } catch(_) { return '—'; }
+
+    </div>
+
+  </div>				<div class="modal-header border-0" style="justify-content:center;">			}
+
+
+
+  <div class="dashboard-container">					<h5 class="modal-title w-100 text-center" id="logoutModalLabel" style="font-weight:700;">Logout Confirmation</h5>
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">					<button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button>			function renderRows(list) {
+
+      <div class="sidebar-content">
+
+        <div class="sidebar-header">				</div>				if (!tbody) return;
+
+          <img src="../images/logo.png" alt="Company Logo" class="company-logo" />
+
+          <h2>ROYAL ORBIT<br/>INNOVATIONS</h2>				<div class="modal-body text-center" style="font-size:1.15rem; color:#222; padding:24px 12px 12px 12px;">				tbody.innerHTML = '';
+
+        </div>
+
+        <nav class="sidebar-nav">					<i class="fa fa-sign-out-alt" style="font-size:2.2rem; color:#2ca6a4; margin-bottom:12px;"></i><br>				list.forEach((item) => {
+
+          <ul>
+
+            <li><a href="dashboard.html"><i class="fa fa-th-large"></i> Dashboard</a></li>					Are you sure you want to logout?					const tr = document.createElement('tr');
+
+            <li><a href="email.html"><i class="fa fa-envelope"></i> Emails</a></li>
+
+            <li><a href="blog.html"><i class="fa fa-blog"></i> Blogs</a></li>				</div>					const isStatic = !!item.isStatic;
+
+            <li><a href="clients.html"><i class="fa fa-users"></i> Clients</a></li>
+
+            <li><a href="services.html"><i class="fa fa-cogs"></i> Services</a></li>				<div class="modal-footer border-0" style="justify-content:center; gap:18px; padding-bottom:24px;">					tr.innerHTML = `
+
+            <li class="active"><i class="fa fa-industry"></i> Industries</li>
+
+          </ul>					<button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal" style="border-radius:8px;">Cancel</button>						<td style='padding:12px 0;'><input type='checkbox' ${isStatic ? 'disabled' : ''} data-id='${item.id}'></td>
+
+        </nav>
+
+      </div>					<button type="button" class="btn btn-primary px-4" id="confirmLogout" style="border-radius:8px; background:#218a8a; border:none;">Yes</button>						<td style='font-weight:normal;'>${item.name || ''}</td>
+
+      <div class="sidebar-bottom">
+
+        <ul>				</div>						<td style='color:#888; text-align:right;'>${formatDate(item.createdAt)}</td>
+
+          <li><a href="setting.html"><i class="fa fa-user-cog"></i> Setting</a></li>
+
+          <li id="logoutBtn" style="cursor:pointer;"><i class="fa fa-sign-out-alt"></i> Logout</li>			</div>						<td style='text-align:right; display:flex; gap:14px; justify-content:flex-end;'>
+
+        </ul>
+
+      </div>		</div>							${isStatic ? '' : `<i class='fa fa-pen-to-square' style='color:#0f766e; cursor:pointer;' data-action='edit' data-id='${item.id}' title='Edit'></i>`}
+
+    </aside>
+
+	</div>							${isStatic ? '' : `<i class='fa fa-trash' style='color:#d9534f; cursor:pointer;' data-action='delete' data-id='${item.id}' title='Delete'></i>`}
+
+    <!-- Main -->
+
+    <main class="main-panel">						</td>
+
+      <div class="top-bar">
+
+        <h1>Industries Management</h1>	<div class="dashboard-container">					`;
+
+        <div class="top-bar-right">
+
+          <div class="search-bar">		<style>					tbody.appendChild(tr);
+
+            <input type="text" id="industrySearch" placeholder="Search industries..." onkeyup="applyFilter()" />
+
+            <button><i class="fa fa-search"></i></button>			/* Ensure Bootstrap modal is above everything */				});
+
+          </div>
+
+          <div class="admin-profile">			.modal-backdrop.show { z-index: 2050 !important; }			}
+
+            <img src="../images/man.png" class="profile-pic" alt="Admin" />
+
+          </div>			.modal { z-index: 2100 !important; }
+
+        </div>
+
+      </div>		</style>			function combinedList() {
+
+
+
+      <div class="content-section">		<!-- Sidebar -->				const dynNames = new Set(dynamicIndustries.map(d => (d.name||'').toLowerCase()));
+
+        <div class="row mb-4">
+
+          <div class="col-md-3">		<aside class="sidebar">				const filteredStatic = STATIC_INDUSTRIES.filter(s => !dynNames.has((s.name||'').toLowerCase()));
+
+            <div class="stats-card">
+
+              <div class="stats-content">			<div class="sidebar-content">				return [...filteredStatic, ...dynamicIndustries];
+
+                <h3 id="totalIndustriesCount">0</h3>
+
+                <p>Total Industries</p>				<div class="sidebar-header">			}
+
+              </div>
+
+              <div class="stats-icon"><i class="fa fa-industry"></i></div>					<img src="../images/logo.png" alt="Company Logo" class="company-logo">
+
+            </div>
+
+          </div>					<h2>ROYAL ORBIT<br>INNOVATIONS</h2>			function updateCount() {
+
+        </div>
+
+				</div>				const dynNames = new Set(dynamicIndustries.map(d => (d.name||'').toLowerCase()));
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+          <h3>Industries List</h3>				<nav class="sidebar-nav">				const filteredStatic = STATIC_INDUSTRIES.filter(s => !dynNames.has((s.name||'').toLowerCase()));
+
+          <div>
+
+            <button type="button" class="btn btn-primary me-2" id="seedStaticBtn">					<ul>				const total = filteredStatic.length + dynamicIndustries.length;
+
+              <i class="fa fa-plus"></i> Seed Default Industries
+
+            </button>						<li><a href="/admin/dashboard" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-th-large"></i> Dashboard</a></li>				if (countEl) countEl.textContent = String(total);
+
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addIndustryModal">
+
+              <i class="fa fa-plus"></i> Add New Industry                        <li><a href="/admin/email" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-envelope"></i> Emails</a></li>				const totalField = document.getElementById('industryTotalField');
+
+            </button>
+
+          </div>						<li><a href="/admin/blog" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-blog"></i> Blogs</a></li>				if (totalField) totalField.value = String(total);
+
+        </div>
+
+						<li><a href="/admin/clients" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-users"></i> Clients</a></li>			}
+
+        <div class="table-responsive">
+
+          <table class="table table-striped">						<li><a href="/admin/services" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-cogs"></i> Services</a></li>
+
+            <thead>
+
+              <tr>						<li class="active"><i class="fa fa-industry"></i> Industries</li>			async function loadDynamic() {
+
+                <th width="5%">Select</th>
+
+                <th width="45%">Industry Name</th>					</ul>				try {
+
+                <th width="30%">Created Date</th>
+
+                <th width="20%" class="text-end">Actions</th>				</nav>					const res = await fetch('../admin/get_industries.php');
+
+              </tr>
+
+            </thead>			</div>					if (!res.ok) throw new Error('Failed to load: ' + res.status);
+
+            <tbody id="industriesTableBody"></tbody>
+
+          </table>			<div class="sidebar-bottom">					const data = await res.json();
+
+        </div>
+
+      </div>				<ul>					dynamicIndustries = data.map(d => ({ id: String(d.id), name: d.name, description: d.description, imageUrl: d.image, createdAt: d.createdAt }));
+
+    </main>
+
+  </div>					<li><a href="/admin/setting" style="color:inherit;text-decoration:none;display:flex;align-items:center;"><i class="fa fa-user-cog"></i> Setting</a></li>					updateCount();
+
+
+
+  <!-- Add Industry Modal -->					<li id="logoutBtn" style="cursor:pointer;"><i class="fa fa-sign-out-alt"></i> Logout</li>					applyFilter();
+
+  <div class="modal fade" id="addIndustryModal" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">				</ul>				} catch (err) {
+
+      <div class="modal-content">
+
+        <div class="modal-header">			</div>					console.error('Failed to load industries', err);
+
+          <h5 class="modal-title">Add New Industry</h5>
+
+          <button class="btn-close" data-bs-dismiss="modal"></button>		</aside>					const diag = document.getElementById('adminDebug');
+
+        </div>
+
+        <form id="industryForm">					if (diag) diag.textContent = 'Failed to load industries: ' + (err.message || err);
+
+          <div class="modal-body">
+
+            <div class="mb-3">		<!-- Main Content -->				}
+
+              <label class="form-label" for="industryName">Industry Name <span class="text-danger">*</span></label>
+
+              <input id="industryName" class="form-control" required />		<main class="main-panel">			}
+
+            </div>
+
+            <div class="mb-3">			<!-- Top Bar -->
+
+              <label class="form-label" for="industryDesc">Description <span class="text-danger">*</span></label>
+
+              <textarea id="industryDesc" class="form-control" rows="3" required></textarea>			<div class="top-bar">			function applyFilter() {
+
+            </div>
+
+            <div class="mb-3">				<h1>Industries Management</h1>				const el = document.getElementById('industrySearch');
+
+              <label class="form-label" for="industryUploadImage">Industry Image <span class="text-danger">*</span></label>
+
+              <div class="input-group">				<div class="top-bar-right">				const q = (el?.value || '').toLowerCase();
+
+                <input id="industryUploadImage" type="file" class="form-control d-none" accept="image/*" required />
+
+                <button type="button" id="industryUploadBtn" class="btn btn-outline-secondary"><i class="fa fa-upload"></i> Choose Image</button>					<div class="search-bar">				const base = combinedList();
+
+              </div>
+
+              <img id="industryPreviewImg" class="img-thumbnail mt-2" style="max-width:200px;display:none" alt="Preview" />						<input type="text" id="industrySearch" placeholder="Search industries..." onkeyup="applyFilter()">				if (!q) return renderRows(base);
+
+            </div>
+
+          </div>						<button><i class="fa fa-search"></i></button>				renderRows(base.filter(i => (i.name||'').toLowerCase().includes(q)));
+
+          <div class="modal-footer">
+
+            <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Cancel</button>					</div>			}
+
+            <button id="addNewIndustryBtn" class="btn btn-primary" type="button">Add Industry</button>
+
+          </div>					<div class="admin-profile">
+
+        </form>
+
+      </div>						<img src="../images/man.png" alt="Admin" class="profile-pic">			// Delegated actions for Edit/Delete
+
+    </div>
+
+  </div>					</div>			if (tbody) {
+
+
+
+  <!-- Edit Industry Modal -->				</div>				tbody.addEventListener('click', (e) => {
+
+  <div class="modal fade" id="editIndustryModal" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">			</div>					const target = e.target;
+
+      <div class="modal-content">
+
+        <div class="modal-header">					if (!(target instanceof HTMLElement)) return;
+
+          <h5 class="modal-title">Edit Industry</h5>
+
+          <button class="btn-close" data-bs-dismiss="modal"></button>			<!-- Industries Content -->					const action = target.getAttribute('data-action');
+
+        </div>
+
+        <div class="modal-body">			<div class="content-section">					const id = target.getAttribute('data-id');
+
+          <input type="hidden" id="editIndustryId" />
+
+          <div class="mb-3">				<!-- Industries Stats -->					if (!action || !id) return;
+
+            <label class="form-label" for="editIndustryName">Industry Name <span class="text-danger">*</span></label>
+
+            <input id="editIndustryName" class="form-control" />				<div class="row mb-4">					const item = dynamicIndustries.find(x => x.id === id);
+
+          </div>
+
+          <div class="mb-3">					<div class="col-md-3">					if (!item) return;
+
+            <label class="form-label" for="editIndustryDesc">Description <span class="text-danger">*</span></label>
+
+            <textarea id="editIndustryDesc" class="form-control" rows="3"></textarea>						<div class="stats-card">
+
+          </div>
+
+          <div class="mb-3">							<div class="stats-content">					if (action === 'delete') {
+
+            <label class="form-label" for="editIndustryImage">Industry Image</label>
+
+            <div class="input-group">								<h3 id="totalIndustriesCount">0</h3>						pendingDeleteId = id;
+
+              <input id="editIndustryImage" type="file" class="form-control d-none" accept="image/*" />
+
+              <button type="button" id="editIndustryUploadBtn" class="btn btn-outline-secondary"><i class="fa fa-upload"></i> Choose New Image</button>								<p>Total Industries</p>						const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+
+            </div>
+
+            <img id="editIndustryPreviewImg" class="img-thumbnail mt-2" style="max-width:200px;display:none" alt="Preview" />							</div>						modal.show();
+
+          </div>
+
+        </div>							<div class="stats-icon">					}
+
+        <div class="modal-footer">
+
+          <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Cancel</button>								<i class="fa fa-industry"></i>					if (action === 'edit') {
+
+          <button id="saveIndustryUpdatesBtn" class="btn btn-primary" type="button">Save Changes</button>
+
+        </div>							</div>						// Prefill edit form
+
+      </div>
+
+    </div>						</div>						document.getElementById('editIndustryId').value = item.id;
+
+  </div>
+
+					</div>						document.getElementById('editIndustryName').value = item.name || '';
+
+  <!-- Delete Confirmation Modal -->
+
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">				</div>						document.getElementById('editIndustryDesc').value = item.description || '';
+
+    <div class="modal-dialog modal-dialog-centered">
+
+      <div class="modal-content">						const prev = document.getElementById('editIndustryPreviewImg');
+
+        <div class="modal-header">
+
+          <h5 class="modal-title">Confirm Deletion</h5>				<!-- Industries Actions -->						if (item.imageUrl && prev) { prev.src = item.imageUrl; prev.style.display = 'block'; } else if (prev) { prev.style.display = 'none'; }
+
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+
+        </div>				<div class="d-flex justify-content-between align-items-center mb-4">						const modal = new bootstrap.Modal(document.getElementById('editIndustryModal'));
+
+        <div class="modal-body text-center">
+
+          <i class="fa fa-exclamation-triangle fa-3x text-danger mb-3"></i>					<h3>Industries List</h3>						modal.show();
+
+          <p>Are you sure you want to delete this industry? This action cannot be undone.</p>
+
+        </div>					<div>					}
+
+        <div class="modal-footer justify-content-center">
+
+          <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Cancel</button>						<button type="button" class="btn btn-primary me-2" id="seedStaticBtn">				});
+
+          <button id="confirmDelete" class="btn btn-danger" type="button">Delete</button>
+
+        </div>							<i class="fa fa-plus"></i> Seed Default Industries			}
+
+      </div>
+
+    </div>						</button>
+
+  </div>
+
+						<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addIndustryModal">			// Confirm Delete
+
+  <!-- Success Modal (after add) -->
+
+  <div class="modal fade" id="successIndustryModal" tabindex="-1" aria-hidden="true">							<i class="fa fa-plus"></i> Add New Industry			const confirmDeleteBtn = document.getElementById('confirmDelete');
+
+    <div class="modal-dialog modal-dialog-centered">
+
+      <div class="modal-content">						</button>			if (confirmDeleteBtn) {
+
+        <div class="modal-header">
+
+          <h5 class="modal-title">Success!</h5>					</div>				confirmDeleteBtn.addEventListener('click', async () => {
+
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+
+        </div>				</div>					if (!pendingDeleteId) return;
+
+        <div class="modal-body text-center">
+
+          <i class="fa fa-check-circle fa-3x text-success mb-3"></i>					try {
+
+          <p>Industry has been successfully added!</p>
+
+        </div>				<!-- Industries Table -->						const form = new FormData(); form.append('id', pendingDeleteId);
+
+        <div class="modal-footer justify-content-center">
+
+          <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>				<div class="table-responsive">						const res = await fetch('../admin/api_delete.php', { method:'POST', body: form });
+
+          <button id="addAnotherIndustryBtn" class="btn btn-primary" type="button">Add Another</button>
+
+        </div>					<table class="table table-striped">						const j = await res.json();
+
+      </div>
+
+    </div>						<thead>						if (j.success) await loadDynamic(); else alert('Delete failed: ' + (j.message || ''));
+
+  </div>
+
+							<tr>					} catch (err) { console.error('Delete error', err); alert('Failed to delete'); }
+
+  <div id="adminDebug" style="display:none"></div>
+
+								<th width="5%">Select</th>					finally {
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>								<th width="40%">Industry Name</th>						pendingDeleteId = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // State								<th width="35%">Created Date</th>						const deleteModalEl = document.getElementById('deleteModal');
+
+      let dynamicIndustries = [];
+
+      const STATIC_INDUSTRIES = [								<th width="20%">Actions</th>						const modalInstance = bootstrap.Modal.getInstance(deleteModalEl);
+
+        'Automotive','Business & Finance','Food & Beverage','Construction','Hospitality','E-Commerce','General Retail','Coffee Shops','Real Estate','Entertainment & Events','Beauty & Personal Care','Health & Fitness','Recruitment & Staffing','Professional Services'
+
+      ].map(n => ({ id: `static-${n}`, name: n, createdAt: null, isStatic: true }));							</tr>						modalInstance?.hide();
+
+
+
+      let pendingDeleteId = null;						</thead>					}
+
+
+
+      // Elements						<tbody id="industriesTableBody">				});
+
+      const tbody = document.getElementById('industriesTableBody');
+
+      const countEl = document.getElementById('totalIndustriesCount');							<!-- Dynamic content will be loaded here -->			}
+
+
+
+      function formatDate(ts){ if(!ts) return '—'; try{ return new Date(ts).toLocaleString(); }catch{ return '—'; } }						</tbody>
+
+
+
+      function combinedList(){					</table>			// Add: image choose helpers (guarded)
+
+        const dynNames = new Set(dynamicIndustries.map(d => (d.name||'').toLowerCase()));
+
+        const filteredStatic = STATIC_INDUSTRIES.filter(s => !dynNames.has((s.name||'').toLowerCase()));				</div>			const addUploadBtn = document.getElementById('industryUploadBtn');
+
+        return [...filteredStatic, ...dynamicIndustries];
+
+      }			</div>			const addFileInput = document.getElementById('industryUploadImage');
+
+
+
+      function updateCount(){		</main>			const addPrev = document.getElementById('industryPreviewImg');
+
+        const dynNames = new Set(dynamicIndustries.map(d => (d.name||'').toLowerCase()));
+
+        const filteredStatic = STATIC_INDUSTRIES.filter(s => !dynNames.has((s.name||'').toLowerCase()));	</div>			if (addUploadBtn && addFileInput) {
+
+        const total = filteredStatic.length + dynamicIndustries.length;
+
+        if (countEl) countEl.textContent = String(total);				addUploadBtn.addEventListener('click', () => addFileInput.click());
+
+      }
+
+	<!-- Add Industry Modal -->				addFileInput.addEventListener('change', (e) => {
+
+      function renderRows(list){
+
+        if (!tbody) return;	<div class="modal fade" id="addIndustryModal" tabindex="-1" aria-labelledby="addIndustryModalLabel" aria-hidden="true">					const file = e.target.files?.[0];
+
+        tbody.innerHTML = '';
+
+        list.forEach(item => {		<div class="modal-dialog modal-lg">					if (file && addPrev) { const r = new FileReader(); r.onload = ev => { addPrev.src = ev.target.result; addPrev.style.display='block'; }; r.readAsDataURL(file); }
+
+          const isStatic = !!item.isStatic;
+
+          const tr = document.createElement('tr');			<div class="modal-content">					else if (addPrev) { addPrev.style.display = 'none'; }
+
+          tr.innerHTML = `
+
+            <td><input type="checkbox" ${isStatic ? 'disabled' : ''} data-id="${item.id}"></td>				<div class="modal-header">				});
+
+            <td>${item.name || ''}</td>
+
+            <td class="text-end text-muted">${formatDate(item.createdAt)}</td>					<h5 class="modal-title" id="addIndustryModalLabel">Add New Industry</h5>			}
+
+            <td class="text-end">
+
+              ${isStatic ? '' : `<i class="fa fa-pen-to-square me-3" style="color:#0f766e; cursor:pointer;" data-action="edit" data-id="${item.id}" title="Edit"></i>`}					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+              ${isStatic ? '' : `<i class="fa fa-trash" style="color:#d9534f; cursor:pointer;" data-action="delete" data-id="${item.id}" title="Delete"></i>`}
+
+            </td>`;				</div>			// Edit: image choose helpers
+
+          tbody.appendChild(tr);
+
+        });				<form id="industryForm">			const editUploadBtn = document.getElementById('editIndustryUploadBtn');
+
+      }
+
+					<div class="modal-body">			const editFileInput = document.getElementById('editIndustryImage');
+
+      async function loadDynamic(){
+
+        try{						<div class="mb-3">			const editPrev = document.getElementById('editIndustryPreviewImg');
+
+          const res = await fetch('./get_industries.php');
+
+          if(!res.ok) throw new Error('Failed to load: '+res.status);							<label for="industryName" class="form-label">Industry Name <span class="text-danger">*</span></label>			if (editUploadBtn && editFileInput) {
+
+          const data = await res.json();
+
+          dynamicIndustries = data.map(d => ({ id: String(d.id), name: d.name, description: d.description, imageUrl: d.image, createdAt: d.createdAt }));							<input type="text" class="form-control" id="industryName" required>				editUploadBtn.addEventListener('click', () => editFileInput.click());
+
+          updateCount();
+
+          window.applyFilter();						</div>				editFileInput.addEventListener('change', (e) => {
+
+        }catch(err){
+
+          console.error('Failed to load industries', err);						<div class="mb-3">					const file = e.target.files?.[0];
+
+          const diag = document.getElementById('adminDebug');
+
+          if (diag) diag.textContent = 'Failed to load industries: ' + (err.message || err);							<label for="industryDesc" class="form-label">Description <span class="text-danger">*</span></label>					if (file && editPrev) { const r = new FileReader(); r.onload = ev => { editPrev.src = ev.target.result; editPrev.style.display='block'; }; r.readAsDataURL(file); }
+
+        }
+
+      }							<textarea class="form-control" id="industryDesc" rows="3" required></textarea>				});
+
+
+
+      // Search						</div>			}
+
+      window.applyFilter = function(){
+
+        const q = (document.getElementById('industrySearch')?.value || '').toLowerCase();						<div class="mb-3">
+
+        const base = combinedList();
+
+        if (!q) return renderRows(base);							<label for="industryUploadImage" class="form-label">Industry Image <span class="text-danger">*</span></label>			// Validation helper
+
+        renderRows(base.filter(i => (i.name||'').toLowerCase().includes(q)));
+
+      }							<div class="input-group">			function validateAddForm() {
+
+
+
+      // Delegated actions								<input type="file" class="form-control d-none" id="industryUploadImage" accept="image/*" required>				let ok = true;
+
+      if (tbody){
+
+        tbody.addEventListener('click', (e) => {								<button type="button" class="btn btn-outline-secondary" id="industryUploadBtn">				const nameEl = document.getElementById('industryName');
+
+          const target = e.target;
+
+          if (!(target instanceof HTMLElement)) return;									<i class="fa fa-upload"></i> Choose Image				const descEl = document.getElementById('industryDesc');
+
+          const action = target.getAttribute('data-action');
+
+          const id = target.getAttribute('data-id');								</button>				const imgEl = document.getElementById('industryUploadImage');
+
+          if (!action || !id) return;
+
+          const item = dynamicIndustries.find(x => x.id === id);							</div>				[nameEl, descEl].forEach(el => { if (el && !el.value?.trim()) { el.classList.add('is-invalid'); ok = false; } else if (el) { el.classList.remove('is-invalid'); } });
+
+          if (!item) return;
+
+							<img id="industryPreviewImg" src="#" alt="Preview" class="img-thumbnail mt-2" style="max-width: 200px; display: none;">				if (imgEl && (!imgEl.files || imgEl.files.length===0)) { imgEl.classList.add('is-invalid'); ok = false; } else if (imgEl) { imgEl.classList.remove('is-invalid'); }
+
+          if (action === 'delete'){
+
+            pendingDeleteId = id;						</div>				return ok;
+
+            new bootstrap.Modal(document.getElementById('deleteModal')).show();
+
+          }					</div>			}
+
+          if (action === 'edit'){
+
+            document.getElementById('editIndustryId').value = item.id;					<div class="modal-footer">
+
+            document.getElementById('editIndustryName').value = item.name || '';
+
+            document.getElementById('editIndustryDesc').value = item.description || '';						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>			// Add click -> open confirm
+
+            const prev = document.getElementById('editIndustryPreviewImg');
+
+            if (item.imageUrl){ prev.src = item.imageUrl; prev.style.display = 'block'; } else { prev.style.display = 'none'; }						<button type="button" class="btn btn-primary" id="addNewIndustryBtn">Add Industry</button>			const addNewBtn = document.getElementById('addNewIndustryBtn');
+
+            new bootstrap.Modal(document.getElementById('editIndustryModal')).show();
+
+          }					</div>			if (addNewBtn) {
+
+        });
+
+      }				</form>				addNewBtn.addEventListener('click', () => {
+
+
+
+      // Confirm delete			</div>					if (!validateAddForm()) {
+
+      const confirmDeleteBtn = document.getElementById('confirmDelete');
+
+      if (confirmDeleteBtn){		</div>						const firstInvalid = document.querySelector('.is-invalid');
+
+        confirmDeleteBtn.addEventListener('click', async () => {
+
+          if (!pendingDeleteId) return;	</div>						firstInvalid?.scrollIntoView({ behavior:'smooth', block:'center' });
+
+          try{
+
+            const form = new FormData();						return;
+
+            form.append('id', pendingDeleteId);
+
+            const res = await fetch('./api_delete.php', { method:'POST', body: form });	<!-- Edit Industry Modal -->					}
+
+            const j = await res.json();
+
+            if (j.success) await loadDynamic(); else alert('Delete failed: ' + (j.message || ''));	<div class="modal fade" id="editIndustryModal" tabindex="-1" aria-labelledby="editIndustryModalLabel" aria-hidden="true">					const confirmModal = new bootstrap.Modal(document.getElementById('confirmAddIndustryModal'));
+
+          }catch(err){ console.error('Delete error', err); alert('Failed to delete'); }
+
+          finally{		<div class="modal-dialog modal-lg">					confirmModal.show();
+
+            pendingDeleteId = null;
+
+            bootstrap.Modal.getInstance(document.getElementById('deleteModal'))?.hide();			<div class="modal-content">				});
+
+          }
+
+        });				<div class="modal-header">			}
+
+      }
+
+					<h5 class="modal-title" id="editIndustryModalLabel">Edit Industry</h5>
+
+      // Image helpers (add)
+
+      const addUploadBtn = document.getElementById('industryUploadBtn');					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>			// Confirm add -> POST to api_upload.php
+
+      const addFileInput = document.getElementById('industryUploadImage');
+
+      const addPrev = document.getElementById('industryPreviewImg');				</div>			const yesAddBtn = document.getElementById('yesAddIndustryBtn');
+
+      if (addUploadBtn && addFileInput){
+
+        addUploadBtn.addEventListener('click', () => addFileInput.click());				<div class="modal-body">			if (yesAddBtn) {
+
+        addFileInput.addEventListener('change', (e) => {
+
+          const file = e.target.files?.[0];					<input type="hidden" id="editIndustryId">				yesAddBtn.addEventListener('click', async (ev) => {
+
+          if (file && addPrev){ const r = new FileReader(); r.onload = ev => { addPrev.src = ev.target.result; addPrev.style.display='block'; }; r.readAsDataURL(file); }
+
+          else if (addPrev){ addPrev.style.display='none'; }					<div class="mb-3">					const yesBtn = ev.currentTarget; yesBtn.disabled = true;
+
+        });
+
+      }						<label for="editIndustryName" class="form-label">Industry Name <span class="text-danger">*</span></label>					const name = document.getElementById('industryName')?.value.trim() || '';
+
+
+
+      // Image helpers (edit)						<input type="text" class="form-control" id="editIndustryName" required>					const description = document.getElementById('industryDesc')?.value.trim() || '';
+
+      const editUploadBtn = document.getElementById('editIndustryUploadBtn');
+
+      const editFileInput = document.getElementById('editIndustryImage');					</div>					const file = addFileInput?.files?.[0];
+
+      const editPrev = document.getElementById('editIndustryPreviewImg');
+
+      if (editUploadBtn && editFileInput){					<div class="mb-3">					const confirmEl = document.getElementById('confirmAddIndustryModal');
+
+        editUploadBtn.addEventListener('click', () => editFileInput.click());
+
+        editFileInput.addEventListener('change', (e) => {						<label for="editIndustryDesc" class="form-label">Description <span class="text-danger">*</span></label>					const addModalEl = document.getElementById('addIndustryModal');
+
+          const file = e.target.files?.[0];
+
+          if (file && editPrev){ const r = new FileReader(); r.onload = ev => { editPrev.src = ev.target.result; editPrev.style.display='block'; }; r.readAsDataURL(file); }						<textarea class="form-control" id="editIndustryDesc" rows="3" required></textarea>					try {
+
+        });
+
+      }					</div>						const form = new FormData();
+
+
+
+      function validateAddForm(){					<div class="mb-3">						form.append('name', name);
+
+        let ok = true;
+
+        const nameEl = document.getElementById('industryName');						<label for="editIndustryImage" class="form-label">Industry Image</label>						form.append('description', description);
+
+        const descEl = document.getElementById('industryDesc');
+
+        const imgEl = document.getElementById('industryUploadImage');						<div class="input-group">						if (file) form.append('image', file);
+
+        [nameEl, descEl].forEach(el => { if (el && !el.value?.trim()){ el.classList.add('is-invalid'); ok=false; } else { el.classList.remove('is-invalid'); }});
+
+        if (imgEl && (!imgEl.files || imgEl.files.length===0)){ imgEl.classList.add('is-invalid'); ok=false; } else { imgEl.classList.remove('is-invalid'); }							<input type="file" class="form-control d-none" id="editIndustryImage" accept="image/*">						const res = await fetch('../admin/api_upload.php', { method: 'POST', body: form });
+
+        return ok;
+
+      }							<button type="button" class="btn btn-outline-secondary" id="editIndustryUploadBtn">						const j = await res.json();
+
+
+
+      // Add flow								<i class="fa fa-upload"></i> Choose New Image						if (j.success) {
+
+      const addNewBtn = document.getElementById('addNewIndustryBtn');
+
+      if (addNewBtn){							</button>							await loadDynamic();
+
+        addNewBtn.addEventListener('click', async () => {
+
+          if (!validateAddForm()){						</div>							const confirmInstance = bootstrap.Modal.getInstance(confirmEl);
+
+            document.querySelector('.is-invalid')?.scrollIntoView({ behavior:'smooth', block:'center' });
+
+            return;						<img id="editIndustryPreviewImg" src="#" alt="Preview" class="img-thumbnail mt-2" style="max-width: 200px; display: none;">							confirmInstance?.hide();
+
+          }
+
+          try{					</div>							confirmEl.addEventListener('hidden.bs.modal', () => {
+
+            const name = document.getElementById('industryName').value.trim();
+
+            const description = document.getElementById('industryDesc').value.trim();				</div>								const addInstance = bootstrap.Modal.getInstance(addModalEl);
+
+            const file = addFileInput.files?.[0];
+
+            const form = new FormData(); form.append('name', name); form.append('description', description); if (file) form.append('image', file);				<div class="modal-footer">								addInstance?.hide();
+
+            const res = await fetch('./api_upload.php', { method:'POST', body: form });
+
+            const j = await res.json();					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>								addModalEl.addEventListener('hidden.bs.modal', () => {
+
+            if (j.success){
+
+              await loadDynamic();					<button type="button" class="btn btn-primary" id="saveIndustryUpdatesBtn">Save Changes</button>									document.getElementById('industryForm')?.reset();
+
+              bootstrap.Modal.getInstance(document.getElementById('addIndustryModal'))?.hide();
+
+              new bootstrap.Modal(document.getElementById('successIndustryModal')).show();				</div>									if (addPrev) addPrev.style.display = 'none';
+
+              document.getElementById('industryForm').reset();
+
+              if (addPrev) addPrev.style.display='none';			</div>									document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+
+            }else{
+
+              alert('Add failed: ' + (j.message || ''));		</div>									document.getElementById('industryUploadImage')?.classList.remove('is-invalid');
+
+            }
+
+          }catch(err){ console.error('Add error', err); alert('Failed to add industry'); }	</div>									new bootstrap.Modal(document.getElementById('successIndustryModal')).show();
+
+        });
+
+      }								}, { once: true });
+
+
+
+      // Add another	<!-- Confirm Add Industry Modal -->							}, { once: true });
+
+      const addAnotherBtn = document.getElementById('addAnotherIndustryBtn');
+
+      if (addAnotherBtn){	<div class="modal fade" id="confirmAddIndustryModal" tabindex="-1" aria-labelledby="confirmAddIndustryModalLabel" aria-hidden="true">						} else { alert('Add failed: ' + (j.message || '')); }
+
+        addAnotherBtn.addEventListener('click', () => {
+
+          bootstrap.Modal.getInstance(document.getElementById('successIndustryModal'))?.hide();		<div class="modal-dialog modal-dialog-centered">					} catch (err) { console.error('Add error', err); alert('Failed to add industry'); }
+
+          new bootstrap.Modal(document.getElementById('addIndustryModal')).show();
+
+        });			<div class="modal-content">					finally { yesBtn.disabled = false; }
+
+      }
+
+				<div class="modal-header">				});
+
+      // Save updates
+
+      const saveUpdatesBtn = document.getElementById('saveIndustryUpdatesBtn');					<h5 class="modal-title" id="confirmAddIndustryModalLabel">Confirm Addition</h5>			}
+
+      if (saveUpdatesBtn){
+
+        saveUpdatesBtn.addEventListener('click', async () => {					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          const id = document.getElementById('editIndustryId').value;
+
+          const name = document.getElementById('editIndustryName').value.trim();				</div>			// Save updates -> api_update.php
+
+          const description = document.getElementById('editIndustryDesc').value.trim();
+
+          const file = document.getElementById('editIndustryImage').files?.[0];				<div class="modal-body text-center">			const saveUpdatesBtn = document.getElementById('saveIndustryUpdatesBtn');
+
+          if (!id) return;
+
+          try{					<i class="fa fa-question-circle fa-3x text-warning mb-3"></i>			if (saveUpdatesBtn) {
+
+            const form = new FormData(); form.append('id', id); form.append('name', name); form.append('description', description); if (file) form.append('image', file);
+
+            const res = await fetch('./api_update.php', { method:'POST', body: form });					<p>Are you sure you want to add this industry?</p>				saveUpdatesBtn.addEventListener('click', async () => {
+
+            const j = await res.json();
+
+            if (j.success){ await loadDynamic(); bootstrap.Modal.getInstance(document.getElementById('editIndustryModal'))?.hide(); }				</div>					const id = document.getElementById('editIndustryId')?.value;
+
+            else alert('Update failed: ' + (j.message || ''));
+
+          }catch(err){ console.error('Update failed', err); alert('Failed to update industry.'); }				<div class="modal-footer justify-content-center">					const name = document.getElementById('editIndustryName')?.value.trim() || '';
+
+        });
+
+      }					<button type="button" class="btn btn-secondary" id="noAddIndustryBtn">No</button>					const description = document.getElementById('editIndustryDesc')?.value.trim() || '';
+
+
+
+      // Seed static industries (name+description only)					<button type="button" class="btn btn-primary" id="yesAddIndustryBtn">Yes, Add</button>					const file = document.getElementById('editIndustryImage')?.files?.[0];
+
+      const seedBtn = document.getElementById('seedStaticBtn');
+
+      if (seedBtn){				</div>					if (!id) return;
+
+        seedBtn.addEventListener('click', async (e) => {
+
+          const btn = e.currentTarget; btn.disabled = true;			</div>					try {
+
+          try{
+
+            const dynNames = new Set(dynamicIndustries.map(d => (d.name||'').toLowerCase()));		</div>						const form = new FormData(); form.append('id', id); form.append('name', name); form.append('description', description);
+
+            const staticSeed = [
+
+              { name:'Automotive', description:'Drive more leads and sales for car dealerships, auto repair, and automotive services.' },	</div>						if (file) form.append('image', file);
+
+              { name:'Business & Finance', description:'Grow your financial services, consulting, or B2B business.' },
+
+              { name:'Food & Beverage', description:'Attract more diners and customers to your restaurant or cafe.' },						const res = await fetch('../admin/api_update.php', { method:'POST', body: form });
+
+              { name:'Construction', description:'Build your reputation and win more projects.' },
+
+              { name:'Hospitality', description:'Fill more rooms and tables with digital strategies.' },	<!-- Delete Confirmation Modal -->						const j = await res.json();
+
+              { name:'E-Commerce', description:'Boost your online store\'s sales and reach new customers.' },
+
+              { name:'General Retail', description:'Drive foot traffic and online sales for retail shops.' },	<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">						if (j.success) { await loadDynamic(); bootstrap.Modal.getInstance(document.getElementById('editIndustryModal'))?.hide(); }
+
+              { name:'Coffee Shops', description:'Brew up more business with engaging local marketing.' },
+
+              { name:'Real Estate', description:'Showcase properties and connect with buyers and sellers.' },		<div class="modal-dialog modal-dialog-centered">						else alert('Update failed: ' + (j.message || ''));
+
+              { name:'Entertainment & Events', description:'Promote events and sell more tickets.' },
+
+              { name:'Beauty & Personal Care', description:'Grow your salon, spa, or beauty brand.' },			<div class="modal-content">					} catch (err) { console.error('Update failed', err); alert('Failed to update industry.'); }
+
+              { name:'Health & Fitness', description:'Inspire more signups and appointments.' },
+
+              { name:'Recruitment & Staffing', description:'Attract top talent and connect with employers.' },				<div class="modal-header">				});
+
+              { name:'Professional Services', description:'Build authority and trust for firms and agencies.' }
+
+            ];					<h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>			}
+
+            let added = 0;
+
+            for (const item of staticSeed){					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+              if (dynNames.has(item.name.toLowerCase())) continue;
+
+              const form = new FormData(); form.append('name', item.name); form.append('description', item.description);				</div>			// Seed preset industries into DB (skips any that already exist by name)
+
+              const res = await fetch('./api_upload.php', { method:'POST', body: form });
+
+              const j = await res.json(); if (j.success) added++;				<div class="modal-body text-center">			const seedBtn = document.getElementById('seedStaticBtn');
+
+            }
+
+            if (added === 0) alert('All preset industries already exist.'); else { alert(`Seeded ${added} industries.`); await loadDynamic(); }					<i class="fa fa-exclamation-triangle fa-3x text-danger mb-3"></i>			if (seedBtn) seedBtn.addEventListener('click', async (e) => {
+
+          }catch(err){ console.error('Seed failed', err); alert('Failed to seed preset industries.'); }
+
+          finally{ btn.disabled = false; }					<p>Are you sure you want to delete this industry? This action cannot be undone.</p>				const btn = e.currentTarget; btn.disabled = true;
+
+        });
+
+      }				</div>				try {
+
+
+
+      // Logout wiring				<div class="modal-footer justify-content-center">					const dynNames = new Set(dynamicIndustries.map(d => (d.name||'').toLowerCase()));
+
+      const logoutBtn = document.getElementById('logoutBtn');
+
+      const logoutModalEl = document.getElementById('logoutModal');					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>					const staticSeed = [
+
+      const logoutModal = new bootstrap.Modal(logoutModalEl);
+
+      const confirmLogout = document.getElementById('confirmLogout');					<button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>						{ name:'Automotive', imageUrl:'/images/automotive.jpeg', description:'Drive more leads and sales for car dealerships, auto repair, and automotive services with targeted digital marketing.' },
+
+      logoutBtn?.addEventListener('click', () => logoutModal.show());
+
+      confirmLogout?.addEventListener('click', () => { window.location.href = '../'; });				</div>						{ name:'Business & Finance', imageUrl:'/images/b&f.jpg', description:'Grow your financial services, consulting, or B2B business with strategies that build trust and attract high-value clients.' },
+
+
+
+      // Initial load			</div>						{ name:'Food & Beverage', imageUrl:'/images/food&beverage.jpg', description:'Attract more diners and customers to your restaurant, cafe, or food brand with mouth-watering digital campaigns.' },
+
+      loadDynamic();
+
+    });		</div>						{ name:'Construction', imageUrl:'/images/constructionReal.webp', description:'Build your reputation and win more projects with marketing tailored for construction and real estate businesses.' },
+
+  </script>
+
+</body>	</div>						{ name:'Hospitality', imageUrl:'/images/hospitality.jpg', description:'Fill more rooms and tables with digital strategies for hotels, resorts and hospitality brands.' },
+
+</html>
+						{ name:'E-Commerce', imageUrl:'/images/Ecommerce.jpg', description:'Boost your online store’s sales and reach new customers with proven e-commerce marketing solutions.' },
+
+	<!-- Success Modal -->						{ name:'General Retail', imageUrl:'/images/general retail.jpg', description:'Drive foot traffic and online sales for retail shops with creative, results-driven marketing.' },
+
+	<div class="modal fade" id="successIndustryModal" tabindex="-1" aria-labelledby="successIndustryModalLabel" aria-hidden="true">						{ name:'Coffee Shops', imageUrl:'/images/coffee.jpg', description:'Brew up more business for your coffee shop or cafe with engaging local marketing campaigns.' },
+
+		<div class="modal-dialog modal-dialog-centered">						{ name:'Real Estate', imageUrl:'/images/realestate.jpg', description:'Showcase properties and connect with buyers and sellers through powerful real estate marketing.' },
+
+			<div class="modal-content">						{ name:'Entertainment & Events', imageUrl:'/images/entertainment.jpg', description:'Promote your events, venues, or entertainment business and sell more tickets with digital marketing.' },
+
+				<div class="modal-header">						{ name:'Beauty & Personal Care', imageUrl:'/images/beauty.webp', description:'Grow your salon, spa, or beauty brand with marketing that highlights your unique services and style.' },
+
+					<h5 class="modal-title" id="successIndustryModalLabel">Success!</h5>						{ name:'Health & Fitness', imageUrl:'/images/health.avif', description:'Inspire more signups and appointments for gyms, clinics, and wellness brands with health-focused marketing.' },
+
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>						{ name:'Recruitment & Staffing', imageUrl:'/images/recruitment.jpg', description:'Attract top talent and connect with employers through digital marketing for recruitment agencies.' },
+
+				</div>						{ name:'Professional Services', imageUrl:'/images/profressional service.jfif', description:'Grow your law firm, agency, or consulting business with marketing that builds authority and trust.' }
+
+				<div class="modal-body text-center">					];
+
+					<i class="fa fa-check-circle fa-3x text-success mb-3"></i>					let added = 0;
+
+					<p>Industry has been successfully added!</p>					for (const item of staticSeed) {
+
+				</div>						if (dynNames.has(item.name.toLowerCase())) continue;
+
+				<div class="modal-footer justify-content-center">						const form = new FormData(); form.append('name', item.name); form.append('description', item.description);
+
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>						const res = await fetch('../admin/api_upload.php', { method:'POST', body: form });
+
+					<button type="button" class="btn btn-primary" id="addAnotherIndustryBtn">Add Another</button>						const j = await res.json(); if (j.success) added++; 
+
+				</div>					}
+
+			</div>					if (added === 0) alert('All preset industries already exist.'); else { alert(`Seeded ${added} industries.`); await loadDynamic(); }
+
+		</div>				} catch (err) { console.error('Seed failed', err); alert('Failed to seed preset industries.'); } finally { btn.disabled = false; }
+
+	</div>			});
+
+
+
+	<!-- Debug info (only visible in console) -->			// Add small CSS for invalid fields
+
+	<div id="adminDebug" style="display:none;"></div>			const style = document.createElement('style');
+
+			style.innerHTML = `.is-invalid { border-color: #dc3545 !important; box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25) !important; }`;
+
+	<!-- Bootstrap JS (must be last) -->			document.head.appendChild(style);
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+			// Kick off load
+
+	<script>			loadDynamic();
+
+		// Admin industries script (PHP backend) — runs after DOM is ready to avoid null errors		});
+
+		document.addEventListener('DOMContentLoaded', () => {		</script>
+
+			// Local state	</main>
+
+			let dynamicIndustries = [];</div>
+
+			const STATIC_INDUSTRIES = [</body>
+
+				'Automotive','Business & Finance','Food & Beverage','Construction','Hospitality','E-Commerce','General Retail','Coffee Shops','Real Estate','Entertainment & Events','Beauty & Personal Care','Health & Fitness','Recruitment & Staffing','Professional Services'	<!-- Bootstrap JS (must be last) -->
+
+			].map(n => ({ id:`static-${n}`, name:n, createdAt:null, isStatic:true }));	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+	<script>
+
+			let pendingDeleteId = null;		document.addEventListener('DOMContentLoaded', function() {
+
+			// Logout modal logic
+
+			const tbody = document.getElementById('industriesTableBody');			var logoutBtn = document.getElementById('logoutBtn');
+
+			const countEl = document.getElementById('totalIndustriesCount');			var logoutModalEl = document.getElementById('logoutModal');
+
+			var confirmLogout = document.getElementById('confirmLogout');
+
+			function formatDate(ts) {			var logoutModal = new bootstrap.Modal(logoutModalEl);
+
+				if (!ts) return '—';			logoutBtn.addEventListener('click', function() {
+
+				try { const d = new Date(ts); return d.toLocaleString(); } catch(_) { return '—'; }				logoutModal.show();
+
+			}			});
+
+			confirmLogout.addEventListener('click', function() {
+
+			function renderRows(list) {				window.location.href = '../';
+
+				if (!tbody) return;			});
+
+				tbody.innerHTML = '';		});
+
+				list.forEach((item) => {	</script>
+
+					const tr = document.createElement('tr');</html>
+
+					const isStatic = !!item.isStatic;					const target = e.target;
+
+					tr.innerHTML = `					if (!(target instanceof HTMLElement)) return;
+
+						<td style='padding:12px 0;'><input type='checkbox' ${isStatic ? 'disabled' : ''} data-id='${item.id}'></td>					const action = target.getAttribute('data-action');
+
+						<td style='font-weight:normal;'>${item.name || ''}</td>					const id = target.getAttribute('data-id');
+
+						<td style='color:#888; text-align:right;'>${formatDate(item.createdAt)}</td>					if (!action || !id) return;
+
+						<td style='text-align:right; display:flex; gap:14px; justify-content:flex-end;'>					const item = dynamicIndustries.find(x => x.id === id);
+
+							${isStatic ? '' : `<i class='fa fa-pen-to-square' style='color:#0f766e; cursor:pointer;' data-action='edit' data-id='${item.id}' title='Edit'></i>`}					if (!item) return; // ignore clicks on static rows
+
+							${isStatic ? '' : `<i class='fa fa-trash' style='color:#d9534f; cursor:pointer;' data-action='delete' data-id='${item.id}' title='Delete'></i>`}
+
+						</td>					if (action === 'delete') {
+
+					`;						pendingDeleteId = id;
+
+					tbody.appendChild(tr);						const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+
+				});						modal.show();
+
+			}					}
+
+					if (action === 'edit') {
+
+			function combinedList() {						pendingEdit = { ...item };
+
+				const dynNames = new Set(dynamicIndustries.map(d => (d.name||'').toLowerCase()));						// Prefill edit form
+
+				const filteredStatic = STATIC_INDUSTRIES.filter(s => !dynNames.has((s.name||'').toLowerCase()));						document.getElementById('editIndustryId').value = pendingEdit.id;
+
+				return [...filteredStatic, ...dynamicIndustries];						document.getElementById('editIndustryName').value = pendingEdit.name || '';
+
+			}						document.getElementById('editIndustryDesc').value = pendingEdit.description || '';
+
+						const prev = document.getElementById('editIndustryPreviewImg');
+
+			function updateCount() {						if (pendingEdit.imageUrl) { prev.src = pendingEdit.imageUrl; prev.style.display = 'block'; }
+
+				const dynNames = new Set(dynamicIndustries.map(d => (d.name||'').toLowerCase()));						else { prev.style.display = 'none'; }
+
+				const filteredStatic = STATIC_INDUSTRIES.filter(s => !dynNames.has((s.name||'').toLowerCase()));						const modal = new bootstrap.Modal(document.getElementById('editIndustryModal'));
+
+				const total = filteredStatic.length + dynamicIndustries.length;						modal.show();
+
+				if (countEl) countEl.textContent = String(total);					}
+
+				const totalField = document.getElementById('industryTotalField');				});
+
+				if (totalField) totalField.value = String(total);
+
+			}				// Confirm Delete
+
+				document.getElementById('confirmDelete').addEventListener('click', async () => {
+
+			async function loadDynamic() {					if (!pendingDeleteId) return;
+
+				try {					const item = dynamicIndustries.find(x => x.id === pendingDeleteId);
+
+					const res = await fetch('./get_industries.php');					try {
+
+					if (!res.ok) throw new Error('Failed to load: ' + res.status);						if (item?.imagePath) {
+
+					const data = await res.json();							try { await deleteObject(ref(storage, item.imagePath)); } catch (_) {}
+
+					dynamicIndustries = data.map(d => ({ id: String(d.id), name: d.name, description: d.description, imageUrl: d.image, createdAt: d.createdAt }));						}
+
+					updateCount();						await deleteDoc(doc(db, 'industry', pendingDeleteId));
+
+					applyFilter();					} catch (err) {
+
+				} catch (err) {						console.error('Delete failed', err);
+
+					console.error('Failed to load industries', err);						alert('Failed to delete industry.');
+
+					const diag = document.getElementById('adminDebug');					} finally {
+
+					if (diag) diag.textContent = 'Failed to load industries: ' + (err.message || err);						pendingDeleteId = null;
+
+				}						const deleteModalEl = document.getElementById('deleteModal');
+
+			}						const modalInstance = bootstrap.Modal.getInstance(deleteModalEl);
+
+						modalInstance?.hide();
+
+			// Make applyFilter global so it can be called from search input					}
+
+			window.applyFilter = function() {				});
+
+				const el = document.getElementById('industrySearch');
+
+				const q = (el?.value || '').toLowerCase();				// Add: image choose helpers
+
+				const base = combinedList();				const addUploadBtn = document.getElementById('industryUploadBtn');
+
+				if (!q) return renderRows(base);				const addFileInput = document.getElementById('industryUploadImage');
+
+				renderRows(base.filter(i => (i.name||'').toLowerCase().includes(q)));				const addPrev = document.getElementById('industryPreviewImg');
+
+			}				addUploadBtn.addEventListener('click', () => addFileInput.click());
+
+				addFileInput.addEventListener('change', (e) => {
+
+			// Delegated actions for Edit/Delete					const file = e.target.files?.[0];
+
+			if (tbody) {					if (file) { const r = new FileReader(); r.onload = ev => { addPrev.src = ev.target.result; addPrev.style.display='block'; }; r.readAsDataURL(file); }
+
+				tbody.addEventListener('click', (e) => {					else { addPrev.style.display = 'none'; }
+
+					const target = e.target;				});
+
+					if (!(target instanceof HTMLElement)) return;
+
+					const action = target.getAttribute('data-action');				// Edit: image choose helpers
+
+					const id = target.getAttribute('data-id');				document.getElementById('editIndustryUploadBtn').addEventListener('click', () => document.getElementById('editIndustryImage').click());
+
+					if (!action || !id) return;				document.getElementById('editIndustryImage').addEventListener('change', (e) => {
+
+					const item = dynamicIndustries.find(x => x.id === id);					const file = e.target.files?.[0];
+
+					if (!item) return;					const prev = document.getElementById('editIndustryPreviewImg');
+
+					if (file) { const r = new FileReader(); r.onload = ev => { prev.src = ev.target.result; prev.style.display='block'; }; r.readAsDataURL(file); }
+
+					if (action === 'delete') {				});
+
+						pendingDeleteId = id;
+
+						const modal = new bootstrap.Modal(document.getElementById('deleteModal'));				// Validation helper
+
+						modal.show();				function validateAddForm() {
+
+					}					let ok = true;
+
+					if (action === 'edit') {					const nameEl = document.getElementById('industryName');
+
+						// Prefill edit form					const descEl = document.getElementById('industryDesc');
+
+						document.getElementById('editIndustryId').value = item.id;					const imgEl = document.getElementById('industryUploadImage');
+
+						document.getElementById('editIndustryName').value = item.name || '';					[nameEl, descEl].forEach(el => { if (!el.value?.trim()) { el.classList.add('is-invalid'); ok = false; } else { el.classList.remove('is-invalid'); } });
+
+						document.getElementById('editIndustryDesc').value = item.description || '';					if (!imgEl.files || imgEl.files.length===0) { imgEl.classList.add('is-invalid'); ok = false; } else { imgEl.classList.remove('is-invalid'); }
+
+						const prev = document.getElementById('editIndustryPreviewImg');					return ok;
+
+						if (item.imageUrl && prev) { prev.src = item.imageUrl; prev.style.display = 'block'; } else if (prev) { prev.style.display = 'none'; }				}
+
+						const modal = new bootstrap.Modal(document.getElementById('editIndustryModal'));
+
+						modal.show();				// Add click -> open confirm
+
+					}				document.getElementById('addNewIndustryBtn').addEventListener('click', () => {
+
+				});					if (!validateAddForm()) {
+
+			}						const firstInvalid = document.querySelector('.is-invalid');
+
+						firstInvalid?.scrollIntoView({ behavior:'smooth', block:'center' });
+
+			// Confirm Delete						return;
+
+			const confirmDeleteBtn = document.getElementById('confirmDelete');					}
+
+			if (confirmDeleteBtn) {					const confirmModal = new bootstrap.Modal(document.getElementById('confirmAddIndustryModal'));
+
+				confirmDeleteBtn.addEventListener('click', async () => {					confirmModal.show();
+
+					if (!pendingDeleteId) return;				});
+
+					try {
+
+						const form = new FormData(); form.append('id', pendingDeleteId);				// Confirm add -> upload + addDoc
+
+						const res = await fetch('./api_delete.php', { method:'POST', body: form });				document.getElementById('yesAddIndustryBtn').addEventListener('click', async (ev) => {
+
+						const j = await res.json();					const yesBtn = ev.currentTarget;
+
+						if (j.success) await loadDynamic(); else alert('Delete failed: ' + (j.message || ''));					yesBtn.disabled = true;
+
+					} catch (err) { console.error('Delete error', err); alert('Failed to delete'); }					const name = document.getElementById('industryName').value.trim();
+
+					finally {					const description = document.getElementById('industryDesc').value.trim();
+
+						pendingDeleteId = null;					const file = addFileInput.files?.[0];
+
+						const deleteModalEl = document.getElementById('deleteModal');					const confirmEl = document.getElementById('confirmAddIndustryModal');
+
+						const modalInstance = bootstrap.Modal.getInstance(deleteModalEl);					const addModalEl = document.getElementById('addIndustryModal');
+
+						modalInstance?.hide();					try {
+
+					}						// Ensure auth before attempting Storage/Firestore writes
+
+				});						if (!auth.currentUser) {
+
+			}							try { await signInAnonymously(auth); } catch(_){ }
+
+						}
+
+			// Add: image choose helpers (guarded)						if (!auth.currentUser) {
+
+			const addUploadBtn = document.getElementById('industryUploadBtn');							alert('Not authenticated. Please enable Anonymous Sign-in in Firebase Auth and refresh the page.');
+
+			const addFileInput = document.getElementById('industryUploadImage');							yesBtn.disabled = false; return;
+
+			const addPrev = document.getElementById('industryPreviewImg');						}
+
+			if (addUploadBtn && addFileInput) {						let imageUrl = '';
+
+				addUploadBtn.addEventListener('click', () => addFileInput.click());						let imagePath = '';
+
+				addFileInput.addEventListener('change', (e) => {						if (file) {
+
+					const file = e.target.files?.[0];							const path = `industries/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g,'_')}`;
+
+					if (file && addPrev) { const r = new FileReader(); r.onload = ev => { addPrev.src = ev.target.result; addPrev.style.display='block'; }; r.readAsDataURL(file); }							const sRef = ref(storage, path);
+
+					else if (addPrev) { addPrev.style.display = 'none'; }							try {
+
+				});								await uploadBytes(sRef, file, { contentType: file.type || 'application/octet-stream' });
+
+			}								imageUrl = await getDownloadURL(sRef);
+
+							} catch (uploadErr) {
+
+			// Edit: image choose helpers								console.error('[Storage] Upload failed:', uploadErr);
+
+			const editUploadBtn = document.getElementById('editIndustryUploadBtn');								alert('Image upload failed. Please check Storage rules and enable Anonymous Sign-in.\n' + (uploadErr?.code || '') + ' ' + (uploadErr?.message || ''));
+
+			const editFileInput = document.getElementById('editIndustryImage');								yesBtn.disabled = false;
+
+			const editPrev = document.getElementById('editIndustryPreviewImg');								return;
+
+			if (editUploadBtn && editFileInput) {							}
+
+				editUploadBtn.addEventListener('click', () => editFileInput.click());							imagePath = path;
+
+				editFileInput.addEventListener('change', (e) => {						}
+
+					const file = e.target.files?.[0];						await addDoc(collection(db, 'industry'), {
+
+					if (file && editPrev) { const r = new FileReader(); r.onload = ev => { editPrev.src = ev.target.result; editPrev.style.display='block'; }; r.readAsDataURL(file); }							name,
+
+				});							description,
+
+			}							imageUrl,
+
+							imagePath,
+
+			// Validation helper							createdAt: serverTimestamp(),
+
+			function validateAddForm() {							updatedAt: serverTimestamp()
+
+				let ok = true;						});
+
+				const nameEl = document.getElementById('industryName');						// Close modals using hidden events to avoid aria-hidden focus issues
+
+				const descEl = document.getElementById('industryDesc');						const confirmInstance = bootstrap.Modal.getInstance(confirmEl);
+
+				const imgEl = document.getElementById('industryUploadImage');						confirmInstance?.hide();
+
+				[nameEl, descEl].forEach(el => { if (el && !el.value?.trim()) { el.classList.add('is-invalid'); ok = false; } else if (el) { el.classList.remove('is-invalid'); } });						confirmEl.addEventListener('hidden.bs.modal', () => {
+
+				if (imgEl && (!imgEl.files || imgEl.files.length===0)) { imgEl.classList.add('is-invalid'); ok = false; } else if (imgEl) { imgEl.classList.remove('is-invalid'); }							const addInstance = bootstrap.Modal.getInstance(addModalEl);
+
+				return ok;							addInstance?.hide();
+
+			}							addModalEl.addEventListener('hidden.bs.modal', () => {
+
+								// Reset form state
+
+			// Add click -> open confirm								document.getElementById('industryForm').reset();
+
+			const addNewBtn = document.getElementById('addNewIndustryBtn');								addPrev.style.display = 'none';
+
+			if (addNewBtn) {								document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+
+				addNewBtn.addEventListener('click', () => {								document.getElementById('industryUploadImage').classList.remove('is-invalid');
+
+					if (!validateAddForm()) {								// Show success
+
+						const firstInvalid = document.querySelector('.is-invalid');								new bootstrap.Modal(document.getElementById('successIndustryModal')).show();
+
+						firstInvalid?.scrollIntoView({ behavior:'smooth', block:'center' });							}, { once: true });
+
+						return;						}, { once: true });
+
+					}					} catch (err) {
+
+					const confirmModal = new bootstrap.Modal(document.getElementById('confirmAddIndustryModal'));						console.error('[Firestore] Add industry failed:', err);
+
+					confirmModal.show();						alert('Failed to add industry. Please check Firestore rules and collection name ("industry").\n' + (err?.code || '') + ' ' + (err?.message || ''));
+
+				});						bootstrap.Modal.getInstance(confirmEl)?.hide();
+
+			}					}
+
+					finally {
+
+			// Confirm add -> POST to api_upload.php						yesBtn.disabled = false;
+
+			const yesAddBtn = document.getElementById('yesAddIndustryBtn');					}
+
+			if (yesAddBtn) {				});
+
+				yesAddBtn.addEventListener('click', async (ev) => {
+
+					const yesBtn = ev.currentTarget; yesBtn.disabled = true;				// No on confirm
+
+					const name = document.getElementById('industryName')?.value.trim() || '';				document.getElementById('noAddIndustryBtn').addEventListener('click', () => {
+
+					const description = document.getElementById('industryDesc')?.value.trim() || '';					const confirmModal = bootstrap.Modal.getInstance(document.getElementById('confirmAddIndustryModal'));
+
+					const file = addFileInput?.files?.[0];					confirmModal?.hide();
+
+					const confirmEl = document.getElementById('confirmAddIndustryModal');				});
+
+					const addModalEl = document.getElementById('addIndustryModal');				document.getElementById('addAnotherIndustryBtn').addEventListener('click', () => {
+
+					try {					const successModal = bootstrap.Modal.getInstance(document.getElementById('successIndustryModal'));
+
+						const form = new FormData();					successModal?.hide();
+
+						form.append('name', name);					new bootstrap.Modal(document.getElementById('addIndustryModal')).show();
+
+						form.append('description', description);				});
+
+						if (file) form.append('image', file);
+
+						const res = await fetch('./api_upload.php', { method: 'POST', body: form });				// Save updates
+
+						const j = await res.json();				document.getElementById('saveIndustryUpdatesBtn').addEventListener('click', async () => {
+
+						if (j.success) {					const id = document.getElementById('editIndustryId').value;
+
+							await loadDynamic();					const name = document.getElementById('editIndustryName').value.trim();
+
+							const confirmInstance = bootstrap.Modal.getInstance(confirmEl);					const description = document.getElementById('editIndustryDesc').value.trim();
+
+							confirmInstance?.hide();					const file = document.getElementById('editIndustryImage').files?.[0];
+
+							confirmEl.addEventListener('hidden.bs.modal', () => {					if (!id) return;
+
+								const addInstance = bootstrap.Modal.getInstance(addModalEl);					try {
+
+								addInstance?.hide();						const update = { name, description, updatedAt: serverTimestamp() };
+
+								addModalEl.addEventListener('hidden.bs.modal', () => {						if (file) {
+
+									document.getElementById('industryForm')?.reset();							const existing = dynamicIndustries.find(x => x.id === id);
+
+									if (addPrev) addPrev.style.display = 'none';							if (existing?.imagePath) {
+
+									document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));								try { await deleteObject(ref(storage, existing.imagePath)); } catch (_) {}
+
+									document.getElementById('industryUploadImage')?.classList.remove('is-invalid');							}
+
+									new bootstrap.Modal(document.getElementById('successIndustryModal')).show();							const path = `industries/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g,'_')}`;
+
+								}, { once: true });							const sRef = ref(storage, path);
+
+							}, { once: true });							await uploadBytes(sRef, file);
+
+						} else { alert('Add failed: ' + (j.message || '')); }							update.imageUrl = await getDownloadURL(sRef);
+
+					} catch (err) { console.error('Add error', err); alert('Failed to add industry'); }							update.imagePath = path;
+
+					finally { yesBtn.disabled = false; }						}
+
+				});						await updateDoc(doc(db, 'industry', id), update);
+
+			}						bootstrap.Modal.getInstance(document.getElementById('editIndustryModal'))?.hide();
+
+					} catch (err) {
+
+			// No on confirm						console.error('Update failed', err);
+
+			const noAddBtn = document.getElementById('noAddIndustryBtn');						alert('Failed to update industry.');
+
+			if (noAddBtn) {					}
+
+				noAddBtn.addEventListener('click', () => {				});
+
+					const confirmModal = bootstrap.Modal.getInstance(document.getElementById('confirmAddIndustryModal'));
+
+					confirmModal?.hide();				// Seed preset industries into Firestore (skips any that already exist by name)
+
+				});				document.getElementById('seedStaticBtn')?.addEventListener('click', async (e) => {
+
+			}					const btn = e.currentTarget;
+
+					btn.disabled = true;
+
+			// Add another industry					try {
+
+			const addAnotherBtn = document.getElementById('addAnotherIndustryBtn');						const dynNames = new Set(dynamicIndustries.map(d => (d.name||'').toLowerCase()));
+
+			if (addAnotherBtn) {						const staticSeed = [
+
+				addAnotherBtn.addEventListener('click', () => {							{ name:'Automotive', imageUrl:'/images/automotive.jpeg', description:'Drive more leads and sales for car dealerships, auto repair, and automotive services with targeted digital marketing.' },
+
+					const successModal = bootstrap.Modal.getInstance(document.getElementById('successIndustryModal'));							{ name:'Business & Finance', imageUrl:'/images/b&f.jpg', description:'Grow your financial services, consulting, or B2B business with strategies that build trust and attract high-value clients.' },
+
+					successModal?.hide();							{ name:'Food & Beverage', imageUrl:'/images/food&beverage.jpg', description:'Attract more diners and customers to your restaurant, cafe, or food brand with mouth-watering digital campaigns.' },
+
+					new bootstrap.Modal(document.getElementById('addIndustryModal')).show();							{ name:'Construction', imageUrl:'/images/constructionReal.webp', description:'Build your reputation and win more projects with marketing tailored for construction and real estate businesses.' },
+
+				});							{ name:'Hospitality', imageUrl:'/images/hospitality.jpg', description:'Fill more rooms and tables with digital strategies for hotels, resorts, and hospitality brands.' },
+
+			}							{ name:'E-Commerce', imageUrl:'/images/Ecommerce.jpg', description:'Boost your online store’s sales and reach new customers with proven e-commerce marketing solutions.' },
+
+							{ name:'General Retail', imageUrl:'/images/general retail.jpg', description:'Drive foot traffic and online sales for retail shops with creative, results-driven marketing.' },
+
+			// Save updates -> api_update.php							{ name:'Coffee Shops', imageUrl:'/images/coffee.jpg', description:'Brew up more business for your coffee shop or cafe with engaging local marketing campaigns.' },
+
+			const saveUpdatesBtn = document.getElementById('saveIndustryUpdatesBtn');							{ name:'Real Estate', imageUrl:'/images/realestate.jpg', description:'Showcase properties and connect with buyers and sellers through powerful real estate marketing.' },
+
+			if (saveUpdatesBtn) {							{ name:'Entertainment & Events', imageUrl:'/images/entertainment.jpg', description:'Promote your events, venues, or entertainment business and sell more tickets with digital marketing.' },
+
+				saveUpdatesBtn.addEventListener('click', async () => {							{ name:'Beauty & Personal Care', imageUrl:'/images/beauty.webp', description:'Grow your salon, spa, or beauty brand with marketing that highlights your unique services and style.' },
+
+					const id = document.getElementById('editIndustryId')?.value;							{ name:'Health & Fitness', imageUrl:'/images/health.avif', description:'Inspire more signups and appointments for gyms, clinics, and wellness brands with health-focused marketing.' },
+
+					const name = document.getElementById('editIndustryName')?.value.trim() || '';							{ name:'Recruitment & Staffing', imageUrl:'/images/recruitment.jpg', description:'Attract top talent and connect with employers through digital marketing for recruitment agencies.' },
+
+					const description = document.getElementById('editIndustryDesc')?.value.trim() || '';							{ name:'Professional Services', imageUrl:'/images/profressional service.jfif', description:'Grow your law firm, agency, or consulting business with marketing that builds authority and trust.' }
+
+					const file = document.getElementById('editIndustryImage')?.files?.[0];						];
+
+					if (!id) return;						let added = 0;
+
+					try {						for (const item of staticSeed) {
+
+						const form = new FormData(); form.append('id', id); form.append('name', name); form.append('description', description);							if (dynNames.has(item.name.toLowerCase())) continue;
+
+						if (file) form.append('image', file);							await addDoc(collection(db, 'industry'), {
+
+						const res = await fetch('./api_update.php', { method:'POST', body: form });								name: item.name,
+
+						const j = await res.json();								description: item.description,
+
+						if (j.success) { await loadDynamic(); bootstrap.Modal.getInstance(document.getElementById('editIndustryModal'))?.hide(); }								imageUrl: item.imageUrl,
+
+						else alert('Update failed: ' + (j.message || ''));								// imagePath omitted because it points to site assets, not Firebase Storage
+
+					} catch (err) { console.error('Update failed', err); alert('Failed to update industry.'); }								createdAt: serverTimestamp(),
+
+				});								updatedAt: serverTimestamp()
+
+			}							});
+
+							added++;
+
+			// Seed preset industries into DB (skips any that already exist by name)						}
+
+			const seedBtn = document.getElementById('seedStaticBtn');						if (added === 0) alert('All preset industries already exist.');
+
+			if (seedBtn) seedBtn.addEventListener('click', async (e) => {						else alert(`Seeded ${added} industries.`);
+
+				const btn = e.currentTarget; btn.disabled = true;					} catch (err) {
+
+				try {						console.error('Seed failed', err);
+
+					const dynNames = new Set(dynamicIndustries.map(d => (d.name||'').toLowerCase()));						alert('Failed to seed preset industries.');
+
+					const staticSeed = [					} finally {
+
+						{ name:'Automotive', imageUrl:'/images/automotive.jpeg', description:'Drive more leads and sales for car dealerships, auto repair, and automotive services with targeted digital marketing.' },						btn.disabled = false;
+
+						{ name:'Business & Finance', imageUrl:'/images/b&f.jpg', description:'Grow your financial services, consulting, or B2B business with strategies that build trust and attract high-value clients.' },					}
+
+						{ name:'Food & Beverage', imageUrl:'/images/food&beverage.jpg', description:'Attract more diners and customers to your restaurant, cafe, or food brand with mouth-watering digital campaigns.' },				});
+
+						{ name:'Construction', imageUrl:'/images/constructionReal.webp', description:'Build your reputation and win more projects with marketing tailored for construction and real estate businesses.' },
+
+						{ name:'Hospitality', imageUrl:'/images/hospitality.jpg', description:'Fill more rooms and tables with digital strategies for hotels, resorts and hospitality brands.' },				// Add small CSS for invalid fields
+
+						{ name:'E-Commerce', imageUrl:'/images/Ecommerce.jpg', description:'Boost your online store's sales and reach new customers with proven e-commerce marketing solutions.' },				const style = document.createElement('style');
+
+						{ name:'General Retail', imageUrl:'/images/general retail.jpg', description:'Drive foot traffic and online sales for retail shops with creative, results-driven marketing.' },				style.innerHTML = `.is-invalid { border-color: #dc3545 !important; box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25) !important; }`;
+
+						{ name:'Coffee Shops', imageUrl:'/images/coffee.jpg', description:'Brew up more business for your coffee shop or cafe with engaging local marketing campaigns.' },				document.head.appendChild(style);
+
+						{ name:'Real Estate', imageUrl:'/images/realestate.jpg', description:'Showcase properties and connect with buyers and sellers through powerful real estate marketing.' },			});
+
+						{ name:'Entertainment & Events', imageUrl:'/images/entertainment.jpg', description:'Promote your events, venues, or entertainment business and sell more tickets with digital marketing.' },			</script>
+
+						{ name:'Beauty & Personal Care', imageUrl:'/images/beauty.webp', description:'Grow your salon, spa, or beauty brand with marketing that highlights your unique services and style.' },		</main>
+
+						{ name:'Health & Fitness', imageUrl:'/images/health.avif', description:'Inspire more signups and appointments for gyms, clinics, and wellness brands with health-focused marketing.' },	</div>
+
+						{ name:'Recruitment & Staffing', imageUrl:'/images/recruitment.jpg', description:'Attract top talent and connect with employers through digital marketing for recruitment agencies.' },</body>
+
+						{ name:'Professional Services', imageUrl:'/images/profressional service.jfif', description:'Grow your law firm, agency, or consulting business with marketing that builds authority and trust.' }	<!-- Bootstrap JS (must be last) -->
+
+					];	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+					let added = 0;	<script>
+
+					for (const item of staticSeed) {		document.addEventListener('DOMContentLoaded', function() {
+
+						if (dynNames.has(item.name.toLowerCase())) continue;			// Logout modal logic
+
+						const form = new FormData(); form.append('name', item.name); form.append('description', item.description);			var logoutBtn = document.getElementById('logoutBtn');
+
+						const res = await fetch('./api_upload.php', { method:'POST', body: form });			var logoutModalEl = document.getElementById('logoutModal');
+
+						const j = await res.json(); if (j.success) added++; 			var confirmLogout = document.getElementById('confirmLogout');
+
+					}			var logoutModal = new bootstrap.Modal(logoutModalEl);
+
+					if (added === 0) alert('All preset industries already exist.'); else { alert(`Seeded ${added} industries.`); await loadDynamic(); }			logoutBtn.addEventListener('click', function() {
+
+				} catch (err) { console.error('Seed failed', err); alert('Failed to seed preset industries.'); } finally { btn.disabled = false; }				logoutModal.show();
+
+			});			});
+
+			confirmLogout.addEventListener('click', function() {
+
+			// Add small CSS for invalid fields				window.location.href = '../';
+
+			const style = document.createElement('style');			});
+
+			style.innerHTML = `.is-invalid { border-color: #dc3545 !important; box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25) !important; }`;		});
+
+			document.head.appendChild(style);	</script>
+
+</html>
+
+			// Kick off load
+			loadDynamic();
+		});
+
+		// Logout modal logic
+		document.addEventListener('DOMContentLoaded', function() {
+			var logoutBtn = document.getElementById('logoutBtn');
+			var logoutModalEl = document.getElementById('logoutModal');
+			var confirmLogout = document.getElementById('confirmLogout');
+			var logoutModal = new bootstrap.Modal(logoutModalEl);
+			logoutBtn.addEventListener('click', function() {
+				logoutModal.show();
+			});
+			confirmLogout.addEventListener('click', function() {
+				window.location.href = '../';
+			});
+		});
+	</script>
+</body>
+</html>
