@@ -1,12 +1,24 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin_logged_in'])) {
-    header('Location: login.php');
+    header('Location: login');
     exit;
 }
 require_once 'db_connect.php';
 // active tab for sidebar
 $active = 'email';
+// load admin contact info for reply-from
+$adminEmail = '';
+$adminName = '';
+try {
+    $r = $conn->query("SELECT firstName, lastName, email FROM `admin` LIMIT 1");
+    if ($r) {
+        $row = $r->fetch_assoc();
+        $adminEmail = $row['email'] ?? '';
+        $adminName = trim(($row['firstName'] ?? '') . ' ' . ($row['lastName'] ?? ''));
+        if (method_exists($r,'free')) $r->free();
+    }
+} catch (Throwable $e) { }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -110,6 +122,38 @@ $active = 'email';
                     <tbody id="emailsTableBody">
                     </tbody>
                 </table>
+                    <!-- Reply Modal -->
+                    <div class="modal fade" id="replyModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Reply to message</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="replyForm">
+                                        <div class="mb-3">
+                                            <label class="form-label">To</label>
+                                            <input type="email" id="replyTo" name="to" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Subject</label>
+                                            <input type="text" id="replySubject" name="subject" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Message</label>
+                                            <textarea id="replyBody" name="body" class="form-control" rows="6" required></textarea>
+                                        </div>
+                                    </form>
+                                    <div id="replyStatus" style="display:none; margin-top:8px;"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="button" id="sendReplyBtn" class="btn btn-primary">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 <!-- Only keep one script block below -->
                 <!-- Only one chevron button, right for next page -->
                 <div style="display:flex; justify-content:flex-end; align-items:center; gap:8px; padding:16px 32px;">
@@ -166,7 +210,7 @@ function renderEmails(list) {
     list.forEach((e, i) => {
         const subject = e.businessName && e.businessName.trim() ? `Consultation from ${e.businessName}` : 'Consultation request';
         const when = fmtTime(e.createdAt);
-        tbody.innerHTML += `<tr style='border-bottom:1px solid #eee;'>
+            tbody.innerHTML += `<tr style='border-bottom:1px solid #eee;'>
             <td style='padding:12px 32px;'><input type='checkbox' data-index='${i}'></td>
             <td style='padding:12px 0;'><i class='fa fa-star' style='color:#ccc;'></i></td>
             <td style='font-weight:600;'>${e.name || '-'}</td>
@@ -177,9 +221,29 @@ function renderEmails(list) {
                 </div>
             </td>
             <td style='text-align:right; padding-right:32px; color:#888;'>${when}</td>
+            <td style='padding-right:32px;'><button class='btn btn-sm btn-outline-primary replyBtn' data-index='${i}'>Reply</button></td>
         </tr>`;
     });
     attachTrashListener();
+    attachReplyListeners();
+}
+
+function attachReplyListeners(){
+    document.querySelectorAll('.replyBtn').forEach(btn=>{
+        btn.onclick = function(){
+            const idx = parseInt(this.getAttribute('data-index'));
+            const msg = filtered[idx] || messages[idx];
+            if(!msg) return;
+            // prefill modal fields
+            document.getElementById('replyTo').value = msg.email || '';
+            document.getElementById('replySubject').value = `Re: Consultation from ${msg.businessName || msg.name || ''}`;
+            document.getElementById('replyBody').value = `\n\n---\nOriginal message from ${msg.name || ''} (${msg.email || ''}) on ${new Date(msg.createdAt||Date.now()).toLocaleString()}\n`;
+            // show modal
+            var replyModalEl = document.getElementById('replyModal');
+            var replyModal = new bootstrap.Modal(replyModalEl);
+            replyModal.show();
+        };
+    });
 }
 
 function filterEmails() {
@@ -194,7 +258,8 @@ function filterEmails() {
 document.getElementById('emailSearch').addEventListener('input', filterEmails);
 async function loadMessages(){
     try {
-        const resp = await fetch('/api/messages.json?ts=' + Date.now(), { cache:'no-store' });
+        // Use relative path so this works when the project is hosted in a subfolder (e.g. /ROIwebsite)
+        const resp = await fetch('../api/messages.json?ts=' + Date.now(), { cache:'no-store' });
         if(!resp.ok) throw new Error('HTTP '+resp.status);
         const data = await resp.json();
         if(Array.isArray(data)){
@@ -216,30 +281,95 @@ window.onload = function(){ loadMessages(); };
 // Delete modal logic
 document.addEventListener('DOMContentLoaded', function() {
     var confirmDelete = document.getElementById('confirmDelete');
-    confirmDelete.addEventListener('click', function() {
+    confirmDelete.addEventListener('click', async function() {
+        // gather createdAt targets to delete
+        let targets = [];
         if (deleteType === 'selected' && selectedIndexes.length > 0) {
-            // UI-only removal (does not persist to server)
-            selectedIndexes.sort((a, b) => b - a).forEach(idx => filtered.splice(idx, 1));
-            renderEmails(filtered);
+            selectedIndexes.forEach(idx => {
+                const msg = filtered[idx];
+                if (msg && msg.createdAt) targets.push(msg.createdAt);
+            });
         } else if (deleteType === 'all') {
-            filtered = [];
-            renderEmails(filtered);
+            // delete everything currently loaded
+            targets = messages.map(m => m.createdAt).filter(Boolean);
         }
+
+        // no targets => nothing to do
+        if (!targets || targets.length === 0) {
+            // hide modal
+            var deleteModalEl = document.getElementById('deleteModal');
+            var modalInstance = bootstrap.Modal.getInstance(deleteModalEl);
+            if (modalInstance) modalInstance.hide();
+            selectedIndexes = [];
+            deleteType = null;
+            return;
+        }
+
+        // call server API to delete
+        try {
+            const resp = await fetch('api_delete_message', {
+                method: 'POST', headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({ createdAt: targets })
+            });
+            const data = await resp.json();
+            if (data && data.ok) {
+                // remove deleted from local arrays
+                const set = new Set(targets.map(t => Number(t)));
+                messages = messages.filter(m => !set.has(Number(m.createdAt)));
+                filtered = filtered.filter(m => !set.has(Number(m.createdAt)));
+                renderEmails(filtered);
+            } else {
+                alert('Delete failed: ' + (data && data.message ? data.message : 'server error'));
+            }
+        } catch (err) {
+            alert('Delete failed: ' + err.message);
+        }
+
+        // cleanup and hide modal
         selectedIndexes = [];
         deleteType = null;
-        // Always hide the modal using the static method
         var deleteModalEl = document.getElementById('deleteModal');
         var modalInstance = bootstrap.Modal.getInstance(deleteModalEl);
         if (modalInstance) {
             modalInstance.hide();
         } else {
-            // fallback: manually remove 'show' class and backdrop
             deleteModalEl.classList.remove('show');
             deleteModalEl.setAttribute('aria-hidden', 'true');
             document.body.classList.remove('modal-open');
             let backdrop = document.querySelector('.modal-backdrop');
             if (backdrop) backdrop.remove();
         }
+    });
+});
+// Reply send logic
+document.addEventListener('DOMContentLoaded', function() {
+    const sendBtn = document.getElementById('sendReplyBtn');
+    const statusEl = document.getElementById('replyStatus');
+    sendBtn.addEventListener('click', async function(){
+        const to = document.getElementById('replyTo').value.trim();
+        const subject = document.getElementById('replySubject').value.trim();
+        const body = document.getElementById('replyBody').value.trim();
+        statusEl.style.display = 'none';
+        if(!to || !subject || !body){
+            statusEl.style.display = 'block'; statusEl.style.color = 'red'; statusEl.textContent = 'Please fill all fields.'; return;
+        }
+        sendBtn.disabled = true; sendBtn.textContent = 'Sending...';
+        try {
+            const resp = await fetch('api_send_reply', {
+                method: 'POST', headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({ to, subject, body })
+            });
+            const data = await resp.json();
+            if(data && data.ok){
+                statusEl.style.display = 'block'; statusEl.style.color = 'green'; statusEl.textContent = 'Reply sent successfully.';
+                // auto-close modal after short delay
+                setTimeout(()=>{ var m = bootstrap.Modal.getInstance(document.getElementById('replyModal')); if(m) m.hide(); }, 1200);
+            } else {
+                statusEl.style.display = 'block'; statusEl.style.color = 'red'; statusEl.textContent = data.message || 'Failed to send reply.';
+            }
+        } catch(err){
+            statusEl.style.display = 'block'; statusEl.style.color = 'red'; statusEl.textContent = 'Error: '+err.message;
+        } finally { sendBtn.disabled = false; sendBtn.textContent = 'Send'; }
     });
 });
 </script>
@@ -253,7 +383,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var confirmLogout = document.getElementById('confirmLogout');
             var logoutModal = new bootstrap.Modal(logoutModalEl);
             if (logoutBtn) logoutBtn.addEventListener('click', function() { logoutModal.show(); });
-            if (confirmLogout) confirmLogout.addEventListener('click', function() { window.location.href = 'logout.php'; });
+            if (confirmLogout) confirmLogout.addEventListener('click', function() { window.location.href = 'logout'; });
         });
     </script>
 </body>

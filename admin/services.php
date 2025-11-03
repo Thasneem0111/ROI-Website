@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin_logged_in'])) {
-    header('Location: login.php');
+    header('Location: login');
     exit;
 }
 require_once 'db_connect.php';
@@ -238,8 +238,8 @@ $active = 'services';
             <script>
             // Dynamic services list and CRUD wiring (mirrors industries behavior)
             let services = [];
-            const apiList = 'get_services.php';
-            const apiUpload = 'api_upload_service.php';
+            const apiList = 'get_services';
+            const apiUpload = 'api_upload_service';
 
             function escapeHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
@@ -406,7 +406,7 @@ $active = 'services';
                 if (!id) return;
                 try {
                     const fd = new FormData(); fd.append('id', id);
-                    const r = await fetch('api_delete_service.php', { method: 'POST', body: fd });
+                    const r = await fetch('api_delete_service', { method: 'POST', body: fd });
                     const j = await r.json();
                     if (j.success) {
                         services = services.filter(it => String(it.id) !== String(id));
@@ -462,7 +462,7 @@ $active = 'services';
                 const fd = new FormData(); fd.append('id', id); fd.append('name', name); fd.append('description', desc); if (file) fd.append('image', file);
                 this.disabled = true;
                 try {
-                    const resp = await fetch('api_update_service.php', { method: 'POST', body: fd });
+                    const resp = await fetch('api_update_service', { method: 'POST', body: fd });
                     const json = await resp.json();
                     if (json.success) {
                         services = services.map(it => {
@@ -506,7 +506,7 @@ $active = 'services';
             var confirmLogout = document.getElementById('confirmLogout');
             var logoutModal = new bootstrap.Modal(logoutModalEl);
             if (logoutBtn) logoutBtn.addEventListener('click', function() { logoutModal.show(); });
-            if (confirmLogout) confirmLogout.addEventListener('click', function() { window.location.href = 'logout.php'; });
+            if (confirmLogout) confirmLogout.addEventListener('click', function() { window.location.href = 'logout'; });
         });
     </script>
 </body>

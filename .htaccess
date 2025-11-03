@@ -1,3 +1,18 @@
+# Use index.php as router but serve static files directly
+DirectoryIndex index.php index.html
+
+RewriteEngine On
+
+# If the requested filename exists as a file, serve it directly.
+# Do NOT short-circuit for existing directories so directory requests
+# (e.g. /blog/) are forwarded to the router which will map them to
+# the intended HTML listing page. Static files (images, css, js) will
+# still be served directly because the -f check remains.
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Otherwise route request to index.php (preserve query string)
+RewriteRule ^ index.php [L,QSA]
 # Enable mod_rewrite
 RewriteEngine On
 

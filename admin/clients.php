@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin_logged_in'])) {
-    header('Location: login.php');
+    header('Location: login');
     exit;
 }
 require_once 'db_connect.php';
@@ -104,10 +104,10 @@ $active = 'clients';
 <script>
 // Dynamic clients admin script: fetch, render, add, update, delete
 document.addEventListener('DOMContentLoaded', function() {
-    const apiList = './get_clients.php';
-    const apiUpload = './api_upload_client.php';
-    const apiUpdate = './api_update_client.php';
-    const apiDelete = './api_delete_client.php';
+    const apiList = 'get_clients';
+    const apiUpload = 'api_upload_client';
+    const apiUpdate = 'api_update_client';
+    const apiDelete = 'api_delete_client';
 
     let clients = [];
     let deleteId = null;
@@ -516,7 +516,7 @@ document.addEventListener('DOMContentLoaded', function() {
            var confirmLogout = document.getElementById('confirmLogout');
            var logoutModal = new bootstrap.Modal(logoutModalEl);
            if (logoutBtn) logoutBtn.addEventListener('click', function() { logoutModal.show(); });
-           if (confirmLogout) confirmLogout.addEventListener('click', function() { window.location.href = 'logout.php'; });
+           if (confirmLogout) confirmLogout.addEventListener('click', function() { window.location.href = 'logout'; });
 
            // Service categories
            var categories = [

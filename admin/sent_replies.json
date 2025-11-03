@@ -1,0 +1,22 @@
+[
+    {
+        "to": "thasneemmarsook0111@gmail.com",
+        "subject": "Re: Consultation from Royal Orbit Innovations",
+        "body": "We'll contact you soon.",
+        "from": "royalorbitinnovations@roi.com.qa",
+        "method": "phpmailer",
+        "ok": true,
+        "error": "",
+        "ts": 1762091818306
+    },
+    {
+        "to": "thasneemmarsook0111@gmail.com",
+        "subject": "Re: Consultation from Royal Orbit Innovations",
+        "body": "We'll contact you soon. Wait.",
+        "from": "royalorbitinnovations@roi.com.qa",
+        "method": "phpmailer",
+        "ok": true,
+        "error": "",
+        "ts": 1762091951545
+    }
+]

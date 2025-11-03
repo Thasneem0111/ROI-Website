@@ -3,9 +3,20 @@
 include 'db_connect.php';
 
 function redirect_with_status($url, $status, $msg = ''){
+    // Normalize URL to remove .php extension from path portion so redirects are extensionless
+    $parts = explode('?', $url, 2);
+    $path = preg_replace('/\.php$/i', '', $parts[0]);
+    $extraQuery = isset($parts[1]) ? $parts[1] : '';
     $params = ['status'=>$status];
     if($msg) $params['msg'] = urlencode($msg);
-    header('Location: ' . $url . '?' . http_build_query($params));
+    $query = http_build_query($params);
+    if ($extraQuery !== '') {
+        // preserve existing query in $url
+        $final = $path . '?' . $extraQuery . '&' . $query;
+    } else {
+        $final = $path . '?' . $query;
+    }
+    header('Location: ' . $final);
     exit;
 }
 
@@ -14,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = isset($_POST['description']) ? trim($_POST['description']) : '';
 
     if ($name === '') {
-        redirect_with_status('add_item.php', 'error', 'Name is required');
+        redirect_with_status('add_item', 'error', 'Name is required');
     }
 
     // Handle file upload
@@ -29,36 +40,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $origName = basename($_FILES['image']['name']);
         $ext = strtolower(pathinfo($origName, PATHINFO_EXTENSION));
         if (!in_array($ext, $allowed)) {
-            redirect_with_status('add_item.php', 'error', 'Invalid image type');
+            redirect_with_status('add_item', 'error', 'Invalid image type');
         }
         // Create a unique filename
         $imageFilename = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $origName);
         $target_file = $target_dir . $imageFilename;
 
         if (!move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
-            redirect_with_status('add_item.php', 'error', 'Error uploading image');
+            redirect_with_status('add_item', 'error', 'Error uploading image');
         }
     }
 
     // Insert into `industry` table (assumes columns: id, name, description, image, createdAt)
     $stmt = $conn->prepare("INSERT INTO industry (`name`, `description`, `image`, `createdAt`) VALUES (?, ?, ?, NOW())");
     if (!$stmt) {
-        redirect_with_status('add_item.php', 'error', 'DB prepare failed: ' . $conn->error);
+        redirect_with_status('add_item', 'error', 'DB prepare failed: ' . $conn->error);
     }
     $imgParam = $imageFilename ?: null;
     $stmt->bind_param('sss', $name, $description, $imgParam);
     if ($stmt->execute()) {
         $stmt->close();
         $conn->close();
-        redirect_with_status('add_item.php', 'success', 'Industry added successfully');
+    redirect_with_status('add_item', 'success', 'Industry added successfully');
     } else {
         $err = $stmt->error;
         $stmt->close();
         $conn->close();
-        redirect_with_status('add_item.php', 'error', 'DB insert failed: ' . $err);
+    redirect_with_status('add_item', 'error', 'DB insert failed: ' . $err);
     }
 }
 // Not a POST request
-header('Location: add_item.php');
+header('Location: add_item');
 exit;
 ?>

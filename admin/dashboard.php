@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin_logged_in'])) {
-    header('Location: login.php');
+    header('Location: login');
     exit;
 }
 require_once 'db_connect.php';
@@ -87,6 +87,23 @@ $chart_data_json = json_encode($counts);
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Dashboard recent emails styling - teal theme */
+        :root { --teal: #2ca6a4; }
+        .recent-emails-section h2 { margin: 0; font-size: 1.25rem; color: #0f3b36; }
+        .recent-emails-list { margin-top: 12px; border-radius: 10px; background: #fff; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+        .recent-emails-list .email-item { display:flex; justify-content:space-between; align-items:center; padding:10px 12px; border-radius:8px; }
+        .recent-emails-list .email-item + .email-item { margin-top:8px; }
+        .recent-emails-list .email-item div { line-height:1.2; }
+        .recent-emails-list .email-item .email-name { font-weight:500; color: #0b2f2b; }
+        .recent-emails-list .email-item .email-business { color: #3c6661; font-size:0.95rem; }
+        .recent-emails-list .email-item .email-address { color:#3b6b66; font-size:0.9rem; }
+        .recent-emails-list .email-item .email-time { color:#7a7a7a; font-size:0.85rem; }
+        .view-all-link { color: var(--teal); text-decoration: none; font-weight:600; }
+        .view-all-link:hover { color: #1f8b7f; text-decoration:none; }
+        /* make sure buttons and links use teal accents */
+        .box-link { color: var(--teal); }
+    </style>
 </head>
 <body>
     <!-- Logout Confirmation Modal -->
@@ -103,7 +120,7 @@ $chart_data_json = json_encode($counts);
                 </div>
                 <div class="modal-footer border-0" style="justify-content:center; gap:18px; padding-bottom:24px;">
                     <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal" style="border-radius:8px;">Cancel</button>
-                    <a href="logout.php" class="btn btn-primary px-4" style="border-radius:8px; background:#218a8a; border:none; color:#fff;">Yes</a>
+                    <a href="logout" class="btn btn-primary px-4" style="border-radius:8px; background:#218a8a; border:none; color:#fff;">Yes</a>
                 </div>
             </div>
         </div>
@@ -138,35 +155,78 @@ $chart_data_json = json_encode($counts);
                 <div class="overview-box">
                     <div class="box-title">Total Services</div>
                     <div class="box-value"><?php echo number_format($totalServices); ?></div>
-                    <a href="services.php" class="box-link">View More</a>
+                    <a href="services" class="box-link">View More</a>
                 </div>
                 <div class="overview-box">
                     <div class="box-title">Total Clients</div>
                     <div class="box-value"><?php echo number_format($totalClients); ?></div>
-                    <a href="clients.php" class="box-link">View More</a>
+                    <a href="clients" class="box-link">View More</a>
                 </div>
                 <div class="overview-box">
                     <div class="box-title">Total Blogs</div>
                     <div class="box-value"><?php echo number_format($totalBlogs); ?></div>
-                    <a href="blog.php" class="box-link">View More</a>
+                    <a href="blog" class="box-link">View More</a>
                 </div>
                 <div class="overview-box">
                     <div class="box-title">Total Industries</div>
                     <div class="box-value"><?php echo number_format($totalIndustries); ?></div>
-                    <a href="industries.php" class="box-link">View More</a>
+                    <a href="industries" class="box-link">View More</a>
                 </div>
             </div>
 
             <div class="recent-emails-section">
-                <h2>Recent Emails</h2>
+                <?php
+                // Load recent messages (show last 4)
+                $recentEmails = [];
+                $messagesPath = __DIR__ . '/../api/messages.json';
+                if (file_exists($messagesPath)) {
+                    $raw = @file_get_contents($messagesPath);
+                    $decoded = json_decode($raw, true);
+                    if (is_array($decoded) && count($decoded) > 0) {
+                        // sort by createdAt desc
+                        usort($decoded, function($a, $b){
+                            $ta = isset($a['createdAt']) ? (int)$a['createdAt'] : 0;
+                            $tb = isset($b['createdAt']) ? (int)$b['createdAt'] : 0;
+                            return $tb - $ta;
+                        });
+                        $recentEmails = array_slice($decoded, 0, 4);
+                    }
+                }
+
+                function pretty_time($ms) {
+                    $ts = (int)$ms;
+                    // createdAt might be milliseconds
+                    if ($ts > 9999999999) $ts = (int)floor($ts / 1000);
+                    $diff = time() - $ts;
+                    if ($diff < 60) return $diff . ' sec ago';
+                    $mins = (int)floor($diff / 60);
+                    if ($mins < 60) return $mins . ' min ago';
+                    $hrs = (int)floor($mins / 60);
+                    if ($hrs < 24) return $hrs . ' hr' . ($hrs > 1 ? 's' : '') . ' ago';
+                    return date('M j, Y H:i', $ts);
+                }
+                ?>
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                    <h2>Recent Emails</h2>
+                    <a href="email" class="view-all-link">View all</a>
+                </div>
                 <div class="recent-emails-list">
-                    <div class="email-item">
-                        <span class="email-name">Nicholas Patrick</span>
-                        <span class="email-business">business name</span>
-                        <span class="email-address">email@gmail.com</span>
-                        <span class="email-phone">+974 1234 5678</span>
-                        <span class="email-time">30 minutes ago</span>
-                    </div>
+                    <?php if (empty($recentEmails)): ?>
+                        <div class="email-item">No recent messages</div>
+                    <?php else: ?>
+                        <?php foreach ($recentEmails as $m): ?>
+                            <div class="email-item" style="border-bottom:1px solid #eee; padding:12px 0; display:flex; justify-content:space-between; gap:12px; align-items:center;">
+                                <div>
+                                    <div style="font-weight:700"><?php echo htmlspecialchars($m['name'] ?? '-', ENT_QUOTES, 'UTF-8'); ?></div>
+                                    <div style="color:#666"><?php echo htmlspecialchars($m['businessName'] ?? '', ENT_QUOTES, 'UTF-8'); ?></div>
+                                    <div style="color:#444; font-size:0.95rem;"><?php echo htmlspecialchars($m['email'] ?? '', ENT_QUOTES, 'UTF-8'); ?><?php if (!empty($m['phone'])) echo ' • ' . htmlspecialchars($m['phone'], ENT_QUOTES, 'UTF-8'); ?></div>
+                                </div>
+                                <div style="text-align:right; color:#888; min-width:120px;">
+                                    <div><?php echo pretty_time($m['createdAt'] ?? time()); ?></div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
             </div>
 

@@ -23,7 +23,7 @@
                 <?php endif; ?>
               <?php endif; ?>
 
-              <form action="upload.php" method="POST" enctype="multipart/form-data">
+              <form action="upload" method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
                   <label class="form-label">Industry Name</label>
                   <input type="text" name="name" class="form-control" required>

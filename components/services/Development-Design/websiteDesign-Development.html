@@ -8,40 +8,20 @@
         <link rel="shortcut icon" href="/images/logo.png" type="image/png">
     
 
-		<!-- Font Awesome for icons -->
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-			integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-			crossorigin="anonymous"
-			referrerpolicy="no-referrer"
-		/>
+        <!-- Font Awesome for icons (single, no SRI mismatch) -->
 
 		<!-- Same CSS stack as mainBlog -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-		<link rel="stylesheet" href="../../../styles.css?v=1" id="siteCss">
-		<script>
-			// Ensure styles.css is loaded even if relative path is off in deep routes
-			window.addEventListener('DOMContentLoaded', function(){
-				try {
-					const val = getComputedStyle(document.documentElement).getPropertyValue('--primary-teal').trim();
-					if (!val) {
-						['../../../styles.css', '../../styles.css', '../styles.css', '/styles.css'].forEach((href)=>{
-							const l=document.createElement('link'); l.rel='stylesheet'; l.href=href+'?v=1'; document.head.appendChild(l);
-						});
-					}
-				} catch(_){}
-			});
-		</script>
+        <link rel="stylesheet" href="/ROIwebsite/styles.css?v=1" id="siteCss">
 	</head>
 	<body>
 		<!-- Header (copied from mainBlog, paths adjusted) -->
 		<header class="site-header">
 			<div class="container header-inner">
-				<a class="brand" href="" aria-label="Royal Orbit Innovations home">
-					<img src="../images/logo.png" alt="Royal Orbit Innovations logo" />
+                <a class="brand" href="/ROIwebsite/" aria-label="Royal Orbit Innovations home">
+                    <img src="/ROIwebsite/images/logo.png" alt="Royal Orbit Innovations logo" />
 					<span class="brand-name">Royal Orbit Innovations</span>
                     <span class="logo-subtitle">Marketing & Technology Agency</span>
                     
@@ -49,9 +29,9 @@
 
 				<nav id="primaryNav" aria-label="Primary">
                 <ul class="nav-list">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/ROIwebsite/">Home</a></li>
+                    <li><a href="/ROIwebsite/about">About</a></li>
+                    <li><a href="/ROIwebsite/blog">Blog</a></li>
                     <li class="nav-services">
                         <a href="#" role="button" aria-haspopup="true" aria-expanded="false">Services <i class="fa-solid fa-chevron-down nav-caret" aria-hidden="true"></i></a>
                         <!-- Mega menu -->
@@ -60,50 +40,50 @@
                                 <div class="mega-col">
                                     <h4><span class="cat-ico"><i class="fa-solid fa-chart-line"></i></span> Digital Marketing</h4>
                                     <ul>
-                                        <li><a href="/services/ppc">PPC Services</a></li>
-                                        <li><a href="/services/seo">SEO Services</a></li>
-                                        <li><a href="/services/email-marketing">Email Marketing</a></li>
+                                        <li><a href="/ROIwebsite/services/ppc">PPC Services</a></li>
+                                        <li><a href="/ROIwebsite/services/seo">SEO Services</a></li>
+                                        <li><a href="/ROIwebsite/services/email-marketing">Email Marketing</a></li>
                                     </ul>
                                 </div>
                                 <div class="mega-col">
                                     <h4><span class="cat-ico"><i class="fa-solid fa-screwdriver-wrench"></i></span> Development &amp; Design</h4>
                                     <ul>
-                                        <li><a href="/services/website-design">Website Design &amp; Development</a></li>
-                                        <li><a href="/services/social-media-design">Social Media Design</a></li>
-                                        <li><a href="/services/landing-page">Landing Page Design</a></li>
+                                        <li><a href="/ROIwebsite/services/website-design">Website Design &amp; Development</a></li>
+                                        <li><a href="/ROIwebsite/services/social-media-design">Social Media Design</a></li>
+                                        <li><a href="/ROIwebsite/services/landing-page">Landing Page Design</a></li>
                                     </ul>
                                 </div>
                                 <div class="mega-col">
                                     <h4><span class="cat-ico"><i class="fa-solid fa-bullhorn"></i></span> Advertising &amp; Management</h4>
                                     <ul>
-                                        <li><a href="/services/social-media-advertising">Social Media Advertising</a></li>
-                                        <li><a href="/services/social-media-management">Social Media Management</a></li>
-                                        <li><a href="/services/listing-management">Listing Management Services</a></li>
+                                        <li><a href="/ROIwebsite/services/social-media-advertising">Social Media Advertising</a></li>
+                                        <li><a href="/ROIwebsite/services/social-media-management">Social Media Management</a></li>
+                                        <li><a href="/ROIwebsite/services/listing-management">Listing Management Services</a></li>
                                     </ul>
                                 </div>
                                 <div class="mega-col">
                                     <h4><span class="cat-ico"><i class="fa-brands fa-google"></i></span> Google My Business</h4>
                                     <ul>
-                                        <li><a href="/services/gmb">Google My Business Services</a></li>
-                                        <li><a href="/services/gmb-management">Google My Business Management</a></li>
-                                        <li><a href="/services/gmb-setup">Google My Business Setup Service</a></li>
-                                        <li><a href="/services/gmb-support">Google My Business Support Service</a></li>
-                                        <li><a href="/services/gmb-optimization">Google My Business Optimization Service</a></li>
-                                        <li><a href="/services/gmb-reinstatement">Google My Business Reinstatement Service</a></li>
+                                        <li><a href="/ROIwebsite/services/gmb">Google My Business Services</a></li>
+                                        <li><a href="/ROIwebsite/services/gmb-management">Google My Business Management</a></li>
+                                        <li><a href="/ROIwebsite/services/gmb-setup">Google My Business Setup Service</a></li>
+                                        <li><a href="/ROIwebsite/services/gmb-support">Google My Business Support Service</a></li>
+                                        <li><a href="/ROIwebsite/services/gmb-optimization">Google My Business Optimization Service</a></li>
+                                        <li><a href="/ROIwebsite/services/gmb-reinstatement">Google My Business Reinstatement Service</a></li>
                                     </ul>
                                 </div>
                             </div>
                             <h4 class="mega-quick-title">Special Services</h4>
                             <div class="mega-quick">
-                                <a class="quick-link" href="/services/call-tracking"><span class="ql-ico"><i class="fa-solid fa-phone"></i></span> Website Call Tracking</a>
-                                <a class="quick-link" href="/services/video-production"><span class="ql-ico"><i class="fa-solid fa-video"></i></span> Video Production</a>
-                                <a class="quick-link" href="/services/conversion-rate"><span class="ql-ico"><i class="fa-solid fa-chart-simple"></i></span> Conversion Rate Optimization</a>
-                                <a class="quick-link" href="/services/api-development"><span class="ql-ico"><i class="fa-solid fa-diagram-project"></i></span> API Development</a>
+                                <a class="quick-link" href="/ROIwebsite/services/call-tracking"><span class="ql-ico"><i class="fa-solid fa-phone"></i></span> Website Call Tracking</a>
+                                <a class="quick-link" href="/ROIwebsite/services/video-production"><span class="ql-ico"><i class="fa-solid fa-video"></i></span> Video Production</a>
+                                <a class="quick-link" href="/ROIwebsite/services/conversion-rate"><span class="ql-ico"><i class="fa-solid fa-chart-simple"></i></span> Conversion Rate Optimization</a>
+                                <a class="quick-link" href="/ROIwebsite/services/api-development"><span class="ql-ico"><i class="fa-solid fa-diagram-project"></i></span> API Development</a>
                             </div>
                         </div>
                     </li>
-                    <li><a href="/industries">Industries</a></li>
-                    <li><a href="/contact">Contacts</a></li>
+                    <li><a href="/ROIwebsite/industries">Industries</a></li>
+                    <li><a href="/ROIwebsite/contact">Contact</a></li>
                 </ul>
             </nav>
 
@@ -128,14 +108,14 @@
 						<p class="hero-subtitle">Services</p>
 						<h1 class="hero-title">Website Design &amp; Development</h1>
 						<p class="hero-description">We build high-performing, conversion-driven websites that deliver measurable results. Our designs combine modern user experiences with impactful brand storytelling, ensuring every visitor stays engaged. With strong SEO foundations and data-driven strategies, your site is built to stand out in search rankings. Backed by clean, scalable code, we create digital experiences that grow with your business.</p>
-						<button id="heroConsultBtn"class="hero-cta-btn" data-consult-trigger onclick="location.href='/contact'">Book A Free Consultation</button>
+                        <button id="heroConsultBtn"class="hero-cta-btn" data-consult-trigger onclick="location.href='/ROIwebsite/contact'">Book A Free Consultation</button>
 					</div>
 					<div class="hero-right">
-						<div class="hero-image-container">
-							<div class="hero-main-image">
-								<img src="../../../images/websitedev.jpg" alt="Website design and development" />
-							</div>
-						</div>
+                        <div class="hero-image-container">
+                            <div class="hero-main-image">
+                                <img src="/ROIwebsite/images/websitedev.jpg" alt="Website Design and Development" />
+                            </div>
+                        </div>
 					</div>
 				</div>
 			</div>

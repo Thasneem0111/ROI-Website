@@ -388,7 +388,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Optimize animation for mobile devices
     function optimizeForMobile() {
         const isMobile = window.innerWidth <= 768;
-        
+        // If track isn't present on this page, skip safely (prevents null.style errors on blog pages)
+        if (!clientsTrack) return;
+
         if (isMobile) {
             // Faster animation on mobile for better performance
             clientsTrack.style.animationDuration = '12s';
@@ -414,7 +416,7 @@ document.addEventListener('DOMContentLoaded', function() {
             startX = e.touches[0].clientX;
             isDragging = true;
             // Pause animation during touch
-            clientsTrack.style.animationPlayState = 'paused';
+            if (clientsTrack) clientsTrack.style.animationPlayState = 'paused';
         }, {passive: true});
         
         // Touch move
@@ -435,7 +437,7 @@ document.addEventListener('DOMContentLoaded', function() {
         clientsSection.addEventListener('touchend', function() {
             isDragging = false;
             // Resume animation
-            clientsTrack.style.animationPlayState = 'running';
+            if (clientsTrack) clientsTrack.style.animationPlayState = 'running';
             // Reset position
             clientsSection.style.transform = 'translateX(0)';
         });
@@ -453,14 +455,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Intersection Observer for clients section
     const clientsObserver = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
+            if (!clientsTrack) return;
             if (entry.isIntersecting) {
                 // Start animation when section is visible
-                if (clientsTrack) {
-                    clientsTrack.style.animationPlayState = 'running';
-                }
+                clientsTrack.style.animationPlayState = 'running';
             } else {
                 // Pause animation when section is not visible (performance optimization)
-                if (clientsTrack && window.innerWidth <= 768) {
+                if (window.innerWidth <= 768) {
                     clientsTrack.style.animationPlayState = 'paused';
                 }
             }
@@ -872,9 +873,11 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.textContent = 'Sending...';
             submitBtn.disabled = true;
             // Use absolute URL in production, fallback to relative in development
-            const apiUrl = window.location.hostname === 'roi.com.qa'
-                ? 'https://www.roi.com.qa/api/consultation'
-                : '/api/consultation';
+            // Resolve API URL: use production host for roi.com.qa, otherwise derive project base (e.g. /ROIwebsite)
+            const apiBase = window.location.hostname === 'roi.com.qa'
+                ? 'https://www.roi.com.qa'
+                : (function(){ const parts = window.location.pathname.split('/'); return parts[1] ? '/' + parts[1] : ''; })();
+            const apiUrl = apiBase + '/api/consultation.php';
             fetch(apiUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -1095,10 +1098,11 @@ function handleSubscribe(e) {
                 const originalBtnTxt = submitBtn.textContent;
                 submitBtn.innerHTML = spinnerHTML + originalBtnTxt;
                 try {
-                    // Use absolute URL in production, fallback to relative in development
-                    const apiUrl = window.location.hostname === 'roi.com.qa'
-                    ? 'https://www.roi.com.qa/api/consultation.php'
-                    : '/api/consultation.php';
+                    // Resolve API URL: use production host for roi.com.qa, otherwise derive project base (e.g. /ROIwebsite)
+                    const apiBase = window.location.hostname === 'roi.com.qa'
+                        ? 'https://www.roi.com.qa'
+                        : (function(){ const parts = window.location.pathname.split('/'); return parts[1] ? '/' + parts[1] : ''; })();
+                    const apiUrl = apiBase + '/api/consultation.php';
                         
                     // const apiUrl = 'api/consultation.php';
                     fetch(apiUrl, {

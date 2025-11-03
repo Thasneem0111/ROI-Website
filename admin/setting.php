@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin_logged_in'])) {
-    header('Location: login.php');
+    header('Location: login');
     exit;
 }
 require_once 'db_connect.php';
@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="settings-panel" style="background:#ffffff; border-radius:24px; margin:40px auto 0 auto; max-width:700px; box-shadow:0 4px 32px rgba(44,166,164,0.10); padding:40px 36px 32px 36px;">
-                <form method="post" action="setting.php" style="display:flex; flex-direction:column; align-items:center; gap:32px; width:100%;">
+                <form method="post" action="setting" style="display:flex; flex-direction:column; align-items:center; gap:32px; width:100%;">
                     <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:16px;">
                         <div style="width:80px; height:80px; background:#2ca6a4; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:12px; box-shadow:0 2px 12px rgba(44,166,164,0.12);">
                             <i class="fa fa-camera" style="color:#fff; font-size:2.2rem;"></i>
@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var logoutBtn = document.getElementById('logoutBtn');
-            if (logoutBtn) logoutBtn.addEventListener('click', function(){ window.location.href = 'logout.php'; });
+            if (logoutBtn) logoutBtn.addEventListener('click', function(){ window.location.href = 'logout'; });
         });
     </script>
 </body>

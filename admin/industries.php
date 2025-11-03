@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin_logged_in'])) {
-    header('Location: login.php');
+    header('Location: login');
     exit;
 }
 require_once 'db_connect.php';
@@ -223,8 +223,8 @@ $active = 'industries';
             <script>
             // Dynamic data: fetch current industries from server and use API for add
             let industries = [];
-            const apiList = 'get_industries.php';
-            const apiUpload = 'api_upload.php';
+            const apiList = 'get_industries';
+            const apiUpload = 'api_upload';
 
             function renderIndustries(list) {
                 const tbody = document.getElementById('industriesTableBody');
@@ -340,7 +340,7 @@ $active = 'industries';
                     if (!id) return;
                     try {
                         const fd = new FormData(); fd.append('id', id);
-                        const r = await fetch('api_delete.php', { method: 'POST', body: fd });
+                        const r = await fetch('api_delete', { method: 'POST', body: fd });
                         const j = await r.json();
                         if (j.success) {
                             // remove item locally and rerender
@@ -412,7 +412,7 @@ $active = 'industries';
                     // disable to prevent double submit
                     this.disabled = true;
                     try {
-                        const resp = await fetch('api_update.php', { method: 'POST', body: fd });
+                        const resp = await fetch('api_update', { method: 'POST', body: fd });
                         const json = await resp.json();
                         if (json.success) {
                             // update local array
@@ -453,7 +453,7 @@ $active = 'industries';
                     document.getElementById('industryPreviewImg').style.display='none';
                 });
 
-                var logoutBtn = document.getElementById('logoutBtn'); var confirmLogout = document.getElementById('confirmLogout'); var logoutModal = new bootstrap.Modal(document.getElementById('logoutModal')); if(logoutBtn) logoutBtn.addEventListener('click', function(){ logoutModal.show(); }); if(confirmLogout) confirmLogout.addEventListener('click', function(){ window.location.href = 'logout.php'; });
+                var logoutBtn = document.getElementById('logoutBtn'); var confirmLogout = document.getElementById('confirmLogout'); var logoutModal = new bootstrap.Modal(document.getElementById('logoutModal')); if(logoutBtn) logoutBtn.addEventListener('click', function(){ logoutModal.show(); }); if(confirmLogout) confirmLogout.addEventListener('click', function(){ window.location.href = 'logout'; });
             });
             </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

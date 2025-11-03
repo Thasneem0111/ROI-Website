@@ -1,0 +1,23 @@
+<IfModule mod_rewrite.c>
+    Options -Indexes
+    RewriteEngine On
+    # Optional: If needed for complex setups, you can set RewriteBase.
+    # In most XAMPP per-directory .htaccess cases this is not required.
+    # RewriteBase /ROIwebsite/admin/
+
+    # 1) Canonicalize: redirect explicit .php URLs to extensionless (per-directory safe)
+    RewriteCond %{THE_REQUEST} \s+/[^\s]*\.php[\s?] [NC]
+    RewriteRule ^(.+)\.php$ $1 [R=301,L]
+
+    # 2) Serve existing files/directories as-is
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # 3) Internally rewrite extensionless to the matching .php file if it exists
+    RewriteCond %{REQUEST_FILENAME}.php -f
+    RewriteRule ^(.+)$ $1.php [L]
+
+    # Ensure index resolution
+    DirectoryIndex index.php index.html
+</IfModule>

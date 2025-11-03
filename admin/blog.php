@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin_logged_in'])) {
-    header('Location: login.php');
+    header('Location: login');
     exit;
 }
 require_once 'db_connect.php';
@@ -477,7 +477,7 @@ $active = 'blog';
 
                     // send to server
                     document.getElementById('addNewBlogModalBtn').disabled = true;
-                    fetch('./api_upload_blog.php', { method: 'POST', body: fd }).then(r => r.json()).then(function(resp){
+                    fetch('api_upload_blog', { method: 'POST', body: fd }).then(r => r.json()).then(function(resp){
                         document.getElementById('addNewBlogModalBtn').disabled = false;
                         if (resp && resp.success) {
                             var addBlogModalEl = document.getElementById('addBlogModal');
@@ -517,10 +517,10 @@ $active = 'blog';
             <script>
             // Blog listing, update and delete (mirrors industries behavior)
             let blogs = [];
-            const apiListBlogs = 'get_blogs.php';
-            const apiUploadBlog = 'api_upload_blog.php';
-            const apiUpdateBlog = 'api_update_blog.php';
-            const apiDeleteBlog = 'api_delete_blog.php';
+            const apiListBlogs = 'get_blogs';
+            const apiUploadBlog = 'api_upload_blog';
+            const apiUpdateBlog = 'api_update_blog';
+            const apiDeleteBlog = 'api_delete_blog';
 
             function escapeHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
@@ -853,7 +853,7 @@ $active = 'blog';
             }
             if (confirmLogout) {
                 confirmLogout.addEventListener('click', function() {
-                    window.location.href = 'logout.php';
+                    window.location.href = 'logout';
                 });
             }
         });

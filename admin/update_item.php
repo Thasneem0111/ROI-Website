@@ -40,7 +40,7 @@ $conn->close();
                 <?php endif; ?>
               <?php endif; ?>
 
-              <form action="update_upload.php" method="POST" enctype="multipart/form-data">
+              <form action="update_upload" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?php echo (int)$row['id']; ?>">
                 <div class="mb-3">
                   <label class="form-label">Industry Name</label>

@@ -230,7 +230,7 @@
 
         async function load(){
           try{
-            const res = await fetch(API_BASE + 'get_industries.php');
+            const res = await fetch(API_BASE + 'get_industries');
             const data = await asJson(res);
             industries = Array.isArray(data) ? data.map(d => ({ id:String(d.id), name:d.name, description:d.description, imageUrl:d.image, createdAt:d.createdAt })) : [];
             updateCount();
@@ -252,7 +252,7 @@
           if(!deleteId) return;
           try{
             const fd = new FormData(); fd.append('id', deleteId);
-            const res = await fetch(API_BASE + 'api_delete.php', { method:'POST', body: fd });
+            const res = await fetch(API_BASE + 'api_delete', { method:'POST', body: fd });
             const j = await asJson(res);
             if(j && j.success){ await load(); } else { alert(j.message || 'Delete failed'); }
           }catch(err){ console.error(err); }
@@ -313,7 +313,7 @@
             fd.append('name', document.getElementById('industryName').value.trim());
             fd.append('description', document.getElementById('industryDesc').value.trim());
             const f = document.getElementById('industryImage').files?.[0]; if(f) fd.append('image', f);
-            const res = await fetch(API_BASE + 'api_upload.php', { method:'POST', body: fd });
+            const res = await fetch(API_BASE + 'api_upload', { method:'POST', body: fd });
             const j = await asJson(res);
             if(j && j.success){
               const m = bootstrap.Modal.getInstance(document.getElementById('addIndustryModal')); if(m) m.hide();
@@ -335,7 +335,7 @@
             fd.append('name', document.getElementById('industryName').value.trim());
             fd.append('description', document.getElementById('industryDesc').value.trim());
             const f = document.getElementById('industryImage').files?.[0]; if(f) fd.append('image', f);
-            const res = await fetch(API_BASE + 'api_update.php', { method:'POST', body: fd });
+            const res = await fetch(API_BASE + 'api_update', { method:'POST', body: fd });
             const j = await asJson(res);
             if(j && j.success){
               const m = bootstrap.Modal.getInstance(document.getElementById('addIndustryModal')); if(m) m.hide();
