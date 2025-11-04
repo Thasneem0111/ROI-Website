@@ -126,6 +126,16 @@ $active = 'services';
                             </div>
                            </div>
                            <div class="mb-3">
+                              <label class="form-label">Select Category <span class="text-danger">*</span></label>
+                              <select class="form-select required-field" id="serviceCategory" required>
+                                  <option value="">Select Category</option>
+                                  <option value="Digital Marketing">Digital Marketing</option>
+                                  <option value="Development & Design">Development & Design</option>
+                                  <option value="Advertising & Management">Advertising & Management</option>
+                                  <option value="Google My Business">Google My Business</option>
+                              </select>
+                          </div>
+                          <div class="mb-3">
                                <label class="form-label">Service Name <span class="text-danger">*</span></label>
                                <input type="text" class="form-control required-field" id="serviceName" placeholder="Type your service name here...." required>
                            </div>
@@ -333,7 +343,7 @@ $active = 'services';
             // Add new service -> validate and show confirm
             document.getElementById('addNewServiceBtn').addEventListener('click', function() {
                 var valid = true;
-                var requiredFields = document.querySelectorAll('#serviceName, #serviceDesc');
+                var requiredFields = document.querySelectorAll('#serviceCategory, #serviceName, #serviceDesc');
                 requiredFields.forEach(function(field) {
                     if (!field.value || field.value.trim() === '') { field.classList.add('is-invalid'); valid = false; } else { field.classList.remove('is-invalid'); }
                 });
@@ -350,6 +360,7 @@ $active = 'services';
                 var addModalEl=document.getElementById('addServiceModal'); var addModal=bootstrap.Modal.getInstance(addModalEl); addModal.hide();
 
                 const fd = new FormData();
+                fd.append('category', document.getElementById('serviceCategory').value.trim());
                 fd.append('name', document.getElementById('serviceName').value.trim());
                 fd.append('description', document.getElementById('serviceDesc').value.trim());
                 const f = document.getElementById('serviceUploadImage').files[0]; if (f) fd.append('image', f);

@@ -10,8 +10,14 @@ if (!$id) {
 $stmt = $conn->prepare("SELECT id, `name`, `description`, `image` FROM industry WHERE id = ? LIMIT 1");
 $stmt->bind_param('i', $id);
 $stmt->execute();
-$res = $stmt->get_result();
-$row = $res->fetch_assoc();
+$row = null;
+if ($stmt) {
+  $rid = null; $rname = null; $rdesc = null; $rimage = null;
+  $stmt->bind_result($rid, $rname, $rdesc, $rimage);
+  if ($stmt->fetch()) {
+    $row = ['id' => $rid, 'name' => $rname, 'description' => $rdesc, 'image' => $rimage];
+  }
+}
 if (!$row) { echo 'Industry not found'; exit; }
 $stmt->close();
 $conn->close();

@@ -61,11 +61,13 @@ try {
     if ($stmt) {
         $stmt->bind_param('ss', $start_sql, $end_sql);
         $stmt->execute();
-        $res = $stmt->get_result();
-        while ($r = $res->fetch_assoc()) {
-            $k = sprintf('%04d-%02d', $r['y'], $r['m']);
+        // Use bind_result/fetch to avoid dependency on mysqli_stmt::get_result()
+        $ry = null; $rm = null; $rc = null;
+        $stmt->bind_result($ry, $rm, $rc);
+        while ($stmt->fetch()) {
+            $k = sprintf('%04d-%02d', $ry, $rm);
             $idx = array_search($k, $keys, true);
-            if ($idx !== false) { $counts[$idx] = intval($r['c']); }
+            if ($idx !== false) { $counts[$idx] = intval($rc); }
         }
         $stmt->close();
     }

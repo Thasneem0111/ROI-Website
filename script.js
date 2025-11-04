@@ -872,12 +872,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const originalText = submitBtn.textContent;
             submitBtn.textContent = 'Sending...';
             submitBtn.disabled = true;
-            // Use absolute URL in production, fallback to relative in development
-            // Resolve API URL: use production host for roi.com.qa, otherwise derive project base (e.g. /ROIwebsite)
-            const apiBase = window.location.hostname === 'roi.com.qa'
-                ? 'https://www.roi.com.qa'
-                : (function(){ const parts = window.location.pathname.split('/'); return parts[1] ? '/' + parts[1] : ''; })();
-            const apiUrl = apiBase + '/api/consultation.php';
+            // Always use a relative API path to stay on the same origin (avoids CORS issues) and work on localhost subfolders
+            const apiUrl = 'api/consultation.php';
             fetch(apiUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -1098,30 +1094,12 @@ function handleSubscribe(e) {
                 const originalBtnTxt = submitBtn.textContent;
                 submitBtn.innerHTML = spinnerHTML + originalBtnTxt;
                 try {
-                    // Resolve API URL: use production host for roi.com.qa, otherwise derive project base (e.g. /ROIwebsite)
-                    const apiBase = window.location.hostname === 'roi.com.qa'
-                        ? 'https://www.roi.com.qa'
-                        : (function(){ const parts = window.location.pathname.split('/'); return parts[1] ? '/' + parts[1] : ''; })();
-                    const apiUrl = apiBase + '/api/consultation.php';
-                        
-                    // const apiUrl = 'api/consultation.php';
-                    fetch(apiUrl, {
-    method: 'POST',
-    headers: { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    },
-    body: JSON.stringify({
-        name: name.value.trim(),
-        email: email.value.trim(),
-        phone: phone.value.trim(),
-        businessName: businessName.value.trim()
-    })
-})
+                    // Always use a relative API path to stay on the same origin (avoids CORS issues) and work on localhost subfolders
+                    const apiUrl = 'api/consultation.php';
 
                     const resp = await fetch(apiUrl, {
                         method:'POST',
-                        headers:{ 'Content-Type':'application/json' },
+                        headers:{ 'Content-Type':'application/json', 'Accept': 'application/json' },
                         body: JSON.stringify({ name: name.value.trim(), email: emailVal, phone: phoneVal })
                     });
                     if(!resp.ok) {

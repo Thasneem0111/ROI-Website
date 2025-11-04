@@ -33,9 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+$category = isset($_POST['category']) ? trim($_POST['category']) : '';
 $name = isset($_POST['name']) ? trim($_POST['name']) : '';
 $description = isset($_POST['description']) ? trim($_POST['description']) : '';
 if ($name === '') { ob_clean(); echo json_encode(['success'=>false,'message'=>'Name required']); exit; }
+if ($category === '') { ob_clean(); echo json_encode(['success'=>false,'message'=>'Category required']); exit; }
 
 $allowed = ['jpg','jpeg','png','webp','avif','gif','jfif'];
 $target_dir = __DIR__ . '/../images/';
@@ -66,30 +68,48 @@ function column_exists($conn, $table, $col) {
 
 $useName = column_exists($conn, 'services', 'name');
 $useTitle = !$useName && column_exists($conn, 'services', 'title');
+$hasCategory = column_exists($conn, 'services', 'category');
 
-if ($useName) {
+if ($useName && $hasCategory) {
+    $insertSql = "INSERT INTO services (`name`, `description`, `image`, `category`, `createdAt`) VALUES (?, ?, ?, ?, NOW())";
+} elseif ($useName) {
     $insertSql = "INSERT INTO services (`name`, `description`, `image`, `createdAt`) VALUES (?, ?, ?, NOW())";
+} elseif ($useTitle && $hasCategory) {
+    $insertSql = "INSERT INTO services (`title`, `description`, `image`, `category`, `created_at`) VALUES (?, ?, ?, ?, NOW())";
 } elseif ($useTitle) {
     $insertSql = "INSERT INTO services (`title`, `description`, `image`, `created_at`) VALUES (?, ?, ?, NOW())";
 } else {
-    $insertSql = "INSERT INTO services (`description`, `image`) VALUES (?, ?)";
+    // Fallback insert when neither `name` nor `title` exists
+    $insertSql = $hasCategory
+        ? "INSERT INTO services (`description`, `image`, `category`) VALUES (?, ?, ?)"
+        : "INSERT INTO services (`description`, `image`) VALUES (?, ?)";
 }
 
 $stmt = $conn->prepare($insertSql);
 if (!$stmt) { ob_clean(); echo json_encode(['success'=>false,'message'=>'DB prepare failed: '.$conn->error]); exit; }
 
 $imgParam = $imageFilename ?: null;
-if ($useName || $useTitle) {
+if ($useName && $hasCategory) {
+    $stmt->bind_param('ssss', $name, $description, $imgParam, $category);
+} elseif ($useName) {
+    $stmt->bind_param('sss', $name, $description, $imgParam);
+} elseif ($useTitle && $hasCategory) {
+    $stmt->bind_param('ssss', $name, $description, $imgParam, $category);
+} elseif ($useTitle) {
     $stmt->bind_param('sss', $name, $description, $imgParam);
 } else {
-    $stmt->bind_param('ss', $description, $imgParam);
+    if ($hasCategory) {
+        $stmt->bind_param('sss', $description, $imgParam, $category);
+    } else {
+        $stmt->bind_param('ss', $description, $imgParam);
+    }
 }
 if ($stmt->execute()) {
     $insertId = $stmt->insert_id;
     $stmt->close();
     $conn->close();
     ob_clean();
-    $resp = ['success'=>true,'id'=>$insertId,'name'=>$name,'description'=>$description,'image'=> $imageFilename ? ('/images/'.$imageFilename) : null, 'createdAt'=>date('Y-m-d H:i:s')];
+    $resp = ['success'=>true,'id'=>$insertId,'name'=>$name,'description'=>$description,'category'=>$hasCategory?$category:null,'image'=> $imageFilename ? ('/images/'.$imageFilename) : null, 'createdAt'=>date('Y-m-d H:i:s')];
     echo json_encode($resp, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     exit;
 } else {

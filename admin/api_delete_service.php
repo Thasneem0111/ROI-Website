@@ -27,9 +27,16 @@ if (!$id) { ob_clean(); echo json_encode(['success'=>false,'message'=>'Invalid i
 $stmt = $conn->prepare('SELECT image FROM services WHERE id = ? LIMIT 1');
 $stmt->bind_param('i', $id);
 $stmt->execute();
-$res = $stmt->get_result();
-$row = $res->fetch_assoc();
-$stmt->close();
+$image = null;
+$row = null;
+// Not all PHP installations have mysqli_stmt::get_result() (depends on mysqlnd). Use bind_result/fetch for compatibility.
+if ($stmt) {
+    $stmt->bind_result($image);
+    if ($stmt->fetch()) {
+        $row = ['image' => $image];
+    }
+    $stmt->close();
+}
 
 if ($row && !empty($row['image'])) {
     $file = __DIR__ . '/../images/' . $row['image'];

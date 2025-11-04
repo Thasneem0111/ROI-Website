@@ -67,9 +67,15 @@ $oldImage = null;
 $stmt = $conn->prepare('SELECT image FROM blog WHERE id = ? LIMIT 1');
 $stmt->bind_param('i', $id);
 $stmt->execute();
-$res = $stmt->get_result();
-if ($res) { $r = $res->fetch_assoc(); if ($r && !empty($r['image'])) $oldImage = $r['image']; }
-$stmt->close();
+$oldImage = null;
+if ($stmt) {
+    $tmpImg = null;
+    $stmt->bind_result($tmpImg);
+    if ($stmt->fetch()) {
+        if (!empty($tmpImg)) $oldImage = $tmpImg;
+    }
+    $stmt->close();
+}
 
 // Build dynamic update only for columns that exist
 function column_exists($conn, $table, $col) {

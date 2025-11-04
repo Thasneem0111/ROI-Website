@@ -24,9 +24,16 @@ if (!$id) { ob_clean(); echo json_encode(['success'=>false,'message'=>'Invalid i
 $stmt = $conn->prepare('SELECT image FROM blog WHERE id = ? LIMIT 1');
 $stmt->bind_param('i', $id);
 $stmt->execute();
-$res = $stmt->get_result();
-$row = $res->fetch_assoc();
-$stmt->close();
+$image = null;
+$row = null;
+// Use bind_result/fetch for broad mysqli compatibility (avoid mysqli_stmt::get_result dependency)
+if ($stmt) {
+    $stmt->bind_result($image);
+    if ($stmt->fetch()) {
+        $row = ['image' => $image];
+    }
+    $stmt->close();
+}
 
 if ($row && !empty($row['image'])) {
     $file = __DIR__ . '/../images/' . $row['image'];

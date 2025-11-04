@@ -1,14 +1,38 @@
 <?php
 // consultation.php
 header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: https://www.roi.com.qa');
+
+// Dynamic CORS: allow same-site (any host serving this file) and selected origins (non-prod dev)
+$origin = isset($_SERVER['HTTP_ORIGIN']) ? trim($_SERVER['HTTP_ORIGIN']) : '';
+$host = isset($_SERVER['HTTP_HOST']) ? preg_replace('/^https?:\/\//i','', $_SERVER['HTTP_HOST']) : '';
+$allowedOrigins = [
+    'https://roi.com.qa',
+    'https://www.roi.com.qa',
+    'http://localhost',
+    'http://localhost:3000',
+    'http://127.0.0.1',
+    'http://127.0.0.1:5500'
+];
+
+// If the request comes from the same host (same-origin), echo it back; else allow if whitelisted
+if ($origin) {
+    $sameSiteOrigin = '';
+    // Build canonical same-site origin based on request scheme + host
+    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    $sameSiteOrigin = $scheme . '://' . $host;
+    if ($origin === $sameSiteOrigin || in_array($origin, $allowedOrigins, true)) {
+        header('Access-Control-Allow-Origin: ' . $origin);
+        header('Vary: Origin');
+    }
+}
+// Methods / headers for preflight and actual requests
 header('Access-Control-Allow-Methods: POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Headers: Content-Type, Accept, Authorization, X-Requested-With');
 header('Access-Control-Max-Age: 86400');
 
 // Handle preflight OPTIONS request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
+    http_response_code(204); // No Content for preflight
     exit();
 }
 

@@ -39,6 +39,7 @@ if ($res) {
             'id' => isset($row['id']) ? (int)$row['id'] : null,
             'name' => $name,
             'description' => isset($row['description']) ? $row['description'] : null,
+            'category' => isset($row['category']) ? $row['category'] : null,
             'image' => $img,
             'createdAt' => $createdAt
         ];

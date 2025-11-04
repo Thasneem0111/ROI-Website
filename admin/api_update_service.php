@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
 $name = isset($_POST['name']) ? trim($_POST['name']) : '';
 $description = isset($_POST['description']) ? trim($_POST['description']) : '';
+$category = isset($_POST['category']) ? trim($_POST['category']) : null;
 if (!$id || $name === '') { echo json_encode(['success'=>false,'message'=>'Invalid input']); exit; }
 
 $allowed = ['jpg','jpeg','png','webp','avif','gif','jfif'];
@@ -40,19 +41,36 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE)
     if (!move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) { ob_clean(); echo json_encode(['success'=>false,'message'=>'Error uploading image']); exit; }
 }
 
+// detect existing columns
+$hasCategory = false;
+try {
+    $r = $conn->query("SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='services' AND COLUMN_NAME='category'");
+    if ($r) { $hasCategory = (bool)$r->num_rows; if (method_exists($r,'free')) $r->free(); }
+} catch (Throwable $e) {}
+
 if ($newImage) {
-    $stmt = $conn->prepare("UPDATE services SET `title` = ?, `description` = ?, `image` = ? WHERE id = ? LIMIT 1");
-    $stmt->bind_param('sssi', $name, $description, $newImage, $id);
+    if ($hasCategory && $category !== null && $category !== '') {
+        $stmt = $conn->prepare("UPDATE services SET `title` = ?, `description` = ?, `image` = ?, `category` = ? WHERE id = ? LIMIT 1");
+        $stmt->bind_param('ssssi', $name, $description, $newImage, $category, $id);
+    } else {
+        $stmt = $conn->prepare("UPDATE services SET `title` = ?, `description` = ?, `image` = ? WHERE id = ? LIMIT 1");
+        $stmt->bind_param('sssi', $name, $description, $newImage, $id);
+    }
 } else {
-    $stmt = $conn->prepare("UPDATE services SET `title` = ?, `description` = ? WHERE id = ? LIMIT 1");
-    $stmt->bind_param('ssi', $name, $description, $id);
+    if ($hasCategory && $category !== null && $category !== '') {
+        $stmt = $conn->prepare("UPDATE services SET `title` = ?, `description` = ?, `category` = ? WHERE id = ? LIMIT 1");
+        $stmt->bind_param('sssi', $name, $description, $category, $id);
+    } else {
+        $stmt = $conn->prepare("UPDATE services SET `title` = ?, `description` = ? WHERE id = ? LIMIT 1");
+        $stmt->bind_param('ssi', $name, $description, $id);
+    }
 }
 
 if (!$stmt) { ob_clean(); echo json_encode(['success'=>false,'message'=>'DB prepare failed']); exit; }
 if ($stmt->execute()) {
     $stmt->close();
     ob_clean();
-    echo json_encode(['success'=>true,'id'=>$id,'name'=>$name,'description'=>$description,'image'=>$newImage ? ('/images/'.$newImage) : null]);
+    echo json_encode(['success'=>true,'id'=>$id,'name'=>$name,'description'=>$description,'category'=> ($hasCategory ? $category : null),'image'=>$newImage ? ('/images/'.$newImage) : null]);
 } else {
     $err = $stmt->error;
     $stmt->close();
